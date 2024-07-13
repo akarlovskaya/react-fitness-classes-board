@@ -1,0 +1,142 @@
+[
+    {
+      "id": "1",
+      "title": "Cardio Core Conditioning",
+      "type": "Drop-In",
+      "description": "Combine cardio training with strength based movements, with emphasis on core! Expect to use a variety of equipment for weight training movements.",
+      "location": "Coquitlam, BC",
+      "cost": "$20 CAD",
+      "instructor": {
+        "name": "Salma Peterson",
+        "description": "Hi, I am a certified Group Fitness Instructor with over 5 years of leading group classes. Join my Cardio Core Conditioning.",
+        "contactEmail": "contact@SalmaPeterson.com",
+        "contactPhone": "555-555-5555"
+      }
+    },
+    {
+      "id": "2",
+      "title": "Yoga for Beginners",
+      "type": "Drop-In",
+      "description": "A calming class focused on introducing the basics of yoga. Perfect for beginners.",
+      "location": "Vancouver, BC",
+      "cost": "$15 CAD",
+      "instructor": {
+        "name": "Emma Jones",
+        "description": "Certified yoga instructor with a passion for helping newcomers find their zen.",
+        "contactEmail": "emma.jones@yogastudio.com",
+        "contactPhone": "555-123-4567"
+      }
+    },
+    {
+      "id": "3",
+      "title": "HIIT Blast",
+      "type": "Drop-In",
+      "description": "High-Intensity Interval Training designed to push your limits and burn maximum calories.",
+      "location": "Burnaby, BC",
+      "cost": "$25 CAD",
+      "instructor": {
+        "name": "John Smith",
+        "description": "Experienced personal trainer specializing in high-intensity workouts.",
+        "contactEmail": "john.smith@hiitgym.com",
+        "contactPhone": "555-765-4321"
+      }
+    },
+    {
+      "id": "4",
+      "title": "Dance Fusion",
+      "type": "Series",
+      "description": "A fun and energetic dance class that combines various styles like hip-hop, salsa, and jazz.",
+      "location": "Richmond, BC",
+      "cost": "$130 CAD for 10 sessions",
+      "instructor": {
+        "name": "Maya Li",
+        "description": "Professional dancer and choreographer with over 10 years of experience.",
+        "contactEmail": "maya.li@dancefusion.com",
+        "contactPhone": "555-987-6543"
+      }
+    },
+    {
+      "id": "5",
+      "title": "Pilates Mat",
+      "type": "Series",
+      "description": "Strengthen and lengthen your muscles with this mat-based Pilates class.",
+      "location": "Surrey, BC",
+      "cost": "$180 CAD for 10 sessions",
+      "instructor": {
+        "name": "Olivia Martin",
+        "description": "Certified Pilates instructor focused on core strength and flexibility.",
+        "contactEmail": "olivia.martin@pilatesstudio.com",
+        "contactPhone": "555-321-8765"
+      }
+    },
+    {
+      "id": "6",
+      "title": "Zumba Fitness",
+      "type": "Drop-In",
+      "description": "Dance your way to fitness with this high-energy Zumba class.",
+      "location": "Langley, BC",
+      "cost": "$20 CAD",
+      "instructor": {
+        "name": "Carlos Gomez",
+        "description": "Licensed Zumba instructor with a passion for dance and fitness.",
+        "contactEmail": "carlos.gomez@zumbafit.com",
+        "contactPhone": "555-654-3210"
+      }
+    },
+    {
+      "id": "7",
+      "title": "Strength and Conditioning",
+      "type": "Series",
+      "description": "Build strength and endurance with this comprehensive conditioning class.",
+      "location": "North Vancouver, BC",
+      "cost": "$200 CAD for 10 sessions",
+      "instructor": {
+        "name": "Laura Thompson",
+        "description": "Certified strength coach dedicated to helping you reach your fitness goals.",
+        "contactEmail": "laura.thompson@strengthcoach.com",
+        "contactPhone": "555-111-2222"
+      }
+    },
+    {
+      "id": "8",
+      "title": "Mindfulness Meditation",
+      "type": "Series",
+      "description": "Learn mindfulness techniques to reduce stress and increase well-being.",
+      "location": "West Vancouver, BC",
+      "cost": "$120 CAD for 10 sessions",
+      "instructor": {
+        "name": "David Lee",
+        "description": "Mindfulness coach with years of experience in meditation practices.",
+        "contactEmail": "david.lee@mindfulnesscoach.com",
+        "contactPhone": "555-333-4444"
+      }
+    },
+    {
+      "id": "9",
+      "title": "Spin Class",
+      "type": "Drop-In",
+      "description": "An intense indoor cycling workout designed to improve cardiovascular health.",
+      "location": "New Westminster, BC",
+      "cost": "$250 CAD for 10 sessions",
+      "instructor": {
+        "name": "Sophie Brown",
+        "description": "Spin instructor with a love for high-energy, heart-pumping workouts.",
+        "contactEmail": "sophie.brown@spinstudio.com",
+        "contactPhone": "555-444-5555"
+      }
+    },
+    {
+      "id": "10",
+      "title": "Aqua Aerobics",
+      "type": "Drop-In",
+      "description": "Low-impact water exercises that are easy on the joints and great for all fitness levels.",
+      "location": "Delta, BC",
+      "cost": "$20 CAD",
+      "instructor": {
+        "name": "Nancy Wilson",
+        "description": "Certified aqua aerobics instructor with a background in aquatic therapy.",
+        "contactEmail": "nancy.wilson@aquahealth.com",
+        "contactPhone": "555-555-6666"
+      }
+    }
+  ]
