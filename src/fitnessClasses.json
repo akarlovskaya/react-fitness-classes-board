@@ -17,7 +17,7 @@
       "id": "2",
       "title": "Yoga for Beginners",
       "type": "Drop-In",
-      "description": "A calming class focused on introducing the basics of yoga. Perfect for beginners.",
+      "description": "A calming class focused on introducing the basics of yoga. Perfect for beginners, it emphasizes fundamental postures, breathing techniques, and mindfulness. This class aims to improve flexibility, strength, and relaxation, providing a solid foundation for your yoga journey in a supportive environment.",
       "location": "Vancouver, BC",
       "cost": "$15 CAD",
       "instructor": {
@@ -31,7 +31,7 @@
       "id": "3",
       "title": "HIIT Blast",
       "type": "Drop-In",
-      "description": "High-Intensity Interval Training designed to push your limits and burn maximum calories.",
+      "description": "HIIT Blast is an intense, fast-paced workout designed to push your limits and maximize calorie burn. This high-intensity interval training class combines short bursts of explosive exercises with brief recovery periods, ensuring you get the most out of your workout in the least amount of time. Expect a mix of cardio, strength training, and plyometric movements that will challenge your endurance and build muscle. Suitable for all fitness levels, HIIT Blast will leave you feeling energized, accomplished, and ready to tackle your fitness goals.",
       "location": "Burnaby, BC",
       "cost": "$25 CAD",
       "instructor": {

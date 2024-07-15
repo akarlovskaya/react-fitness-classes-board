@@ -1,6 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { useState } from 'react';
+
 
 const ClassListing = ({workout}) => {
+  const [showFullDescription, setshowFullDescription] = useState(false);
+  let description = workout.description;
+
+// show short version of description
+  if (!showFullDescription) {
+    description = description.substring(0, 130) + '...';
+  }
+
   return (
     <li key={workout.id} className="bg-white rounded-xl shadow-md relative">
     <div className="p-4">
@@ -10,8 +20,12 @@ const ClassListing = ({workout}) => {
       </div>
 
       <div className="mb-5">
-        {workout.description}
+        {description}
       </div>
+
+      <button onClick={() => setshowFullDescription((prevState) => !prevState)} className='text-indigo-500 mb -5 hover:text-indigo-600'>
+        { showFullDescription ? 'Less' : 'More'}
+      </button>
 
       <h3 className="text-indigo-500 mb-2">{ workout.cost }</h3>
 
