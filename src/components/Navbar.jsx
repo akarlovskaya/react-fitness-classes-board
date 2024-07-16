@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import vanklasLogo from '../assets/images/vanklasLogo.png';
 
 const Navbar = () => {
@@ -11,27 +12,25 @@ const Navbar = () => {
             className="flex flex-1 items-center justify-center md:items-stretch md:justify-start"
           >
             {/* <!-- Logo --> */}
-            <a className="flex flex-shrink-0 items-center mr-4" href="/index.html">
+            <Link className="flex flex-shrink-0 items-center mr-4" to="/">
               <img
                 className="h-20 w-auto"
                 src={ vanklasLogo }
                 alt="vanklasLogo, Discover Fitness in Metro Vancover"
               />
               {/* <span className="hidden md:block text-white text-2xl font-bold ml-2">Discover Fitness in Metro Vancover</span> */}
-            </a>
+            </Link>
             <div className="md:ml-auto">
               <div className="flex space-x-2">
-                <a
-                  href="/index.html"
-                  className="text-white bg-black hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">Home</a>
-                <a
-                  href="/jobs.html"
-                  className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">Classes</a
-                >
-                <a
-                  href="/add-job.html"
-                  className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">Add Class</a
-                >
+                <Link
+                tof="/"
+                  className="text-white bg-black hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">Home</Link>
+                <Link
+                  to="/classes"
+                  className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">Classes</Link>
+                <Link
+                  to="/add-class"
+                  className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">Add Class</Link>
               </div>
             </div>
           </div>
@@ -42,4 +41,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar;

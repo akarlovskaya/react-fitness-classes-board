@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Card from './Card';
 
 const HomePageCards = () => {
@@ -11,24 +12,24 @@ const HomePageCards = () => {
             <p className="mt-2 mb-4">
               Find fitness classes near you
             </p>
-            <a
-              href="/jobs.html"
+            <Link
+              to="/classes"
               className="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
             >
               Browse Classes
-            </a>
+            </Link>
           </Card>
           <Card bg='bg-orange-100'>
             <h2 className="text-2xl font-bold">For Fitness Proffesionals</h2>
             <p className="mt-2 mb-4">
               List your classes to help others discover them
             </p>
-            <a
-              href="/add-job.html"
+            <Link
+              to="/add-class"
               className="inline-block bg-indigo-500 text-white rounded-lg px-4 py-2 hover:bg-indigo-600"
             >
               Add Class
-            </a>
+            </Link>
           </Card>
         </div>
       </div>
@@ -36,4 +37,4 @@ const HomePageCards = () => {
   )
 }
 
-export default HomePageCards
+export default HomePageCards;
