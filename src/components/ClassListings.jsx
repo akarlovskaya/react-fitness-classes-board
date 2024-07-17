@@ -9,7 +9,9 @@ const ClassListings = ( {isHome = false} ) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const urlAPI = isHome ? 'http://localhost:8000/classes?_limit=3' : 'http://localhost:8000/classes';
+    const urlAPI = isHome
+      ? '/api/classes?_limit=3' 
+      : '/api/classes';
 
     const fetchClasses = async() => {
       try {
