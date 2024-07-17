@@ -9,9 +9,11 @@ const ClassListings = ( {isHome = false} ) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const urlAPI = isHome ? 'http://localhost:8000/classes?_limit=3' : 'http://localhost:8000/classes';
+
     const fetchClasses = async() => {
       try {
-        const res = await fetch('http://localhost:8000/classes');
+        const res = await fetch(urlAPI);
         const data = await res.json();
         setClasses(data);
       } catch (error) {
