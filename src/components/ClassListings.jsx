@@ -1,9 +1,28 @@
 import React from 'react';
-import workouts from '../fitnessClasses.json';
+import { useState, useEffect } from 'react';
 import ClassListing from './ClassListing';
+import Spinner from './Spinner';
+
 
 const ClassListings = ( {isHome = false} ) => {
-  const classListings = isHome ? workouts.slice(0, 3) : workouts;
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchClasses = async() => {
+      try {
+        const res = await fetch('http://localhost:8000/classes');
+        const data = await res.json();
+        setClasses(data);
+      } catch (error) {
+        console.log('Error fetching data', error);
+      } finally {
+          setLoading(false);
+        }
+    };
+
+    fetchClasses();
+  }, []);
 
   return (
     <section className="bg-blue-50 px-4 py-10">
@@ -11,11 +30,15 @@ const ClassListings = ( {isHome = false} ) => {
         <h2 className="text-3xl font-bold text-indigo-500 mb-6 text-center">
           { isHome ? 'Recent Fitness Classes' : 'Browse All Fitness Classes'}
         </h2>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          { classListings.map((workout) => (
-            <ClassListing key={workout.id} workout={workout}/>
-          ))}
-        </ul>
+          { loading ? (
+            <Spinner loading={loading}/>
+          ) : (
+            <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {classes.map((workout) => (
+                <ClassListing key={workout.id} workout={workout}/>
+              ))}
+            </ul>
+          )}
       </div>
     </section>
   )
