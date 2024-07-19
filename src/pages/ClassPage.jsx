@@ -34,7 +34,7 @@ const ClassPage = () => {
                     <i
                     className="fa-solid fa-location-dot text-lg text-orange-700 mr-2"
                     ></i>
-                    <p className="text-orange-700"> { workout.location } </p>
+                    <p className="text-orange-700"> { workout.location.city } </p>
                 </div>
                 </div>
 

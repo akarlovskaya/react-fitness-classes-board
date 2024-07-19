@@ -1,144 +1,224 @@
 {
-"classes": [
+  "classes": [
     {
       "id": "1",
       "title": "Cardio Core Conditioning",
       "type": "Drop-In",
       "description": "Combine cardio training with strength based movements, with emphasis on core! Expect to use a variety of equipment for weight training movements.",
-      "location": "Coquitlam, BC",
+      "location": {
+        "place": "Gold Gym",
+        "city": "Coquitlam, BC",
+        "address": "1156 - 34 West street",
+        "zipcode": "V3C 2M2"
+      },
+      "time": "6pm",
+      "days": "Mon, Wed, Fri",
       "cost": "$20 CAD",
       "instructor": {
         "name": "Salma Peterson",
         "description": "Hi, I am a certified Group Fitness Instructor with over 5 years of leading group classes. Join my Cardio Core Conditioning.",
         "contactEmail": "contact@SalmaPeterson.com",
         "contactPhone": "555-555-5555"
-      }
+      },
+      "payment-options": "cash"
     },
     {
       "id": "2",
       "title": "Yoga for Beginners",
       "type": "Drop-In",
       "description": "A calming class focused on introducing the basics of yoga. Perfect for beginners, it emphasizes fundamental postures, breathing techniques, and mindfulness. This class aims to improve flexibility, strength, and relaxation, providing a solid foundation for your yoga journey in a supportive environment.",
-      "location": "Vancouver, BC",
+      "location": {
+        "place": "Yoga Studio",
+        "city": "Vancouver, BC",
+        "address": "123 Yoga Lane",
+        "zipcode": "V6B 1A1"
+      },
+      "time": "6pm",
+      "days": "Tue, Thu",
       "cost": "$15 CAD",
       "instructor": {
         "name": "Emma Jones",
         "description": "Certified yoga instructor with a passion for helping newcomers find their zen.",
         "contactEmail": "emma.jones@yogastudio.com",
         "contactPhone": "555-123-4567"
-      }
+      },
+      "payment-options": "e-transfer"
     },
     {
       "id": "3",
       "title": "HIIT Blast",
       "type": "Drop-In",
       "description": "HIIT Blast is an intense, fast-paced workout designed to push your limits and maximize calorie burn. This high-intensity interval training class combines short bursts of explosive exercises with brief recovery periods, ensuring you get the most out of your workout in the least amount of time. Expect a mix of cardio, strength training, and plyometric movements that will challenge your endurance and build muscle. Suitable for all fitness levels, HIIT Blast will leave you feeling energized, accomplished, and ready to tackle your fitness goals.",
-      "location": "Burnaby, BC",
+      "location": {
+        "place": "HIIT Gym",
+        "city": "Burnaby, BC",
+        "address": "789 HIIT Ave",
+        "zipcode": "V5A 2A2"
+      },
+      "time": "7pm",
+      "days": "Mon, Wed, Fri",
       "cost": "$25 CAD",
       "instructor": {
         "name": "John Smith",
         "description": "Experienced personal trainer specializing in high-intensity workouts.",
         "contactEmail": "john.smith@hiitgym.com",
         "contactPhone": "555-765-4321"
-      }
+      },
+      "payment-options": "e-transfer"
     },
     {
       "id": "4",
       "title": "Dance Fusion",
       "type": "Series",
       "description": "A fun and energetic dance class that combines various styles like hip-hop, salsa, and jazz.",
-      "location": "Richmond, BC",
+      "location": {
+        "place": "Dance Fusion Studio",
+        "city": "Richmond, BC",
+        "address": "456 Dance Blvd",
+        "zipcode": "V6X 3A8"
+      },
+      "time": "6pm",
+      "days": "Tue, Thu",
       "cost": "$130 CAD for 10 sessions",
       "instructor": {
         "name": "Maya Li",
         "description": "Professional dancer and choreographer with over 10 years of experience.",
         "contactEmail": "maya.li@dancefusion.com",
         "contactPhone": "555-987-6543"
-      }
+      },
+      "payment-options": "cash"
     },
     {
       "id": "5",
       "title": "Pilates Mat",
       "type": "Series",
       "description": "Strengthen and lengthen your muscles with this mat-based Pilates class.",
-      "location": "Surrey, BC",
+      "location": {
+        "place": "Pilates Studio",
+        "city": "Surrey, BC",
+        "address": "321 Pilates Dr",
+        "zipcode": "V3T 1B8"
+      },
+      "time": "7pm",
+      "days": "Mon, Wed",
       "cost": "$180 CAD for 10 sessions",
       "instructor": {
         "name": "Olivia Martin",
         "description": "Certified Pilates instructor focused on core strength and flexibility.",
         "contactEmail": "olivia.martin@pilatesstudio.com",
         "contactPhone": "555-321-8765"
-      }
+      },
+      "payment-options": "e-transfer"
     },
     {
       "id": "6",
       "title": "Zumba Fitness",
       "type": "Drop-In",
       "description": "Dance your way to fitness with this high-energy Zumba class.",
-      "location": "Langley, BC",
+      "location": {
+        "place": "Zumba Fit Studio",
+        "city": "Langley, BC",
+        "address": "654 Zumba St",
+        "zipcode": "V3A 4P4"
+      },
+      "time": "8pm",
+      "days": "Mon, Thu",
       "cost": "$20 CAD",
       "instructor": {
         "name": "Carlos Gomez",
         "description": "Licensed Zumba instructor with a passion for dance and fitness.",
         "contactEmail": "carlos.gomez@zumbafit.com",
         "contactPhone": "555-654-3210"
-      }
+      },
+      "payment-options": "e-transfer"
     },
     {
       "id": "7",
       "title": "Strength and Conditioning",
       "type": "Series",
       "description": "Build strength and endurance with this comprehensive conditioning class.",
-      "location": "North Vancouver, BC",
+      "location": {
+        "place": "Strength Coach Gym",
+        "city": "North Vancouver, BC",
+        "address": "987 Strength Rd",
+        "zipcode": "V7P 2L8"
+      },
+      "time": "6pm",
+      "days": "Tue, Thu",
       "cost": "$200 CAD for 10 sessions",
       "instructor": {
         "name": "Laura Thompson",
         "description": "Certified strength coach dedicated to helping you reach your fitness goals.",
         "contactEmail": "laura.thompson@strengthcoach.com",
         "contactPhone": "555-111-2222"
-      }
+      },
+      "payment-options": "e-transfer"
     },
     {
       "id": "8",
       "title": "Mindfulness Meditation",
       "type": "Series",
       "description": "Learn mindfulness techniques to reduce stress and increase well-being.",
-      "location": "West Vancouver, BC",
+      "location": {
+        "place": "Mindfulness Center",
+        "city": "West Vancouver, BC",
+        "address": "123 Mindfulness Ave",
+        "zipcode": "V7V 3K4"
+      },
+      "time": "8pm",
+      "days": "Tue, Fri",
       "cost": "$120 CAD for 10 sessions",
       "instructor": {
         "name": "David Lee",
         "description": "Mindfulness coach with years of experience in meditation practices.",
         "contactEmail": "david.lee@mindfulnesscoach.com",
         "contactPhone": "555-333-4444"
-      }
+      },
+      "payment-options": "e-transfer"
     },
     {
       "id": "9",
       "title": "Spin Class",
       "type": "Drop-In",
       "description": "An intense indoor cycling workout designed to improve cardiovascular health.",
-      "location": "New Westminster, BC",
+      "location": {
+        "place": "Spin Studio",
+        "city": "New Westminster, BC",
+        "address": "345 Spin St",
+        "zipcode": "V3L 5A2"
+      },
+      "time": "6pm",
+      "days": "Mon, Thu",
       "cost": "$250 CAD for 10 sessions",
       "instructor": {
         "name": "Sophie Brown",
         "description": "Spin instructor with a love for high-energy, heart-pumping workouts.",
         "contactEmail": "sophie.brown@spinstudio.com",
         "contactPhone": "555-444-5555"
-      }
+      },
+      "payment-options": "e-transfer"
     },
     {
       "id": "10",
       "title": "Aqua Aerobics",
       "type": "Drop-In",
       "description": "Low-impact water exercises that are easy on the joints and great for all fitness levels.",
-      "location": "Delta, BC",
+      "location": {
+        "place": "Aqua Health Pool",
+        "city": "Delta, BC",
+        "address": "567 Aqua Rd",
+        "zipcode": "V4K 3A1"
+      },
+      "time": "7pm",
+      "days": "Tue, Fri",
       "cost": "$20 CAD",
       "instructor": {
         "name": "Nancy Wilson",
         "description": "Certified aqua aerobics instructor with a background in aquatic therapy.",
         "contactEmail": "nancy.wilson@aquahealth.com",
         "contactPhone": "555-555-6666"
-      }
+      },
+      "payment-options": "cash"
     }
   ]
 }
