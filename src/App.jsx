@@ -4,6 +4,7 @@ import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import ClassesPage from './pages/ClassesPage';
 import ClassPage, { workoutLoader} from './pages/ClassPage';
+import AddClassPage from './pages/AddClassPage';
 import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter(
@@ -12,6 +13,7 @@ const router = createBrowserRouter(
       <Route index element={< HomePage />} />
       <Route path='/classes' element={< ClassesPage />} />
       <Route path='/classes/:id' element={< ClassPage />} loader={workoutLoader}/>
+      <Route path='/add-class' element={< AddClassPage />} />
       <Route path='*' element={< NotFound />} />
     </Route>
     
