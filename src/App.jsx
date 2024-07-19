@@ -3,7 +3,7 @@ import { Route, createBrowserRouter,createRoutesFromElements,RouterProvider } fr
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import ClassesPage from './pages/ClassesPage';
-import ClassPage from './pages/ClassPage';
+import ClassPage, { workoutLoader} from './pages/ClassPage';
 import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter(
@@ -11,7 +11,7 @@ const router = createBrowserRouter(
     <Route path='/' element={< MainLayout />}>
       <Route index element={< HomePage />} />
       <Route path='/classes' element={< ClassesPage />} />
-      <Route path='/classes/:id' element={< ClassPage />} />
+      <Route path='/classes/:id' element={< ClassPage />} loader={workoutLoader}/>
       <Route path='*' element={< NotFound />} />
     </Route>
     
