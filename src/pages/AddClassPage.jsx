@@ -1,13 +1,14 @@
 import React from 'react';
 import { useState } from 'react'; 
+import Checkbox from '../components/Checkbox';
 
 const AddClassPage = () => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
     const [description, setDescription] = useState('');
     const [time, setTime] = useState('');
-    const [days, setDays] = useState('');
     const [fee, setFee] = useState(null);
+    const [daysList, setDaysList] = useState([]);
     const [place, setPlace] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -18,6 +19,53 @@ const AddClassPage = () => {
     const [contactEmail, setContactEmail] = useState('');
     const [contactPhone, setContactPhone] = useState('');
     const [paymentOptions, setPaymentOptions] = useState('');
+    
+
+    const DAYS = [
+        {
+          id: "monday",
+          label: "Monday"
+        },
+        {
+          id: "tuesday",
+          label: "Tuesday"
+        },
+        {
+          id: "wednesday",
+          label: "Wednesday"
+        },
+        {
+          id: "thursday",
+          label: "Thursday"
+        },
+        {
+          id: "friday",
+          label: "Friday"
+        },
+        {
+          id: "saturday",
+          label: "Saturday"
+        },
+        {
+            id: "sunday",
+            label: "Sunday"
+        }
+      ];
+
+    const handleSelect = (event) => {
+        const value = event.target.value;
+        const isChecked = event.target.checked;
+
+        if (isChecked) {
+            // Add checked day to the daysList
+            setDaysList([...daysList, value]);
+        } else {
+            // Remove unchecked item from the daysList
+            const filteredList = daysList.filter((item) => item !==value);
+            setDaysList(filteredList);
+        }
+
+    };    
 
   return (
     <section className="bg-indigo-50">
@@ -90,64 +138,21 @@ const AddClassPage = () => {
             </div>
 
             <fieldset>
-            <legend class="block text-sm font-semibold leading-6 text-gray-900 mb-2">Days of the Week</legend>
-            <div class="mb-4">
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="monday" name="monday" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="monday" class="font-medium text-gray-900">Monday</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="tuesday" name="tuesday" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="tuesday" class="font-medium text-gray-900">Tuesday</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="wednesday" name="wednesday" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="wednesday" class="font-medium text-gray-900">Wednesday</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="thursday" name="thursday" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="thursday" class="font-medium text-gray-900">Thursday</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="friday" name="friday" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="friday" class="font-medium text-gray-900">Friday</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="saturday" name="saturday" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="saturday" class="font-medium text-gray-900">Saturday</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="sunday" name="sunday" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="sunday" class="font-medium text-gray-900">Sunday</label>
-                </div>
-              </div>
+            <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Days of the Week</legend>
+            <div className="mb-4">
+               { 
+                DAYS.map(day => 
+                    <Checkbox 
+                        key={day.id}
+                        type="checkbox"
+                        value={day.id} 
+                        id={day.id} 
+                        name={day.id}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        handleSelect={handleSelect}>{day.label}
+                    </Checkbox>
+                   )
+                } 
             </div>
           </fieldset>
 
@@ -300,8 +305,8 @@ const AddClassPage = () => {
             </fieldset>
 
             <fieldset>
-            <legend class="block text-sm font-semibold leading-6 text-gray-900 mb-2">Payment Options</legend>
-            <div class="mb-4">
+            <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Payment Options</legend>
+            {/* <div class="mb-4">
               <div class="relative flex gap-x-3">
                 <div class="flex h-6 items-center">
                   <input id="etransfer" name="etransfer" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
@@ -334,7 +339,7 @@ const AddClassPage = () => {
                   <label htmlFor="cheque" class="font-medium text-gray-900">Cheque</label>
                 </div>
               </div>
-              </div>
+            </div> */}
           </fieldset>
 
             <div>
