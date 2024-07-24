@@ -3,11 +3,11 @@ import { useState } from 'react';
 import Checkbox from '../components/Checkbox';
 
 const AddClassPage = () => {
+    const [type, setType] = useState('Drop-In');
     const [title, setTitle] = useState('');
-    const [type, setType] = useState('');
     const [description, setDescription] = useState('');
     const [time, setTime] = useState('');
-    const [fee, setFee] = useState(null);
+    const [fee, setFee] = useState('');
     const [daysList, setDaysList] = useState([]);
     const [place, setPlace] = useState('');
     const [address, setAddress] = useState('');
@@ -110,12 +110,41 @@ const AddClassPage = () => {
             setPaymentOptions(filteredList);
         }
     };
+
+    const submitForm = (e) => {
+        e.preventDefault();
+
+        const newWorkout = {
+            type,
+            title,
+            description,
+            time,
+            cost: fee,
+            days: daysList,
+            location: {
+              place,
+              address,
+              city,
+              region,
+              zipcode
+            },            
+            instructor: {
+              name: instructorName,
+              description: instructorDescription,
+              contactEmail,
+              contactPhone
+            },
+            payment_options: paymentOptions
+        }
+
+        console.log(newWorkout);
+    };
     
   return (
     <section className="bg-indigo-50">
         <div className="container m-auto max-w-2xl py-24">
         <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-        <form>
+        <form onSubmit={submitForm}>
             <h1 className="text-3xl text-center font-semibold mb-6">Add Class</h1>
 
             <fieldset>
@@ -211,7 +240,7 @@ const AddClassPage = () => {
                         type="number"
                         id="fee"
                         name="fee"
-                        className="border rounded w-full py-2 px-3"
+                        className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="Price for One Class or Session"
                         required
                         value={fee}

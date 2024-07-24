@@ -7,7 +7,8 @@
       "description": "Combine cardio training with strength based movements, with emphasis on core! Expect to use a variety of equipment for weight training movements.",
       "location": {
         "place": "Gold Gym",
-        "city": "Coquitlam, BC",
+        "city": "Coquitlam",
+        "region": "BC",
         "address": "1156 - 34 West street",
         "zipcode": "V3C 2M2"
       },
@@ -20,7 +21,7 @@
         "contactEmail": "contact@SalmaPeterson.com",
         "contactPhone": "555-555-5555"
       },
-      "payment-options": "cash"
+      "payment_options": "cash"
     },
     {
       "id": "2",
@@ -29,7 +30,8 @@
       "description": "A calming class focused on introducing the basics of yoga. Perfect for beginners, it emphasizes fundamental postures, breathing techniques, and mindfulness. This class aims to improve flexibility, strength, and relaxation, providing a solid foundation for your yoga journey in a supportive environment.",
       "location": {
         "place": "Yoga Studio",
-        "city": "Vancouver, BC",
+        "city": "Vancouver",
+        "region": "BC",
         "address": "123 Yoga Lane",
         "zipcode": "V6B 1A1"
       },
@@ -42,7 +44,7 @@
         "contactEmail": "emma.jones@yogastudio.com",
         "contactPhone": "555-123-4567"
       },
-      "payment-options": "e-transfer"
+      "payment_options": "e-transfer"
     },
     {
       "id": "3",
@@ -51,7 +53,8 @@
       "description": "HIIT Blast is an intense, fast-paced workout designed to push your limits and maximize calorie burn. This high-intensity interval training class combines short bursts of explosive exercises with brief recovery periods, ensuring you get the most out of your workout in the least amount of time. Expect a mix of cardio, strength training, and plyometric movements that will challenge your endurance and build muscle. Suitable for all fitness levels, HIIT Blast will leave you feeling energized, accomplished, and ready to tackle your fitness goals.",
       "location": {
         "place": "HIIT Gym",
-        "city": "Burnaby, BC",
+        "city": "Burnaby",
+        "region": "BC",
         "address": "789 HIIT Ave",
         "zipcode": "V5A 2A2"
       },
@@ -64,7 +67,7 @@
         "contactEmail": "john.smith@hiitgym.com",
         "contactPhone": "555-765-4321"
       },
-      "payment-options": "e-transfer"
+      "payment_options": "e-transfer"
     },
     {
       "id": "4",
@@ -73,7 +76,8 @@
       "description": "A fun and energetic dance class that combines various styles like hip-hop, salsa, and jazz.",
       "location": {
         "place": "Dance Fusion Studio",
-        "city": "Richmond, BC",
+        "city": "Richmond",
+        "region": "BC",
         "address": "456 Dance Blvd",
         "zipcode": "V6X 3A8"
       },
@@ -86,7 +90,7 @@
         "contactEmail": "maya.li@dancefusion.com",
         "contactPhone": "555-987-6543"
       },
-      "payment-options": "cash"
+      "payment_options": "cash"
     },
     {
       "id": "5",
@@ -95,7 +99,8 @@
       "description": "Strengthen and lengthen your muscles with this mat-based Pilates class.",
       "location": {
         "place": "Pilates Studio",
-        "city": "Surrey, BC",
+        "city": "Surrey",
+        "region": "BC",
         "address": "321 Pilates Dr",
         "zipcode": "V3T 1B8"
       },
@@ -108,7 +113,7 @@
         "contactEmail": "olivia.martin@pilatesstudio.com",
         "contactPhone": "555-321-8765"
       },
-      "payment-options": "e-transfer"
+      "payment_options": "e-transfer"
     },
     {
       "id": "6",
@@ -117,7 +122,8 @@
       "description": "Dance your way to fitness with this high-energy Zumba class.",
       "location": {
         "place": "Zumba Fit Studio",
-        "city": "Langley, BC",
+        "city": "Langley",
+        "region": "BC",
         "address": "654 Zumba St",
         "zipcode": "V3A 4P4"
       },
@@ -130,7 +136,7 @@
         "contactEmail": "carlos.gomez@zumbafit.com",
         "contactPhone": "555-654-3210"
       },
-      "payment-options": "e-transfer"
+      "payment_options": "e-transfer"
     },
     {
       "id": "7",
@@ -139,7 +145,8 @@
       "description": "Build strength and endurance with this comprehensive conditioning class.",
       "location": {
         "place": "Strength Coach Gym",
-        "city": "North Vancouver, BC",
+        "city": "North Vancouver",
+        "region": "BC",
         "address": "987 Strength Rd",
         "zipcode": "V7P 2L8"
       },
@@ -152,7 +159,7 @@
         "contactEmail": "laura.thompson@strengthcoach.com",
         "contactPhone": "555-111-2222"
       },
-      "payment-options": "e-transfer"
+      "payment_options": "e-transfer"
     },
     {
       "id": "8",
@@ -161,7 +168,8 @@
       "description": "Learn mindfulness techniques to reduce stress and increase well-being.",
       "location": {
         "place": "Mindfulness Center",
-        "city": "West Vancouver, BC",
+        "city": "West Vancouver",
+        "region": "BC",
         "address": "123 Mindfulness Ave",
         "zipcode": "V7V 3K4"
       },
@@ -174,7 +182,7 @@
         "contactEmail": "david.lee@mindfulnesscoach.com",
         "contactPhone": "555-333-4444"
       },
-      "payment-options": "e-transfer"
+      "payment_options": "e-transfer"
     },
     {
       "id": "9",
@@ -183,7 +191,8 @@
       "description": "An intense indoor cycling workout designed to improve cardiovascular health.",
       "location": {
         "place": "Spin Studio",
-        "city": "New Westminster, BC",
+        "city": "New Westminster",
+        "region": "BC",
         "address": "345 Spin St",
         "zipcode": "V3L 5A2"
       },
@@ -196,7 +205,7 @@
         "contactEmail": "sophie.brown@spinstudio.com",
         "contactPhone": "555-444-5555"
       },
-      "payment-options": "e-transfer"
+      "payment_options": "e-transfer"
     },
     {
       "id": "10",
@@ -205,7 +214,8 @@
       "description": "Low-impact water exercises that are easy on the joints and great for all fitness levels.",
       "location": {
         "place": "Aqua Health Pool",
-        "city": "Delta, BC",
+        "city": "Delta",
+        "region": "BC",
         "address": "567 Aqua Rd",
         "zipcode": "V4K 3A1"
       },
@@ -218,7 +228,7 @@
         "contactEmail": "nancy.wilson@aquahealth.com",
         "contactPhone": "555-555-6666"
       },
-      "payment-options": "cash"
+      "payment_options": "cash"
     }
   ]
 }
