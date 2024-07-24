@@ -18,41 +18,71 @@ const AddClassPage = () => {
     const [instructorDescription, setInstructorDescription] = useState('');
     const [contactEmail, setContactEmail] = useState('');
     const [contactPhone, setContactPhone] = useState('');
-    const [paymentOptions, setPaymentOptions] = useState('');
+    const [paymentOptions, setPaymentOptions] = useState([]);
     
 
     const DAYS = [
         {
-          id: "monday",
+          id: "1",
+          name: "monday",
           label: "Monday"
         },
         {
-          id: "tuesday",
+          id: "2",
+          name: "tuesday",
           label: "Tuesday"
         },
         {
-          id: "wednesday",
+          id: "3",
+          name: "wednesday",
           label: "Wednesday"
         },
         {
-          id: "thursday",
+          id: "4",
+          name: "thursday",
           label: "Thursday"
         },
         {
-          id: "friday",
+          id: "5",
+          name: "friday",
           label: "Friday"
         },
         {
-          id: "saturday",
+          id: "6",
+          name: "saturday",
           label: "Saturday"
         },
         {
-            id: "sunday",
-            label: "Sunday"
+           id: "7",
+           name: "sunday",
+           label: "Sunday"
         }
       ];
 
-    const handleSelect = (event) => {
+    const PAYMENT_OPTIONS = [
+        {
+            id: "1",
+            type: "e-trandfer",
+            label: "E-trandfer"
+        },
+        {
+            id: "2",
+            type: "cash",
+            label: "Cash"
+        },
+        {
+            id: "3",
+            type: "visa-mastercard",
+            label: "Visa/Mastercard"
+        },
+        {
+            id: "4",
+            type: "cheque",
+            label: "Cheque"
+        }
+      ];
+
+    const handleSelectDay = (event) => {
         const value = event.target.value;
         const isChecked = event.target.checked;
 
@@ -65,8 +95,22 @@ const AddClassPage = () => {
             setDaysList(filteredList);
         }
 
-    };    
+    };
 
+    const handleSelectPayment = (event) => {
+        const value = event.target.value;
+        const isChecked = event.target.checked;
+
+        if (isChecked) {
+            // Add checked option to the PaymentOptions list
+            setPaymentOptions([...paymentOptions, value]);
+        } else {
+            // Remove unchecked item from the PaymentOptions list
+            const filteredList = paymentOptions.filter((item) => item !==value);
+            setPaymentOptions(filteredList);
+        }
+    };
+    
   return (
     <section className="bg-indigo-50">
         <div className="container m-auto max-w-2xl py-24">
@@ -76,103 +120,108 @@ const AddClassPage = () => {
 
             <fieldset>
                 <legend className="font-semibold uppercase mb-2 mt-8">Class Information</legend>
+                {/* Type of class */}
                 <div className="mb-4">
-                <label htmlFor="type" className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Type</label>
-                <select
-                    id="type"
-                    name="type"
-                    className="border rounded w-full py-2 px-3"
-                    required
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                    >
-                    <option value="Drop-In">Drop-In</option>
-                    <option value="Session">Session</option>
-                </select>
+                    <label htmlFor="type" className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Type</label>
+                    <select
+                        id="type"
+                        name="type"
+                        className="border rounded w-full py-2 px-3"
+                        required
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                        >
+                        <option value="Drop-In">Drop-In</option>
+                        <option value="Session">Session</option>
+                    </select>
                 </div>
 
-            <div className="mb-4">
-            <label 
-                htmlFor="title" 
-                className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Name</label>
-            <input
-                type="text"
-                id="title"
-                name="title"
-                className="border rounded w-full py-2 px-3 mb-2"
-                placeholder="E.g. Cardio Dance"
-                required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            </div>
+                {/* Name of class*/}
+                <div className="mb-4">
+                    <label 
+                    htmlFor="title" 
+                    className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Name</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        className="border rounded w-full py-2 px-3 mb-2"
+                        placeholder="E.g. Cardio Dance"
+                        required
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                </div>
+                {/* Description */}
+                <div className="mb-4">
+                    <label
+                        htmlFor="description"
+                        className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Description</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        className="border rounded w-full py-2 px-3"
+                        rows="5"
+                        placeholder="Tell what to expect from your classes - e.g. goal of the class, duration, what participants should bring and wear, if any eguipment will be used in your class. Note: Make your first sentence as informative and catchy as possible, as only the first 130 characters will be visible on the Home Page. The full description will be visible on the Class Details page."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}>
+                        </textarea>
+                </div>
+                {/* Time */}
+                <div className="mb-4">
+                    <label 
+                        htmlFor="time" 
+                        className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Time</label>
+                    <input
+                        type="time"
+                        id="time"
+                        name="time"
+                        className="border rounded w-full py-2 px-3 mb-2"
+                        required
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                    />
+                </div>
 
-            <div className="mb-4">
-            <label
-                htmlFor="description"
-                className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Description</label>
-            <textarea
-                id="description"
-                name="description"
-                className="border rounded w-full py-2 px-3"
-                rows="5"
-                placeholder="Tell what to expect from your classes - e.g. goal of the class, duration, what participants should bring and wear, if any eguipment will be used in your class. Note: Make your first sentence as informative and catchy as possible, as only the first 130 characters will be visible on the Home Page. The full description will be visible on the Class Details page."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}>
-                </textarea>
-            </div>
+                {/* Checkbox DAY of WEEK */}
+                <fieldset>
+                    <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Days of the Week</legend>
+                    <div className="mb-4">
+                    { 
+                        DAYS.map(day => 
+                            <Checkbox 
+                                key={day.id}
+                                type="checkbox"
+                                value={day.name} 
+                                id={day.id} 
+                                name={day.name}
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                handleSelect={handleSelectDay}>{day.label}
+                            </Checkbox>
+                        )
+                        } 
+                    </div>
+                </fieldset>
+                {/* Fee */}
+                <div className="mb-4">
+                    <label
+                        htmlFor="fee"
+                        className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Fee</label>
+                    <input
+                        type="number"
+                        id="fee"
+                        name="fee"
+                        className="border rounded w-full py-2 px-3"
+                        placeholder="Price for One Class or Session"
+                        required
+                        value={fee}
+                        onChange={(e) => setFee(e.target.value)}
+                    />
+                </div>
+            </fieldset> 
+            {/* END of CLASS INFORMATION */}
 
-            <div className="mb-4">
-            <label 
-                htmlFor="time" 
-                className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Time</label>
-            <input
-                type="time"
-                id="time"
-                name="time"
-                className="border rounded w-full py-2 px-3 mb-2"
-                required
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-            />
-            </div>
-
-            <fieldset>
-            <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Days of the Week</legend>
-            <div className="mb-4">
-               { 
-                DAYS.map(day => 
-                    <Checkbox 
-                        key={day.id}
-                        type="checkbox"
-                        value={day.id} 
-                        id={day.id} 
-                        name={day.id}
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        handleSelect={handleSelect}>{day.label}
-                    </Checkbox>
-                   )
-                } 
-            </div>
-          </fieldset>
-
-            <div className="mb-4">
-            <label
-                htmlFor="fee"
-                className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Fee</label>
-            <input
-                type="number"
-                id="fee"
-                name="fee"
-                className="border rounded w-full py-2 px-3"
-                placeholder="Price for One Class or Session"
-                required
-                value={fee}
-                onChange={(e) => setFee(e.target.value)}
-            />
-            </div>
-            </fieldset>
-
+            {/* LOCATION */}
             <fieldset>
             <legend className="font-semibold uppercase mb-2 mt-10">Location</legend>
                 <div className='mb-4'>
@@ -242,104 +291,87 @@ const AddClassPage = () => {
                     />
                 </div>
             </fieldset>
+            {/* END of LOCATION */}
 
+            {/* INSTRUCTOR INFORMATION */}
             <fieldset>
                 <legend className="font-semibold uppercase mb-2 mt-8">Instructor Info</legend>
                 <div className="mb-4">
                 <label htmlFor="instructorName" className="block text-gray-700 font-bold mb-2">Name</label>
-                <input
-                    type="text"
-                    id="instructorName"
-                    name="instructorName"
-                    className="border rounded w-full py-2 px-3"
-                    value={instructorName}
-                    onChange={(e) => setInstructorName(e.target.value)} 
-                />
+                    <input
+                        type="text"
+                        id="instructorName"
+                        name="instructorName"
+                        className="border rounded w-full py-2 px-3"
+                        value={instructorName}
+                        onChange={(e) => setInstructorName(e.target.value)} 
+                    />
                 </div>
-
+                {/* About */}
                 <div className="mb-4">
                 <label
                     htmlFor="instructorDescription"
                     className="block text-gray-700 font-bold mb-2">About You</label>
-                <textarea
-                    id="instructorDescription"
-                    name="instructorDescription"
-                    className="border rounded w-full py-2 px-3"
-                    rows="4"
-                    placeholder="Tell a bit about yourself - experience, what moves you?"
-                    value={instructorDescription}
-                    onChange={(e) => setInstructorDescription(e.target.value)} 
-                ></textarea>
+                    <textarea
+                        id="instructorDescription"
+                        name="instructorDescription"
+                        className="border rounded w-full py-2 px-3"
+                        rows="4"
+                        placeholder="Tell a bit about yourself - experience, what moves you?"
+                        value={instructorDescription}
+                        onChange={(e) => setInstructorDescription(e.target.value)} 
+                    ></textarea>
                 </div>
-
+                {/* Contact Email */}
                 <div className="mb-4">
-                <label
-                    htmlFor="contactEmail"
-                    className="block text-gray-700 font-bold mb-2">Contact Email</label>
-                <input
-                    type="email"
-                    id="contactEmail"
-                    name="contactEmail"
-                    className="border rounded w-full py-2 px-3"
-                    placeholder="You email address"
-                    required
-                    value={contactEmail}
-                    onChange={(e) => setContactEmail(e.target.value)} 
-                />
+                    <label
+                        htmlFor="contactEmail"
+                        className="block text-gray-700 font-bold mb-2">Contact Email</label>
+                    <input
+                        type="email"
+                        id="contactEmail"
+                        name="contactEmail"
+                        className="border rounded w-full py-2 px-3"
+                        placeholder="You email address"
+                        required
+                        value={contactEmail}
+                        onChange={(e) => setContactEmail(e.target.value)} 
+                    />
                 </div>
-
+                {/* Contact Phone */}
                 <div className="mb-4">
-                <label
+                    <label
                     htmlFor="contactPhone"
                     className="block text-gray-700 font-bold mb-2">Contact Phone</label>
-                <input
-                    type="tel"
-                    id="contactPhone"
-                    name="contactPhone"
-                    className="border rounded w-full py-2 px-3"
-                    placeholder="Add phone number. Optional"
-                    value={contactPhone}
-                    onChange={(e) => setContactPhone(e.target.value)} 
-                />
+                    <input
+                        type="tel"
+                        id="contactPhone"
+                        name="contactPhone"
+                        className="border rounded w-full py-2 px-3"
+                        placeholder="Add phone number. Optional"
+                        value={contactPhone}
+                        onChange={(e) => setContactPhone(e.target.value)} 
+                    />
                 </div>
             </fieldset>
-
+            {/* PAYMENT OPRIONS */}
             <fieldset>
-            <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Payment Options</legend>
-            {/* <div class="mb-4">
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="etransfer" name="etransfer" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="etransfer" class="font-medium text-gray-900">E-transfer</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="cash" name="cash" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="cash" class="font-medium text-gray-900">Cash</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="visa" name="visa" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="visa" class="font-medium text-gray-900">Visa/Mastercard</label>
-                </div>
-              </div>
-              <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                  <input id="cheque" name="cheque" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                </div>
-                <div class="text-sm leading-6">
-                  <label htmlFor="cheque" class="font-medium text-gray-900">Cheque</label>
-                </div>
-              </div>
-            </div> */}
+            <legend className="font-semibold uppercase mb-2 mt-8">Payment Options</legend>
+            <div className="mb-4">
+               { 
+                PAYMENT_OPTIONS.map(payment => 
+                    <Checkbox 
+                        key={payment.id}
+                        type="checkbox"
+                        value={payment.type} 
+                        id={payment.id} 
+                        name={payment.type}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        handleSelect={handleSelectPayment}>{payment.label}
+                    </Checkbox>
+                   )
+                } 
+            </div>
           </fieldset>
 
             <div>
