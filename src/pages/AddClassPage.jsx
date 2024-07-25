@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react'; 
 import Checkbox from '../components/Checkbox';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const AddClassPage = ({addClassSubmit}) => {
     const [type, setType] = useState('Drop-In');
@@ -151,6 +152,9 @@ const AddClassPage = ({addClassSubmit}) => {
         }
 
         addClassSubmit(newWorkout);
+
+        // show confirmation
+        toast.success('Class listing created successfully!');
         // redirect to Class page
         navigate('/classes');
     };

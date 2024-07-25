@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ClassPage = ({deleteWorkout}) => {
     // const {id} = useParams();
@@ -12,8 +13,10 @@ const ClassPage = ({deleteWorkout}) => {
         const confirm = window.confirm("Are you sure you want to delete this class listing?");
 
         if (!confirm) return;
-        
+
         deleteWorkout(workoutId);
+
+        toast.success('Class listing deleted successfully!');
 
         navigate('/classes');
     };
