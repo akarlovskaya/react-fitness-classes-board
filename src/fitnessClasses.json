@@ -231,41 +231,12 @@
       "payment_options": "cash"
     },
     {
-      "id": "59c7",
-      "type": "Drop-In",
-      "title": "Cardio Fit Test",
-      "description": "Test Desc",
-      "time": "16:31",
-      "cost": "20",
-      "days": [
-        "1",
-        "2"
-      ],
-      "location": {
-        "place": "Awesome Gym ",
-        "address": "123 Kensal Place",
-        "city": "Coquitlam",
-        "region": "BC",
-        "zipcode": "V3B0G3"
-      },
-      "instructor": {
-        "name": "Anna",
-        "description": "about me",
-        "contactEmail": "naturalfi@gmail.com",
-        "contactPhone": "123123123"
-      },
-      "payment_options": [
-        "1",
-        "2"
-      ]
-    },
-    {
-      "id": "78a8",
-      "type": "Drop-In",
-      "title": "cardio",
-      "description": "aaaaaaa",
-      "time": "15:10",
-      "cost": "20",
+      "id": "0bc7",
+      "type": "Session",
+      "title": "Pilates Test",
+      "description": "pilates desc",
+      "time": "14:46",
+      "cost": "120",
       "days": [
         "monday",
         "wednesday",
@@ -281,13 +252,13 @@
       "instructor": {
         "name": "Anna",
         "description": "about",
-        "contactEmail": "natural@gmail.com",
-        "contactPhone": "123123"
+        "contactEmail": "naturc@gmail.com",
+        "contactPhone": "12333333"
       },
       "payment_options": [
-        "etransfer",
         "cash",
-        "visaMastercard"
+        "etransfer",
+        "cheque"
       ]
     }
   ]

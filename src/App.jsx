@@ -20,13 +20,21 @@ const App = () => {
       console.log('newWorkout: ', newWorkout);
       return;
   };
+
+  // Delete workout
+  const deleteWorkout = async (id) => {
+    const res = await fetch(`/api/classes/${id}`, {
+      method: 'DELETE',
+    });
+    return;
+  }
   
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={< MainLayout />}>
         <Route index element={< HomePage />} />
         <Route path='/classes' element={< ClassesPage />} />
-        <Route path='/classes/:id' element={< ClassPage />} loader={workoutLoader}/>
+        <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/>
         <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
         <Route path='*' element={< NotFound />} />
       </Route>
