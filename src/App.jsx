@@ -7,20 +7,32 @@ import ClassPage, { workoutLoader} from './pages/ClassPage';
 import AddClassPage from './pages/AddClassPage';
 import NotFound from './pages/NotFound';
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={< MainLayout />}>
-      <Route index element={< HomePage />} />
-      <Route path='/classes' element={< ClassesPage />} />
-      <Route path='/classes/:id' element={< ClassPage />} loader={workoutLoader}/>
-      <Route path='/add-class' element={< AddClassPage />} />
-      <Route path='*' element={< NotFound />} />
-    </Route>
-    
-    ) 
-);
-
 const App = () => {
+  // Add new workout
+  const addWorkout = async (newWorkout) => {
+      const res = await fetch('/api/classes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newWorkout),
+      });
+      console.log('newWorkout: ', newWorkout);
+      return;
+  };
+  
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={< MainLayout />}>
+        <Route index element={< HomePage />} />
+        <Route path='/classes' element={< ClassesPage />} />
+        <Route path='/classes/:id' element={< ClassPage />} loader={workoutLoader}/>
+        <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
+        <Route path='*' element={< NotFound />} />
+      </Route>
+      
+      ) 
+  );
   return <RouterProvider router={router} />
 }
 

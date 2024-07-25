@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState } from 'react'; 
 import Checkbox from '../components/Checkbox';
+import { useNavigate } from 'react-router-dom';
 
-const AddClassPage = () => {
+const AddClassPage = ({addClassSubmit}) => {
     const [type, setType] = useState('Drop-In');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -19,6 +20,9 @@ const AddClassPage = () => {
     const [contactEmail, setContactEmail] = useState('');
     const [contactPhone, setContactPhone] = useState('');
     const [paymentOptions, setPaymentOptions] = useState([]);
+
+    // for redirecting to Class page
+    const navigate = useNavigate();
     
 
     const DAYS = [
@@ -62,8 +66,8 @@ const AddClassPage = () => {
     const PAYMENT_OPTIONS = [
         {
             id: "1",
-            type: "e-trandfer",
-            label: "E-trandfer"
+            type: "etransfer",
+            label: "E-transfer"
         },
         {
             id: "2",
@@ -72,7 +76,7 @@ const AddClassPage = () => {
         },
         {
             id: "3",
-            type: "visa-mastercard",
+            type: "visaMastercard",
             label: "Visa/Mastercard"
         },
         {
@@ -83,15 +87,20 @@ const AddClassPage = () => {
       ];
 
     const handleSelectDay = (event) => {
-        const value = event.target.value;
+        const value = event.target.value; // monday
+        const id = event.target.id; // 1
         const isChecked = event.target.checked;
+        console.log('event: ', event);
 
         if (isChecked) {
             // Add checked day to the daysList
+            console.log('daysList: ', daysList);
+            console.log('value: ', value);
             setDaysList([...daysList, value]);
         } else {
             // Remove unchecked item from the daysList
             const filteredList = daysList.filter((item) => item !==value);
+            console.log('filteredList: ', filteredList);
             setDaysList(filteredList);
         }
 
@@ -100,13 +109,17 @@ const AddClassPage = () => {
     const handleSelectPayment = (event) => {
         const value = event.target.value;
         const isChecked = event.target.checked;
+        console.log('event.target: ', event.target);
 
         if (isChecked) {
             // Add checked option to the PaymentOptions list
             setPaymentOptions([...paymentOptions, value]);
+            console.log('daysList: ', daysList);
+            console.log('value: ', value);
         } else {
             // Remove unchecked item from the PaymentOptions list
             const filteredList = paymentOptions.filter((item) => item !==value);
+            console.log('filteredList: ', filteredList);
             setPaymentOptions(filteredList);
         }
     };
@@ -137,7 +150,9 @@ const AddClassPage = () => {
             payment_options: paymentOptions
         }
 
-        console.log(newWorkout);
+        addClassSubmit(newWorkout);
+        // redirect to Class page
+        navigate('/classes');
     };
     
   return (

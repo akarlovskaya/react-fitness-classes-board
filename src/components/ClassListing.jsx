@@ -29,7 +29,7 @@ const ClassListing = ({workout}) => {
         { showFullDescription ? 'Less' : 'More'}
       </button>
 
-      <h3 className="text-indigo-500 mb-2">{ workout.cost }</h3>
+      <h3 className="text-indigo-500 mb-2">${ workout.cost } CAD</h3>
 
       <div className="border border-gray-100 mb-5"></div>
 

@@ -14,7 +14,7 @@
       },
       "time": "6pm",
       "days": "Mon, Wed, Fri",
-      "cost": "$20 CAD",
+      "cost": "20",
       "instructor": {
         "name": "Salma Peterson",
         "description": "Hi, I am a certified Group Fitness Instructor with over 5 years of leading group classes. Join my Cardio Core Conditioning.",
@@ -37,7 +37,7 @@
       },
       "time": "6pm",
       "days": "Tue, Thu",
-      "cost": "$15 CAD",
+      "cost": "15",
       "instructor": {
         "name": "Emma Jones",
         "description": "Certified yoga instructor with a passion for helping newcomers find their zen.",
@@ -60,7 +60,7 @@
       },
       "time": "7pm",
       "days": "Mon, Wed, Fri",
-      "cost": "$25 CAD",
+      "cost": "25",
       "instructor": {
         "name": "John Smith",
         "description": "Experienced personal trainer specializing in high-intensity workouts.",
@@ -83,7 +83,7 @@
       },
       "time": "6pm",
       "days": "Tue, Thu",
-      "cost": "$130 CAD for 10 sessions",
+      "cost": "130 for 10 sessions",
       "instructor": {
         "name": "Maya Li",
         "description": "Professional dancer and choreographer with over 10 years of experience.",
@@ -106,7 +106,7 @@
       },
       "time": "7pm",
       "days": "Mon, Wed",
-      "cost": "$180 CAD for 10 sessions",
+      "cost": "80 for 10 sessions",
       "instructor": {
         "name": "Olivia Martin",
         "description": "Certified Pilates instructor focused on core strength and flexibility.",
@@ -129,7 +129,7 @@
       },
       "time": "8pm",
       "days": "Mon, Thu",
-      "cost": "$20 CAD",
+      "cost": "20",
       "instructor": {
         "name": "Carlos Gomez",
         "description": "Licensed Zumba instructor with a passion for dance and fitness.",
@@ -152,7 +152,7 @@
       },
       "time": "6pm",
       "days": "Tue, Thu",
-      "cost": "$200 CAD for 10 sessions",
+      "cost": "100 for 10 sessions",
       "instructor": {
         "name": "Laura Thompson",
         "description": "Certified strength coach dedicated to helping you reach your fitness goals.",
@@ -175,7 +175,7 @@
       },
       "time": "8pm",
       "days": "Tue, Fri",
-      "cost": "$120 CAD for 10 sessions",
+      "cost": "120 for 10 sessions",
       "instructor": {
         "name": "David Lee",
         "description": "Mindfulness coach with years of experience in meditation practices.",
@@ -198,7 +198,7 @@
       },
       "time": "6pm",
       "days": "Mon, Thu",
-      "cost": "$250 CAD for 10 sessions",
+      "cost": "150 for 10 sessions",
       "instructor": {
         "name": "Sophie Brown",
         "description": "Spin instructor with a love for high-energy, heart-pumping workouts.",
@@ -221,7 +221,7 @@
       },
       "time": "7pm",
       "days": "Tue, Fri",
-      "cost": "$20 CAD",
+      "cost": "20",
       "instructor": {
         "name": "Nancy Wilson",
         "description": "Certified aqua aerobics instructor with a background in aquatic therapy.",
@@ -229,6 +229,66 @@
         "contactPhone": "555-555-6666"
       },
       "payment_options": "cash"
+    },
+    {
+      "id": "59c7",
+      "type": "Drop-In",
+      "title": "Cardio Fit Test",
+      "description": "Test Desc",
+      "time": "16:31",
+      "cost": "20",
+      "days": [
+        "1",
+        "2"
+      ],
+      "location": {
+        "place": "Awesome Gym ",
+        "address": "123 Kensal Place",
+        "city": "Coquitlam",
+        "region": "BC",
+        "zipcode": "V3B0G3"
+      },
+      "instructor": {
+        "name": "Anna",
+        "description": "about me",
+        "contactEmail": "naturalfi@gmail.com",
+        "contactPhone": "123123123"
+      },
+      "payment_options": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "78a8",
+      "type": "Drop-In",
+      "title": "cardio",
+      "description": "aaaaaaa",
+      "time": "15:10",
+      "cost": "20",
+      "days": [
+        "monday",
+        "wednesday",
+        "friday"
+      ],
+      "location": {
+        "place": "Gym",
+        "address": "123 Kensal Place",
+        "city": "Coquitlam",
+        "region": "BC",
+        "zipcode": "V3B0G3"
+      },
+      "instructor": {
+        "name": "Anna",
+        "description": "about",
+        "contactEmail": "natural@gmail.com",
+        "contactPhone": "123123"
+      },
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "visaMastercard"
+      ]
     }
   ]
 }
