@@ -98,7 +98,7 @@
       "title": "Dance Fusion",
       "description": "A fun and energetic dance class that combines various styles like hip-hop, salsa, and jazz.",
       "time": "10:45",
-      "cost": "40 for 5 sessions",
+      "cost": "40",
       "days": [
         "tuesday",
         "wednesday",
@@ -123,22 +123,22 @@
     },
     {
       "id": "5",
-      "title": "Pilates Mat",
       "type": "Session",
+      "title": "Pilates Mat",
       "description": "Strengthen and lengthen your muscles with this mat-based Pilates class.",
-      "location": {
-        "place": "Pilates Studio",
-        "city": "Surrey",
-        "region": "BC",
-        "address": "321 Pilates Dr",
-        "zipcode": "V3T 1B8"
-      },
-      "time": "7pm",
+      "time": "11:03",
+      "cost": "140",
       "days": [
         "monday",
         "wednesday"
       ],
-      "cost": "80 for 10 sessions",
+      "location": {
+        "place": "Pilates Studio",
+        "address": "321 Pilates Dr",
+        "city": "Surrey",
+        "region": "BC",
+        "zipcode": "V3T 1B8"
+      },
       "instructor": {
         "name": "Olivia Martin",
         "description": "Certified Pilates instructor focused on core strength and flexibility.",
@@ -199,7 +199,7 @@
         "saturday",
         "sunday"
       ],
-      "cost": "100 for 10 sessions",
+      "cost": "100",
       "instructor": {
         "name": "Laura Thompson",
         "description": "Certified strength coach dedicated to helping you reach your fitness goals.",
@@ -229,7 +229,7 @@
         "tuesday",
         "friday"
       ],
-      "cost": "120 for 10 sessions",
+      "cost": "120",
       "instructor": {
         "name": "David Lee",
         "description": "Mindfulness coach with years of experience in meditation practices.",

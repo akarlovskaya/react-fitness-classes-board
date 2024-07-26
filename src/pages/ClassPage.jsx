@@ -74,7 +74,13 @@ const ClassPage = ({deleteWorkout}) => {
 
                     <h3 className="text-indigo-800 text-lg font-bold mb-2">Fee</h3>
 
-                    <p className="mb-4">${ workout.cost } CAD</p>
+                    { workout.type === "Session" ? 
+                        <p className="mb-4">${workout.cost} CAD per 10 sessions</p>
+                    : 
+                        <p className="mb-4">${workout.cost} CAD</p> 
+                    }
+
+                    {/* <p className="mb-4">${ workout.cost } CAD</p> */}
 
                     <h3 className="text-indigo-800 text-lg font-bold mb-2">Schedule</h3>
 
