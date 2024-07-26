@@ -2,22 +2,22 @@
   "classes": [
     {
       "id": "1",
-      "title": "Cardio Core Conditioning",
       "type": "Drop-In",
+      "title": "Cardio Core Conditioning",
       "description": "Combine cardio training with strength based movements, with emphasis on core! Expect to use a variety of equipment for weight training movements.",
-      "location": {
-        "place": "Gold Gym",
-        "city": "Coquitlam",
-        "region": "BC",
-        "address": "1156 - 34 West street",
-        "zipcode": "V3C 2M2"
-      },
-      "time": "6pm",
+      "time": "11:45",
+      "cost": "20",
       "days": [
         "wednesday",
         "friday"
       ],
-      "cost": "20",
+      "location": {
+        "place": "Gold Gym",
+        "address": "1156 - 34 West street",
+        "city": "Coquitlam",
+        "region": "BC",
+        "zipcode": "V3C 2M2"
+      },
       "instructor": {
         "name": "Salma Peterson",
         "description": "Hi, I am a certified Group Fitness Instructor with over 5 years of leading group classes. Join my Cardio Core Conditioning.",
@@ -63,23 +63,23 @@
     },
     {
       "id": "3",
-      "title": "HIIT Blast",
       "type": "Drop-In",
+      "title": "HIIT Blast",
       "description": "HIIT Blast is an intense, fast-paced workout designed to push your limits and maximize calorie burn. This high-intensity interval training class combines short bursts of explosive exercises with brief recovery periods, ensuring you get the most out of your workout in the least amount of time. Expect a mix of cardio, strength training, and plyometric movements that will challenge your endurance and build muscle. Suitable for all fitness levels, HIIT Blast will leave you feeling energized, accomplished, and ready to tackle your fitness goals.",
-      "location": {
-        "place": "HIIT Gym",
-        "city": "Burnaby",
-        "region": "BC",
-        "address": "789 HIIT Ave",
-        "zipcode": "V5A 2A2"
-      },
-      "time": "7pm",
+      "time": "11:45",
+      "cost": "25",
       "days": [
         "monday",
         "wednesday",
         "friday"
       ],
-      "cost": "25",
+      "location": {
+        "place": "HIIT Gym",
+        "address": "789 HIIT Ave",
+        "city": "Burnaby",
+        "region": "BC",
+        "zipcode": "V5A 2A2"
+      },
       "instructor": {
         "name": "John Smith",
         "description": "Experienced personal trainer specializing in high-intensity workouts.",
@@ -94,23 +94,23 @@
     },
     {
       "id": "4",
+      "type": "Session",
       "title": "Dance Fusion",
-      "type": "Series",
       "description": "A fun and energetic dance class that combines various styles like hip-hop, salsa, and jazz.",
-      "location": {
-        "place": "Dance Fusion Studio",
-        "city": "Richmond",
-        "region": "BC",
-        "address": "456 Dance Blvd",
-        "zipcode": "V6X 3A8"
-      },
-      "time": "6pm",
+      "time": "10:45",
+      "cost": "40 for 5 sessions",
       "days": [
         "tuesday",
         "wednesday",
         "friday"
       ],
-      "cost": "130 for 10 sessions",
+      "location": {
+        "place": "Dance Fusion Studio",
+        "address": "456 Dance Blvd",
+        "city": "Richmond",
+        "region": "BC",
+        "zipcode": "V6X 3A8"
+      },
       "instructor": {
         "name": "Maya Li",
         "description": "Professional dancer and choreographer with over 10 years of experience.",
@@ -124,7 +124,7 @@
     {
       "id": "5",
       "title": "Pilates Mat",
-      "type": "Series",
+      "type": "Session",
       "description": "Strengthen and lengthen your muscles with this mat-based Pilates class.",
       "location": {
         "place": "Pilates Studio",
@@ -185,7 +185,7 @@
     {
       "id": "7",
       "title": "Strength and Conditioning",
-      "type": "Series",
+      "type": "Session",
       "description": "Build strength and endurance with this comprehensive conditioning class.",
       "location": {
         "place": "Strength Coach Gym",
@@ -215,7 +215,7 @@
     {
       "id": "8",
       "title": "Mindfulness Meditation",
-      "type": "Series",
+      "type": "Session",
       "description": "Learn mindfulness techniques to reduce stress and increase well-being.",
       "location": {
         "place": "Mindfulness Center",
@@ -256,7 +256,7 @@
       "days": [
         "friday"
       ],
-      "cost": "150 for 10 sessions",
+      "cost": "150",
       "instructor": {
         "name": "Sophie Brown",
         "description": "Spin instructor with a love for high-energy, heart-pumping workouts.",

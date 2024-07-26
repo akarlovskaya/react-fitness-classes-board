@@ -7,9 +7,10 @@ import {FaMapMarker} from 'react-icons/fa';
 const ClassListing = ({workout}) => {
   const [showFullDescription, setshowFullDescription] = useState(false);
   let description = workout.description;
+  console.log('description.length >= 130: ', description.length >= 130);
 
 // show short version of description
-  if (!showFullDescription) {
+  if (!showFullDescription && description.length >= 130 ) {
     description = description.substring(0, 130) + '...';
   }
 
@@ -24,11 +25,17 @@ const ClassListing = ({workout}) => {
       <div className="mb-5">
         {description}
       </div>
-
-      <button onClick={() => setshowFullDescription((prevState) => !prevState)} className='text-indigo-500 mb -5 hover:text-indigo-600'>
-        { showFullDescription ? 'Less' : 'More'}
-      </button>
-
+      {
+        description.length >= 130 
+        ?
+          <button 
+            onClick={() => setshowFullDescription((prevState) => !prevState)} 
+            className='text-indigo-500 mb -5 hover:text-indigo-600'>
+            { showFullDescription ? 'Less' : 'More'}
+          </button> 
+        : null
+      
+      }
       <h3 className="text-indigo-500 mb-2">${ workout.cost } CAD</h3>
 
       <div className="border border-gray-100 mb-5"></div>

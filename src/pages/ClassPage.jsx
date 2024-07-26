@@ -8,7 +8,7 @@ const ClassPage = ({deleteWorkout}) => {
     const navigate = useNavigate();
     const workout = useLoaderData();
     // console.log('workout: ', workout);
-    // console.log(' workout.days ', workout.days);
+    // console.log(' workout.days ', workout.payment_options);
 
     const onDeleteClick = (workoutId) => {
         const confirm = window.confirm("Are you sure you want to delete this class listing?");
@@ -33,7 +33,7 @@ const ClassPage = ({deleteWorkout}) => {
 
     // Capitalize First Letter for Days Array and string together with comma
     function formatDaysArray(daysArray) {
-        return daysArray.map(day => day.charAt(0).toUpperCase() + day.slice(1) + ', ')
+        return daysArray.map(day => day.charAt(0).toUpperCase() + day.slice(1)).join(', ');
     };
 
     return (
@@ -81,7 +81,7 @@ const ClassPage = ({deleteWorkout}) => {
                     <p className="mb-4">{ changeTimeFormat(workout.time) } on {formatDaysArray(workout.days)} </p>
 
                     <h3 className="text-indigo-800 text-lg font-bold mb-2">Location</h3>
-                    <p className="mb-4">{ workout.location.place } </p>
+                    <b className="mb-4">{ workout.location.place } </b>
                     <address 
                         className="mb-4">
                             { workout.location.address }<br/>
@@ -89,14 +89,15 @@ const ClassPage = ({deleteWorkout}) => {
                             { workout.location.zipcode }
                     </address>
 
-                    <h3 className="text-indigo-800 text-lg font-bold mb-2">How to Pay</h3>
+                    <h3 className="text-indigo-800 text-lg font-bold mb-2">Payment Options</h3>
                     <ul>
                         { workout.payment_options.map( payment => {
                             return (
-                                <li>{payment.charAt(0).toUpperCase() + payment.slice(1)}</li>
-                            );
-                        }
-                    )}
+                                <li key={payment}>
+                                    {payment.charAt(0).toUpperCase() + payment.slice(1)}
+                                </li>  
+                            )                   
+                        })}
                     </ul>
 
                 </div>
