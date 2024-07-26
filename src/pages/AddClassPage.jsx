@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Checkbox from '../components/Checkbox';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FaFacebookSquare, FaInstagram, FaLinkedin, FaLink } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 
 const AddClassPage = ({addClassSubmit}) => {
     const [type, setType] = useState('Drop-In');
@@ -20,6 +22,7 @@ const AddClassPage = ({addClassSubmit}) => {
     const [instructorDescription, setInstructorDescription] = useState('');
     const [contactEmail, setContactEmail] = useState('');
     const [contactPhone, setContactPhone] = useState('');
+    const [socialLinksList, setSocialLinksList] = useState([]);
     const [paymentOptions, setPaymentOptions] = useState([]);
 
     // for redirecting to Class page
@@ -87,6 +90,45 @@ const AddClassPage = ({addClassSubmit}) => {
         }
       ];
 
+    const SOCIAL_LINKS = [
+        {
+            id: "1",
+            name: "facebook",
+            label: "Facebook"
+        },
+        {
+            id: "2",
+            name: "instagram",
+            label: "Instagram"
+        },
+        {
+            id: "3",
+            name: "xcom",
+            label: "Twitter / X.com"
+        },
+        {
+            id: "4",
+            name: "linkedin",
+            label: "LinkedIn"
+        }
+    ];
+
+    const renderSocialIconSwitch = (social) => {
+        switch(social) {
+            case 'facebook':
+              return <FaFacebookSquare />;
+            case 'instagram':
+                return <FaInstagram />;
+            case 'xcom':
+                return <FaXTwitter />;
+            case 'linkedin':
+                return <FaLinkedin />;
+                
+            default:
+              return <FaLink />;
+          }
+    }
+
     const handleSelectDay = (event) => {
         const value = event.target.value; // monday
         const id = event.target.id; // 1
@@ -116,6 +158,10 @@ const AddClassPage = ({addClassSubmit}) => {
             setPaymentOptions(filteredList);
         }
     };
+
+    const setsocialLinksList = (event) => {
+
+    }
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -393,6 +439,33 @@ const AddClassPage = ({addClassSubmit}) => {
                         onChange={(e) => setContactPhone(e.target.value)} 
                     />
                 </div>
+                {/* SOCIAL ACCOUNTS*/}
+                <fieldset>
+                <legend className="font-semibold uppercase mb-2 mt-8">Social Accounts</legend>
+                    <div className="mb-4">
+                    { SOCIAL_LINKS.map(social_link => {
+                        return (
+                            <div className="relative flex gap-x-3 mb-4">
+                            <label
+                                htmlFor={social_link.name}
+                                className="flex text-lg h-10 items-center">{renderSocialIconSwitch(social_link.name)}
+                            </label>
+                            <input
+                                type="text"
+                                id={social_link.id}
+                                name={social_link.name}
+                                className="border rounded w-full py-2 px-3"
+                                placeholder="Link to social profile. Optional"
+                                value={socialLinksList}
+                                onChange={(e) => setSocialLinksList(e.target.value)} 
+                            />
+                            </div>
+                        )})
+                    }
+                    </div>
+                </fieldset>
+
+
             </fieldset>
             {/* PAYMENT OPRIONS */}
             <fieldset>

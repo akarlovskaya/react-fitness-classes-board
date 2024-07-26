@@ -3,12 +3,14 @@ import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import InstructorInfo from '../components/InstructorInfo';
 
 const ClassPage = ({deleteWorkout}) => {
     const navigate = useNavigate();
     const workout = useLoaderData();
     // console.log('workout: ', workout);
-    // console.log(' workout.days ', workout.payment_options);
+    console.log('workout.instructor.socialLinks ', workout.instructor.socialLinks);
+
 
     const onDeleteClick = (workoutId) => {
         const confirm = window.confirm("Are you sure you want to delete this class listing?");
@@ -80,8 +82,6 @@ const ClassPage = ({deleteWorkout}) => {
                         <p className="mb-4">${workout.cost} CAD</p> 
                     }
 
-                    {/* <p className="mb-4">${ workout.cost } CAD</p> */}
-
                     <h3 className="text-indigo-800 text-lg font-bold mb-2">Schedule</h3>
 
                     <p className="mb-4">{ changeTimeFormat(workout.time) } on {formatDaysArray(workout.days)} </p>
@@ -111,24 +111,7 @@ const ClassPage = ({deleteWorkout}) => {
 
             {/* <!-- Sidebar --> */}
             <aside>
-                {/* <!-- Instructor Info --> */}
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h3 className="text-xl font-bold mb-6">Instructor Info</h3>
-
-                    <h2 className="text-2xl">{ workout.instructor.name }</h2>
-
-                    <p className="my-2"> { workout.instructor.description } </p>
-
-                    <hr className="my-4" />
-
-                    <h3 className="text-xl">Contact Email:</h3>
-
-                    <p className="my-2 bg-indigo-100 p-2 font-bold">{ workout.instructor.contactEmail }</p>
-
-                    <h3 className="text-xl">Contact Phone:</h3>
-
-                    <p className="my-2 bg-indigo-100 p-2 font-bold">{ workout.instructor.contactPhone }</p>
-                </div>
+                <InstructorInfo workout={workout}/>
 
                 {/* <!-- Manage --> */}
                 <div className="bg-white p-6 rounded-lg shadow-md mt-6">

@@ -53,7 +53,12 @@
         "name": "Emma Jones",
         "description": "Certified yoga instructor with a passion for helping newcomers find their zen.",
         "contactEmail": "emma.jones@yogastudio.com",
-        "contactPhone": "555-123-4567"
+        "contactPhone": "555-123-4567",
+        "socialLinks": [
+          "facebook",
+          "instagram",
+          "x_com"
+        ]
       },
       "payment_options": [
         "etransfer",
