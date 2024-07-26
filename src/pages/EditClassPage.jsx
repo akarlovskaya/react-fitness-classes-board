@@ -92,7 +92,6 @@ const EditClassPage = ({updateClassSubmit}) => {
 
       const handleSelectDay = (event) => {
         const value = event.target.value; // monday
-        const id = event.target.id; // 1
         const isChecked = event.target.checked;
 
         if (isChecked) {
@@ -163,7 +162,7 @@ const EditClassPage = ({updateClassSubmit}) => {
         <div className="container m-auto max-w-2xl py-24">
         <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
         <form onSubmit={submitForm}>
-            <h1 className="text-3xl text-center font-semibold mb-6">Add Class</h1>
+            <h1 className="text-3xl text-center font-semibold mb-6">Edit Class</h1>
 
             <fieldset>
                 <legend className="font-semibold uppercase mb-2 mt-8">Class Information</legend>
@@ -428,7 +427,7 @@ const EditClassPage = ({updateClassSubmit}) => {
             <button
             className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                 type="submit">
-                Add Class
+                Edit Class
             </button>
             </div>
         </form>

@@ -13,7 +13,10 @@
         "zipcode": "V3C 2M2"
       },
       "time": "6pm",
-      "days": "Mon, Wed, Fri",
+      "days": [
+        "wednesday",
+        "friday"
+      ],
       "cost": "20",
       "instructor": {
         "name": "Salma Peterson",
@@ -21,30 +24,42 @@
         "contactEmail": "contact@SalmaPeterson.com",
         "contactPhone": "555-555-5555"
       },
-      "payment_options": "cash"
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "visaMastercard"
+      ]
     },
     {
       "id": "2",
-      "title": "Yoga for Beginners",
       "type": "Drop-In",
+      "title": "Yoga for Beginners",
       "description": "A calming class focused on introducing the basics of yoga. Perfect for beginners, it emphasizes fundamental postures, breathing techniques, and mindfulness. This class aims to improve flexibility, strength, and relaxation, providing a solid foundation for your yoga journey in a supportive environment.",
+      "time": "23:04",
+      "cost": "15",
+      "days": [
+        "monday",
+        "friday",
+        "wednesday"
+      ],
       "location": {
         "place": "Yoga Studio",
+        "address": "123 Yoga Lane",
         "city": "Vancouver",
         "region": "BC",
-        "address": "123 Yoga Lane",
         "zipcode": "V6B 1A1"
       },
-      "time": "6pm",
-      "days": "Tue, Thu",
-      "cost": "15",
       "instructor": {
         "name": "Emma Jones",
         "description": "Certified yoga instructor with a passion for helping newcomers find their zen.",
         "contactEmail": "emma.jones@yogastudio.com",
         "contactPhone": "555-123-4567"
       },
-      "payment_options": "e-transfer"
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "cheque"
+      ]
     },
     {
       "id": "3",
@@ -59,7 +74,11 @@
         "zipcode": "V5A 2A2"
       },
       "time": "7pm",
-      "days": "Mon, Wed, Fri",
+      "days": [
+        "monday",
+        "wednesday",
+        "friday"
+      ],
       "cost": "25",
       "instructor": {
         "name": "John Smith",
@@ -67,7 +86,11 @@
         "contactEmail": "john.smith@hiitgym.com",
         "contactPhone": "555-765-4321"
       },
-      "payment_options": "e-transfer"
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "visaMastercard"
+      ]
     },
     {
       "id": "4",
@@ -82,7 +105,11 @@
         "zipcode": "V6X 3A8"
       },
       "time": "6pm",
-      "days": "Tue, Thu",
+      "days": [
+        "tuesday",
+        "wednesday",
+        "friday"
+      ],
       "cost": "130 for 10 sessions",
       "instructor": {
         "name": "Maya Li",
@@ -90,7 +117,9 @@
         "contactEmail": "maya.li@dancefusion.com",
         "contactPhone": "555-987-6543"
       },
-      "payment_options": "cash"
+      "payment_options": [
+        "etransfer"
+      ]
     },
     {
       "id": "5",
@@ -105,7 +134,10 @@
         "zipcode": "V3T 1B8"
       },
       "time": "7pm",
-      "days": "Mon, Wed",
+      "days": [
+        "monday",
+        "wednesday"
+      ],
       "cost": "80 for 10 sessions",
       "instructor": {
         "name": "Olivia Martin",
@@ -113,7 +145,11 @@
         "contactEmail": "olivia.martin@pilatesstudio.com",
         "contactPhone": "555-321-8765"
       },
-      "payment_options": "e-transfer"
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "visaMastercard"
+      ]
     },
     {
       "id": "6",
@@ -128,7 +164,11 @@
         "zipcode": "V3A 4P4"
       },
       "time": "8pm",
-      "days": "Mon, Thu",
+      "days": [
+        "monday",
+        "tuesday",
+        "saturday"
+      ],
       "cost": "20",
       "instructor": {
         "name": "Carlos Gomez",
@@ -136,7 +176,11 @@
         "contactEmail": "carlos.gomez@zumbafit.com",
         "contactPhone": "555-654-3210"
       },
-      "payment_options": "e-transfer"
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "cheque"
+      ]
     },
     {
       "id": "7",
@@ -151,7 +195,10 @@
         "zipcode": "V7P 2L8"
       },
       "time": "6pm",
-      "days": "Tue, Thu",
+      "days": [
+        "saturday",
+        "sunday"
+      ],
       "cost": "100 for 10 sessions",
       "instructor": {
         "name": "Laura Thompson",
@@ -159,7 +206,11 @@
         "contactEmail": "laura.thompson@strengthcoach.com",
         "contactPhone": "555-111-2222"
       },
-      "payment_options": "e-transfer"
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "visaMastercard"
+      ]
     },
     {
       "id": "8",
@@ -174,7 +225,10 @@
         "zipcode": "V7V 3K4"
       },
       "time": "8pm",
-      "days": "Tue, Fri",
+      "days": [
+        "tuesday",
+        "friday"
+      ],
       "cost": "120 for 10 sessions",
       "instructor": {
         "name": "David Lee",
@@ -182,7 +236,9 @@
         "contactEmail": "david.lee@mindfulnesscoach.com",
         "contactPhone": "555-333-4444"
       },
-      "payment_options": "e-transfer"
+      "payment_options": [
+        "visaMastercard"
+      ]
     },
     {
       "id": "9",
@@ -197,7 +253,9 @@
         "zipcode": "V3L 5A2"
       },
       "time": "6pm",
-      "days": "Mon, Thu",
+      "days": [
+        "friday"
+      ],
       "cost": "150 for 10 sessions",
       "instructor": {
         "name": "Sophie Brown",
@@ -205,7 +263,9 @@
         "contactEmail": "sophie.brown@spinstudio.com",
         "contactPhone": "555-444-5555"
       },
-      "payment_options": "e-transfer"
+      "payment_options": [
+        "etransfer"
+      ]
     },
     {
       "id": "10",
@@ -220,7 +280,9 @@
         "zipcode": "V4K 3A1"
       },
       "time": "7pm",
-      "days": "Tue, Fri",
+      "days": [
+        "monday"
+      ],
       "cost": "20",
       "instructor": {
         "name": "Nancy Wilson",
@@ -228,7 +290,9 @@
         "contactEmail": "nancy.wilson@aquahealth.com",
         "contactPhone": "555-555-6666"
       },
-      "payment_options": "cash"
+      "payment_options": [
+        "cash"
+      ]
     },
     {
       "id": "0bc7",
@@ -254,7 +318,44 @@
         "description": "about",
         "contactEmail": "naturc@gmail.com",
         "contactPhone": "12333333"
-      }
+      },
+      "payment_options": [
+        "etransfer",
+        "cash",
+        "visaMastercard"
+      ]
+    },
+    {
+      "id": "6db3",
+      "type": "Drop-In",
+      "title": "test",
+      "description": "sfsaf",
+      "time": "21:27",
+      "cost": "123",
+      "days": [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday"
+      ],
+      "location": {
+        "place": "Gym",
+        "address": "41-1125 Kensal Placesdafsadf",
+        "city": "Coquitlam",
+        "region": "BC",
+        "zipcode": "V3B0G3"
+      },
+      "instructor": {
+        "name": "Anna Karlovskaya",
+        "description": "dsfsdf",
+        "contactEmail": "naturalfitpacific@gmail.com",
+        "contactPhone": "7782229295"
+      },
+      "payment_options": [
+        "etransfer",
+        "cash"
+      ]
     }
   ]
 }

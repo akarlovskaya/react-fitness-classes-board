@@ -1,13 +1,14 @@
 import React from 'react';
 import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const ClassPage = ({deleteWorkout}) => {
-    // const {id} = useParams();
     const navigate = useNavigate();
     const workout = useLoaderData();
+    // console.log('workout: ', workout);
+    // console.log(' workout.days ', workout.days);
 
     const onDeleteClick = (workoutId) => {
         const confirm = window.confirm("Are you sure you want to delete this class listing?");
@@ -19,6 +20,20 @@ const ClassPage = ({deleteWorkout}) => {
         toast.success('Class listing deleted successfully!');
 
         navigate('/classes');
+    };
+
+    // Convert time to AM / PM
+    const changeTimeFormat = (time) => {
+        const timeString12hr = new Date('1970-01-01T' + time + 'Z')
+            .toLocaleTimeString('en-CA',
+            {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
+            );
+        return timeString12hr;
+    }
+
+    // Capitalize First Letter for Days Array and string together with comma
+    function formatDaysArray(daysArray) {
+        return daysArray.map(day => day.charAt(0).toUpperCase() + day.slice(1) + ', ')
     };
 
     return (
@@ -45,29 +60,51 @@ const ClassPage = ({deleteWorkout}) => {
                 </h1>
                 <div
                 className="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
-                    <i
-                    className="fa-solid fa-location-dot text-lg text-orange-700 mr-2"
-                    ></i>
+                    <FaMapMarker className='inline text-lg mb-1 mr-1 mt-1 text-orange-700' />
                     <p className="text-orange-700"> { workout.location.city } </p>
                 </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                <h3 className="text-indigo-800 text-lg font-bold mb-6">
-                    Class Description
-                </h3>
+                    <h3 className="text-indigo-800 text-lg font-bold mb-6">
+                        Class Description
+                    </h3>
 
-                <p className="mb-4"> { workout.description } </p>
+                    <p className="mb-4"> { workout.description } </p>
 
-                <h3 className="text-indigo-800 text-lg font-bold mb-2">Fee</h3>
+                    <h3 className="text-indigo-800 text-lg font-bold mb-2">Fee</h3>
 
-                <p className="mb-4">{ workout.cost }</p>
+                    <p className="mb-4">${ workout.cost } CAD</p>
+
+                    <h3 className="text-indigo-800 text-lg font-bold mb-2">Schedule</h3>
+
+                    <p className="mb-4">{ changeTimeFormat(workout.time) } on {formatDaysArray(workout.days)} </p>
+
+                    <h3 className="text-indigo-800 text-lg font-bold mb-2">Location</h3>
+                    <p className="mb-4">{ workout.location.place } </p>
+                    <address 
+                        className="mb-4">
+                            { workout.location.address }<br/>
+                            {`${workout.location.city}, ${workout.location.region}`}<br/>
+                            { workout.location.zipcode }
+                    </address>
+
+                    <h3 className="text-indigo-800 text-lg font-bold mb-2">How to Pay</h3>
+                    <ul>
+                        { workout.payment_options.map( payment => {
+                            return (
+                                <li>{payment.charAt(0).toUpperCase() + payment.slice(1)}</li>
+                            );
+                        }
+                    )}
+                    </ul>
+
                 </div>
             </main>
 
             {/* <!-- Sidebar --> */}
             <aside>
-                {/* <!-- Company Info --> */}
+                {/* <!-- Instructor Info --> */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     <h3 className="text-xl font-bold mb-6">Instructor Info</h3>
 
