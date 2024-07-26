@@ -1,30 +1,32 @@
 import React from 'react';
 import { useState } from 'react'; 
+import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import Checkbox from '../components/Checkbox';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const AddClassPage = ({addClassSubmit}) => {
-    const [type, setType] = useState('Drop-In');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [time, setTime] = useState('');
-    const [fee, setFee] = useState('');
-    const [daysList, setDaysList] = useState([]);
-    const [place, setPlace] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [region, setRegion] = useState('');
-    const [zipcode, setZipcode] = useState('');
-    const [instructorName, setInstructorName] = useState('');
-    const [instructorDescription, setInstructorDescription] = useState('');
-    const [contactEmail, setContactEmail] = useState('');
-    const [contactPhone, setContactPhone] = useState('');
-    const [paymentOptions, setPaymentOptions] = useState([]);
+const EditClassPage = ({updateClassSubmit}) => {
+    const workout = useLoaderData();
+
+    const [type, setType] = useState(workout.type);
+    const [title, setTitle] = useState(workout.title);
+    const [description, setDescription] = useState(workout.description);
+    const [time, setTime] = useState(workout.time);
+    const [fee, setFee] = useState(workout.cost);
+    const [daysList, setDaysList] = useState(workout.days);
+    const [place, setPlace] = useState(workout.location.place);
+    const [address, setAddress] = useState(workout.location.address);
+    const [city, setCity] = useState(workout.location.city);
+    const [region, setRegion] = useState(workout.location.region);
+    const [zipcode, setZipcode] = useState(workout.location.zipcode);
+    const [instructorName, setInstructorName] = useState(workout.instructor.name);
+    const [instructorDescription, setInstructorDescription] = useState(workout.instructor.description);
+    const [contactEmail, setContactEmail] = useState(workout.instructor.contactEmail);
+    const [contactPhone, setContactPhone] = useState(workout.instructor.contactPhone);
+    const [paymentOptions, setPaymentOptions] = useState(workout.payment_options);
 
     // for redirecting to Class page
     const navigate = useNavigate();
-    
+    const {id} = useParams();
 
     const DAYS = [
         {
@@ -87,7 +89,8 @@ const AddClassPage = ({addClassSubmit}) => {
         }
       ];
 
-    const handleSelectDay = (event) => {
+
+      const handleSelectDay = (event) => {
         const value = event.target.value; // monday
         const id = event.target.id; // 1
         const isChecked = event.target.checked;
@@ -120,7 +123,8 @@ const AddClassPage = ({addClassSubmit}) => {
     const submitForm = (e) => {
         e.preventDefault();
 
-        const newWorkout = {
+        const updatedWorkout = {
+            id,
             type,
             title,
             description,
@@ -143,14 +147,17 @@ const AddClassPage = ({addClassSubmit}) => {
             payment_options: paymentOptions
         }
 
-        addClassSubmit(newWorkout);
+        console.log('updatedWorkout :', updatedWorkout);
+
+        updateClassSubmit(updatedWorkout);
 
         // show confirmation
-        toast.success('Class listing created successfully!');
+        toast.success('Class listing updated successfully!');
         // redirect to Class page
-        navigate('/classes');
+        navigate(`/classes/${id}`);
     };
-    
+
+
   return (
     <section className="bg-indigo-50">
         <div className="container m-auto max-w-2xl py-24">
@@ -228,18 +235,20 @@ const AddClassPage = ({addClassSubmit}) => {
                     <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Days of the Week</legend>
                     <div className="mb-4">
                     { 
-                        DAYS.map(day => 
+                        DAYS.map(day => {
+                            return (                            
                             <Checkbox 
                                 key={day.id}
                                 type="checkbox"
                                 value={day.name} 
                                 id={day.id} 
+                                checked={daysList.includes(day.name)}
                                 name={day.name}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 handleSelect={handleSelectDay}>{day.label}
-                            </Checkbox>
-                        )
-                        } 
+                            </Checkbox>)
+                        })
+                    } 
                     </div>
                 </fieldset>
                 {/* Fee */}
@@ -405,6 +414,7 @@ const AddClassPage = ({addClassSubmit}) => {
                         type="checkbox"
                         value={payment.type} 
                         id={payment.id} 
+                        checked={paymentOptions.includes(payment.type)}
                         name={payment.type}
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         handleSelect={handleSelectPayment}>{payment.label}
@@ -426,6 +436,6 @@ const AddClassPage = ({addClassSubmit}) => {
         </div>
     </section>
   )
-};
+}
 
-export default AddClassPage;
+export default EditClassPage;

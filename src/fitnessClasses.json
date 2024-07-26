@@ -233,7 +233,7 @@
     {
       "id": "0bc7",
       "type": "Session",
-      "title": "Pilates Test",
+      "title": "Pilates New test",
       "description": "pilates desc",
       "time": "14:46",
       "cost": "120",
@@ -254,12 +254,7 @@
         "description": "about",
         "contactEmail": "naturc@gmail.com",
         "contactPhone": "12333333"
-      },
-      "payment_options": [
-        "cash",
-        "etransfer",
-        "cheque"
-      ]
+      }
     }
   ]
 }

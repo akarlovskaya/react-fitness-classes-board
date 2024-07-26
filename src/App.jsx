@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import ClassesPage from './pages/ClassesPage';
 import ClassPage, { workoutLoader} from './pages/ClassPage';
 import AddClassPage from './pages/AddClassPage';
+import EditClassPage from './pages/EditClassPage';
 import NotFound from './pages/NotFound';
 
 const App = () => {
@@ -27,7 +28,21 @@ const App = () => {
       method: 'DELETE',
     });
     return;
-  }
+  };
+
+  // Edit workout
+  const updateWorkout = async (updatedWorkout) => {
+    const res = await fetch(`/api/classes/${updatedWorkout.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedWorkout),
+    });
+    console.log('updatedWorkout: ', updatedWorkout);
+    return;
+
+  };
   
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -36,6 +51,7 @@ const App = () => {
         <Route path='/classes' element={< ClassesPage />} />
         <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/>
         <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
+        <Route path='/edit-class/:id' element={< EditClassPage updateClassSubmit={updateWorkout}/>} loader={workoutLoader}/>
         <Route path='*' element={< NotFound />} />
       </Route>
       
