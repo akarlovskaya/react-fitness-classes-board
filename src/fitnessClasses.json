@@ -361,6 +361,34 @@
         "etransfer",
         "cash"
       ]
+    },
+    {
+      "id": "a5aa",
+      "type": "Drop-In",
+      "title": "Zumba Toning Test",
+      "description": "desc",
+      "time": "17:10",
+      "cost": "20",
+      "days": [
+        "saturday",
+        "sunday"
+      ],
+      "location": {
+        "place": "Awesome Gym ",
+        "address": "1125 Kensal Place",
+        "city": "Coquitlam",
+        "region": "BC",
+        "zipcode": "V3B0G3"
+      },
+      "instructor": {
+        "name": "Anna J",
+        "description": "about me",
+        "contactEmail": "naturafic@gmail.com",
+        "contactPhone": "123334555"
+      },
+      "payment_options": [
+        "etransfer"
+      ]
     }
   ]
 }

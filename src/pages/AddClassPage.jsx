@@ -30,37 +30,30 @@ const AddClassPage = ({addClassSubmit}) => {
 
     const DAYS = [
         {
-          id: "1",
           name: "monday",
           label: "Monday"
         },
         {
-          id: "2",
           name: "tuesday",
           label: "Tuesday"
         },
         {
-          id: "3",
           name: "wednesday",
           label: "Wednesday"
         },
         {
-          id: "4",
           name: "thursday",
           label: "Thursday"
         },
         {
-          id: "5",
           name: "friday",
           label: "Friday"
         },
         {
-          id: "6",
           name: "saturday",
           label: "Saturday"
         },
         {
-           id: "7",
            name: "sunday",
            label: "Sunday"
         }
@@ -68,22 +61,19 @@ const AddClassPage = ({addClassSubmit}) => {
 
     const PAYMENT_OPTIONS = [
         {
-            id: "1",
             type: "etransfer",
             label: "E-transfer"
         },
         {
-            id: "2",
             type: "cash",
             label: "Cash"
         },
         {
-            id: "3",
+
             type: "visaMastercard",
-            label: "Visa/Mastercard"
+            label: "Visa / Mastercard"
         },
         {
-            id: "4",
             type: "cheque",
             label: "Cheque"
         }
@@ -91,22 +81,18 @@ const AddClassPage = ({addClassSubmit}) => {
 
     const SOCIAL_LINKS = [
         {
-            id: "1",
             name: "facebook",
             label: "Facebook"
         },
         {
-            id: "2",
             name: "instagram",
             label: "Instagram"
         },
         {
-            id: "3",
             name: "x_com",
             label: "Twitter / X.com"
         },
         {
-            id: "4",
             name: "linkedin",
             label: "LinkedIn"
         }
@@ -259,10 +245,10 @@ const AddClassPage = ({addClassSubmit}) => {
                     { 
                         DAYS.map(day => 
                             <Checkbox 
-                                key={day.id}
+                                key={day.name}
                                 type="checkbox"
                                 value={day.name} 
-                                id={day.id} 
+                                id={day.name} 
                                 name={day.name}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 handleSelect={handleSelectDay}>{day.label}
@@ -428,14 +414,14 @@ const AddClassPage = ({addClassSubmit}) => {
                     <div className="mb-4">
                     { SOCIAL_LINKS.map(social_link => {
                         return (
-                            <div key={social_link.id} className="relative flex gap-x-3 mb-4">
+                            <div key={social_link.name} className="relative flex gap-x-3 mb-4">
                             <label
                                 htmlFor={social_link.name}
                                 className="flex text-lg h-10 items-center">{renderSocialIconSwitch(social_link.name)}
                             </label>
                             <input
                                 type="text"
-                                id={social_link.id}
+                                id={social_link.name}
                                 name={social_link.name}
                                 className="border rounded w-full py-2 px-3"
                                 placeholder="Link to social profile. Optional"
@@ -457,10 +443,10 @@ const AddClassPage = ({addClassSubmit}) => {
                { 
                 PAYMENT_OPTIONS.map(payment => 
                     <Checkbox 
-                        key={payment.id}
+                        key={payment.type}
                         type="checkbox"
                         value={payment.type} 
-                        id={payment.id} 
+                        id={payment.type} 
                         name={payment.type}
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         handleSelect={handleSelectPayment}>{payment.label}
