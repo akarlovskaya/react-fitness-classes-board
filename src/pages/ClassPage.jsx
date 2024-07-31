@@ -62,8 +62,8 @@ const ClassPage = ({deleteWorkout}) => {
                 </h1>
                 <div
                 className="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
-                    <FaMapMarker className='inline text-lg mb-1 mr-1 mt-1 text-orange-700' />
-                    <p className="text-orange-700"> { workout.location.city } </p>
+                    <FaMapMarker className='inline text-lg mb-1 mr-1 mt-1 text-orange-dark' />
+                    <p className="text-orange-dark"> { workout.location.city } </p>
                 </div>
                 </div>
 
@@ -118,11 +118,11 @@ const ClassPage = ({deleteWorkout}) => {
                     <h3 className="text-xl font-bold mb-6">Manage Class</h3>
                     <Link
                         to={`/edit-class/${workout.id}`}
-                        className="bg-indigo-500 hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+                        className="bg-navy hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
                         >Edit Class</Link>
                     <button 
                         onClick={() => onDeleteClick(workout.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+                        className="bg-orange-dark hover:bg-dark-light text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                         Delete Class
                     </button>
                 </div>

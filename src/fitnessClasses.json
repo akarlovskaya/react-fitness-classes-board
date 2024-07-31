@@ -27,7 +27,7 @@
       "payment_options": [
         "etransfer",
         "cash",
-        "visaMastercard"
+        "Visa / Mastercard"
       ]
     },
     {
@@ -94,7 +94,7 @@
       "payment_options": [
         "etransfer",
         "cash",
-        "visaMastercard"
+        "Visa / Mastercard"
       ]
     },
     {
@@ -153,7 +153,7 @@
       "payment_options": [
         "etransfer",
         "cash",
-        "visaMastercard"
+        "visa / Mastercard"
       ]
     },
     {
@@ -214,7 +214,7 @@
       "payment_options": [
         "etransfer",
         "cash",
-        "visaMastercard"
+        "Visa / Mastercard"
       ]
     },
     {
@@ -242,7 +242,7 @@
         "contactPhone": "555-333-4444"
       },
       "payment_options": [
-        "visaMastercard"
+        "Visa / Mastercard"
       ]
     },
     {
@@ -327,7 +327,7 @@
       "payment_options": [
         "etransfer",
         "cash",
-        "visaMastercard"
+        "Visa / Mastercard"
       ]
     },
     {

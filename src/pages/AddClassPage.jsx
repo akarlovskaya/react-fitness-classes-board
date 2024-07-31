@@ -3,8 +3,7 @@ import { useState } from 'react';
 import Checkbox from '../components/Checkbox';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaFacebookSquare, FaInstagram, FaLinkedin, FaLink } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
+import { renderSocialIconSwitch } from '../utilities/Utilities';
 
 const AddClassPage = ({addClassSubmit}) => {
     const [type, setType] = useState('Drop-In');
@@ -103,7 +102,7 @@ const AddClassPage = ({addClassSubmit}) => {
         },
         {
             id: "3",
-            name: "xcom",
+            name: "x_com",
             label: "Twitter / X.com"
         },
         {
@@ -112,22 +111,6 @@ const AddClassPage = ({addClassSubmit}) => {
             label: "LinkedIn"
         }
     ];
-
-    const renderSocialIconSwitch = (social) => {
-        switch(social) {
-            case 'facebook':
-              return <FaFacebookSquare />;
-            case 'instagram':
-                return <FaInstagram />;
-            case 'xcom':
-                return <FaXTwitter />;
-            case 'linkedin':
-                return <FaLinkedin />;
-                
-            default:
-              return <FaLink />;
-          }
-    }
 
     const handleSelectDay = (event) => {
         const value = event.target.value; // monday
@@ -445,7 +428,7 @@ const AddClassPage = ({addClassSubmit}) => {
                     <div className="mb-4">
                     { SOCIAL_LINKS.map(social_link => {
                         return (
-                            <div className="relative flex gap-x-3 mb-4">
+                            <div key={social_link.id} className="relative flex gap-x-3 mb-4">
                             <label
                                 htmlFor={social_link.name}
                                 className="flex text-lg h-10 items-center">{renderSocialIconSwitch(social_link.name)}

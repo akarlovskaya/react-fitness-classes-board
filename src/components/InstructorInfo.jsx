@@ -15,11 +15,16 @@ const InstructorInfo = ({workout}) => {
         <h3 className="text-xl">Contact Email:</h3>
         <p className="my-2 bg-indigo-100 p-2 font-bold">{ workout.instructor.contactEmail }</p>
 
-        <h3 className="text-xl">Contact Phone:</h3>
+        <h3 className="text-xl mt-4">Contact Phone:</h3>
         <p className="my-2 bg-indigo-100 p-2 font-bold">{ workout.instructor.contactPhone }</p>
 
-        <h3 className="text-xl">Follow Me:</h3>
-        <SocialLinks socialLinks={workout.instructor.socialLinks}/>
+        {
+          workout.instructor.socialLinks 
+          ? 
+          <SocialLinks socialLinks={workout.instructor.socialLinks}/>
+          : null
+        }
+        
     </div>
   )
 }
