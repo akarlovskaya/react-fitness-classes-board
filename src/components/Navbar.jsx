@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import vanklasLogo from '../assets/images/vanklasLogo.png';
+// import vanklasLogo from '../assets/images/vanklas-logo.png';
+import vanklasLogo from '../assets/images/vanKlas-logo-narrow.png';
 
 const Navbar = () => {
 
@@ -11,7 +12,7 @@ const Navbar = () => {
 
   return (
     <>
-    <nav className="bg-indigo-700 border-b border-indigo-500">
+    <nav className="bg-navy border-b">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <div
