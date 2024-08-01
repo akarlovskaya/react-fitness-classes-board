@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import vanklasLogo from '../assets/images/vanKlas-logo-narrow.png';
 
 const Navbar = () => {
@@ -11,20 +11,21 @@ const Navbar = () => {
 
   return (
     <>
-    <nav className="bg-navy border-b">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
-          <div
-            className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-            {/* <!-- Logo --> */}
-            <NavLink className="flex flex-shrink-0 items-center mr-4" to="/">
-              <img
-                className="h-20 w-auto"
-                src={ vanklasLogo }
-                alt="vanklasLogo, Discover Fitness in Metro Vancover"
-              />
-              {/* <span className="hidden md:block text-white text-2xl font-bold ml-2">Discover Fitness in Metro Vancover</span> */}
-            </NavLink>
+    <header className="bg-navy border-b shadow-sm sticky top-0 z-50">
+          <nav className="flex justify-between items-center px-3 max-w-6xl mx-auto">
+
+            {/* Logo */}
+            <div>
+              <NavLink className="flex flex-shrink-0 items-center mr-4" to="/">
+                <img
+                  className="h-20 w-auto"
+                  src={ vanklasLogo }
+                  alt="vanklasLogo, Discover Fitness in Metro Vancouver"
+                />
+              </NavLink>
+            </div>
+
+            {/* Navigation */}
             <div className="md:ml-auto">
               <div className="flex space-x-2">
                 <NavLink
@@ -41,10 +42,8 @@ const Navbar = () => {
                   className={LinkClass}>Profile</NavLink>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+          </nav>
+    </header>
     </>
   )
 }
