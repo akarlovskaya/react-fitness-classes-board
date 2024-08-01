@@ -1,6 +1,5 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-// import vanklasLogo from '../assets/images/vanklas-logo.png';
 import vanklasLogo from '../assets/images/vanKlas-logo-narrow.png';
 
 const Navbar = () => {
@@ -37,6 +36,9 @@ const Navbar = () => {
                 <NavLink
                   to="/add-class"
                   className={LinkClass}>Add Class</NavLink>
+                <NavLink
+                  to="/profile"
+                  className={LinkClass}>Profile</NavLink>
               </div>
             </div>
           </div>

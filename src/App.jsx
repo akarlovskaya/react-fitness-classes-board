@@ -6,7 +6,11 @@ import ClassesPage from './pages/ClassesPage';
 import ClassPage, { workoutLoader} from './pages/ClassPage';
 import AddClassPage from './pages/AddClassPage';
 import EditClassPage from './pages/EditClassPage';
+import ProfilePage from './pages/ProfilePage';
 import NotFound from './pages/NotFound';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 const App = () => {
   // Add new workout
@@ -52,6 +56,10 @@ const App = () => {
         <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/>
         <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
         <Route path='/edit-class/:id' element={< EditClassPage updateClassSubmit={updateWorkout}/>} loader={workoutLoader}/>
+        <Route path='/profile' element={< ProfilePage />} />
+        <Route path='/sign-in' element={< SignInPage />} />
+        <Route path='/sign-up' element={< SignUpPage />} />
+        <Route path='/forgot-password' element={< ForgotPasswordPage />} />
         <Route path='*' element={< NotFound />} />
       </Route>
       
