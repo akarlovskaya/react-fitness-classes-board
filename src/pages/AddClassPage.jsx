@@ -128,10 +128,6 @@ const AddClassPage = ({addClassSubmit}) => {
         }
     };
 
-    const setsocialLinksList = (event) => {
-
-    }
-
     const submitForm = (e) => {
         e.preventDefault();
 
