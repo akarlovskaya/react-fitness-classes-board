@@ -20,7 +20,7 @@ export default {
         'navy-light': '#002b99',
         // 'orange-dark': '#FF5F00',
         'orange-dark': '#e65400',
-        'orange-light': '#FF9F66',
+        'orange-light': '#ff5f00',
         'beige': '#FFFAE6'
       },
     },

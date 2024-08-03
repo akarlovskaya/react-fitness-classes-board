@@ -18,10 +18,8 @@ const SignInPage = () => {
     setFormData(values => ({...values, [name]: value}))
   };
 
- 
-
   return (
-    <section className="bg-blue-50 px-4 py-10">
+    <section className="bg-blue-50 px-4 py-10 h-screen">
         <div className="container-xl lg:container m-auto">
             <h1 className="text-3xl font-bold text-navy mb-6 text-center">Sign In</h1>
         
