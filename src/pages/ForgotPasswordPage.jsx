@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import { signInWithEmailAndPassword, getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
- 
+
+  async function onSubmit(e) {
+    e.preventDefault();
+
+    try {
+        const auth = getAuth();
+        await sendPasswordResetEmail(auth, email);
+        toast.success("Email was sent");
+        // To do - redirect to Sign In page automatically
+        
+    } catch (error) {
+        toast.error("Could not sent reset password");
+    }
+  }
 
   return (
     <section className="bg-blue-50 px-4 py-10 h-screen">
         <div className="container-xl lg:container m-auto">
             <h1 className="text-3xl font-bold text-navy mb-6 text-center">Forgot Password</h1>
         
-        <form className="w-full md:w-[67%] lg:w-[30%] m-auto">
+        <form 
+            onSubmit={onSubmit}
+            className="w-full md:w-[67%] lg:w-[30%] m-auto">
             <label htmlFor="email" className='block text-gray-700 font-bold mb-2'>Enter email:
             <input 
                 type="email"
