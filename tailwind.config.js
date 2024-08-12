@@ -18,6 +18,7 @@ export default {
       colors: {
         'navy': '#002379',
         'navy-light': '#002b99',
+        'purple': '#4F1787',
         // 'orange-dark': '#FF5F00',
         'orange-dark': '#e65400',
         'orange-light': '#ff5f00',

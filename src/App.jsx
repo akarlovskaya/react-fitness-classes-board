@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   // Add new workout
@@ -56,7 +57,9 @@ const App = () => {
         <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/>
         <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
         <Route path='/edit-class/:id' element={< EditClassPage updateClassSubmit={updateWorkout}/>} loader={workoutLoader}/>
-        <Route path='/profile' element={< ProfilePage />} />
+        <Route path='/profile' element={< PrivateRoute />}>
+          <Route path='/profile' element={< ProfilePage />} />
+        </Route>
         <Route path='/sign-in' element={< SignInPage />} />
         <Route path='/sign-up' element={< SignUpPage />} />
         <Route path='/forgot-password' element={< ForgotPasswordPage />} />
