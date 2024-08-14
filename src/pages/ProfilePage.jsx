@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { doc, updateDoc, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import { toast } from 'react-toastify';
+import { IoCreateOutline } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 
 const ProfilePage = () => {
@@ -203,6 +205,13 @@ const ProfilePage = () => {
                   </fieldset> */}
               {/* </fieldset> */}
             </form>
+
+            {/* Create Class Listing Button*/}
+            <Link to='/add-class'
+              className='flex bg-navy hover:bg-navy-light justify-center text-white py-2 px-4 rounded-full w-full items-center focus:outline-none focus:shadow-outline'
+            >
+              <IoCreateOutline className='mr-2 text-xl'/> Create Class
+            </Link>
           </div>
         </div>
       </section>
