@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { getAuth } from 'firebase/auth';
+import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { doc, updateDoc, addDoc } from 'firebase/firestore';
+import { db } from '../firebase.js';
+import { toast } from 'react-toastify';
+
 
 const ProfilePage = () => {
   const auth = getAuth();
+  console.log("auth.currentUser ", auth.currentUser);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    instructorName: auth.currentUser.displayName,
-    instructorDescription: "About John",
+    instructorName: auth.currentUser.displayName || "",
+    instructorDescription: "",
     contactEmail: auth.currentUser.email,
-    contactPhone: "123-22-33"
+    contactPhone: auth.currentUser.phoneNumber || "",
+    // ToDO: instructorPhoto: auth.currentUser.photoURL || ""
   });
+  const [editInfo, setEditInfo] = useState(false);
 
   const {instructorName, instructorDescription, contactEmail, contactPhone } = formData;
 
@@ -19,6 +27,59 @@ const ProfilePage = () => {
     auth.signOut();
     // redirect to Home page
     navigate("/");
+  }
+
+  const onChange = (e) => {
+    setFormData((prevState)=>({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  console.log("auth.currentUser.phoneNumber ", auth.currentUser.phoneNumber);
+
+  // add change to DB
+ const onSubmit = async () => {
+    try {
+      // Check for NAME Changes
+      if (auth.currentUser.displayName !== instructorName) {
+        // update display name in firebase auth
+        await updateProfile(auth.currentUser, {
+          displayName: instructorName
+        });
+      }
+
+      // Check for EMAIL Changes
+      if (auth.currentUser.email !== contactEmail) {
+        // update display name in firebase auth
+        await updateProfile(auth.currentUser, {
+          email: contactEmail
+        });
+      }
+
+      // Check for PHONE Changes
+      if (auth.currentUser.phoneNumber !== contactPhone) {
+        // update display name in firebase auth
+        await updateProfile(auth.currentUser, {
+          phoneNumber: contactPhone
+        });
+      }
+
+        // update data in firestore
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(docRef, {
+            fullName: instructorName,
+            email: contactEmail,
+            // TODO - phone: contactPhone,
+            // TODO - about: instructorDescription
+        });
+      
+      toast.success("Profile details updated.");
+      
+    } catch (error) {
+      console.log('error ', error);
+      toast.error("Could not update details.");
+    }
   }
 
   return (
@@ -30,15 +91,21 @@ const ProfilePage = () => {
             {/* Edit and Sign Out */}
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
               <button
-                  className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
-                  type="submit">
-                  Edit
+                  type="submit"
+                  className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
+                  onClick={()=> {
+                    editInfo && onSubmit();
+                    setEditInfo(prevState => !prevState) 
+                   }}
+              >
+                  { editInfo ? "Save" : "Edit" }
               </button>
 
               <button
+                  type="submit"
+                  className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
                   onClick={onSignOut}
-                  className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
-                  type="submit">
+              >
                   Sign Out
               </button>
             </div>
@@ -47,17 +114,19 @@ const ProfilePage = () => {
               {/* INSTRUCTOR INFORMATION */}
               {/* <fieldset> */}
                   {/* <legend className="font-semibold uppercase mb-2 mt-8">Instructor Info</legend> */}
-                  <div className="mb-4">
-                  <label htmlFor="instructorName" className="block text-gray-700 font-bold mb-2">Name</label>
-                      <input
-                          type="text"
-                          id="instructorName"
-                          name="instructorName"
-                          className="border rounded w-full py-2 px-3"
-                          value={instructorName}
-                          // onChange={(e) => setInstructorName(e.target.value)} 
-                      />
-                  </div>
+                    <div className="mb-4">
+                    <label htmlFor="instructorName" className="block text-gray-700 font-bold mb-2">Name</label>
+                        <input
+                            type="text"
+                            id="instructorName"
+                            name="instructorName"
+                            disabled={!editInfo}
+                            className="border rounded w-full py-2 px-3" 
+                            value={instructorName}
+                            onChange={onChange} 
+                        />
+                    </div>
+
                   {/* About */}
                   <div className="mb-4">
                   <label
@@ -66,11 +135,12 @@ const ProfilePage = () => {
                       <textarea
                           id="instructorDescription"
                           name="instructorDescription"
+                          disabled={!editInfo}
                           className="border rounded w-full py-2 px-3"
                           rows="4"
                           placeholder="Tell a bit about yourself - experience, what moves you?"
                           value={instructorDescription}
-                          // onChange={(e) => setInstructorDescription(e.target.value)} 
+                          onChange={onChange} 
                       ></textarea>
                   </div>
                   {/* Contact Email */}
@@ -82,11 +152,12 @@ const ProfilePage = () => {
                           type="email"
                           id="contactEmail"
                           name="contactEmail"
+                          disabled={!editInfo}
                           className="border rounded w-full py-2 px-3"
                           placeholder="You email address"
                           required
                           value={contactEmail}
-                          // onChange={(e) => setContactEmail(e.target.value)} 
+                          onChange={onChange} 
                       />
                   </div>
                   {/* Contact Phone */}
@@ -98,10 +169,11 @@ const ProfilePage = () => {
                           type="tel"
                           id="contactPhone"
                           name="contactPhone"
+                          disabled={!editInfo}
                           className="border rounded w-full py-2 px-3"
                           placeholder="Add phone number. Optional"
                           value={contactPhone}
-                          // onChange={(e) => setContactPhone(e.target.value)} 
+                          onChange={onChange} 
                       />
                   </div>
                   {/* SOCIAL ACCOUNTS*/}
