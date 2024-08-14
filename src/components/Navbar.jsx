@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import vanklasLogo from '../assets/images/vanKlas-logo-narrow.png';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const Navbar = () => {
+  const [pageState, setPageState] = useState("Sign in");
+  const auth = getAuth();
+
+  // track changes with user authentication status
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setPageState("Profile");
+      } else {
+        setPageState("Sign In");
+      }
+    });
+  }, [auth])
 
   const LinkClass = ({ isActive }) => 
     isActive 
@@ -39,7 +53,9 @@ const Navbar = () => {
                   className={LinkClass}>Add Class</NavLink>
                 <NavLink
                   to="/profile"
-                  className={LinkClass}>Profile</NavLink>
+                  className={LinkClass}>
+                  {pageState}
+                </NavLink>
               </div>
             </div>
           </nav>
