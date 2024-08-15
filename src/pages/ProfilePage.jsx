@@ -91,7 +91,7 @@ const ProfilePage = () => {
             <h1 className="text-3xl text-center font-semibold mb-6">My Profile</h1>
 
             {/* Edit and Sign Out */}
-            <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
+            <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
               <button
                   type="submit"
                   className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
@@ -111,6 +111,21 @@ const ProfilePage = () => {
                   Sign Out
               </button>
             </div>
+
+          
+            {/* Image upload */}
+            <div className='mb-4'>
+              
+              <label htmlFor="avatarImage" className="block text-gray-700 font-bold mb-2">Profile Image</label>
+                <p className='mb-2'>Accepted format .jpg, .png, jpeg</p>
+                <input 
+                  type="file" 
+                  id='avatarImage'
+                  name='avatarImage'
+                  accept='.jpg, .png, jpeg'
+                /> 
+            </div>
+
 
             <form>
               {/* INSTRUCTOR INFORMATION */}
