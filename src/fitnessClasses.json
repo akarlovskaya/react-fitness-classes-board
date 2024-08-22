@@ -3,13 +3,12 @@
     {
       "id": "1",
       "type": "Drop-In",
-      "title": "Cardio Core Conditioning",
+      "title": "Cardio Core Fit",
       "description": "Combine cardio training with strength based movements, with emphasis on core! Expect to use a variety of equipment for weight training movements.",
       "time": "11:45",
       "cost": "20",
       "days": [
-        "wednesday",
-        "friday"
+        "monday"
       ],
       "location": {
         "place": "Gold Gym",
@@ -385,6 +384,35 @@
         "description": "about me",
         "contactEmail": "naturafic@gmail.com",
         "contactPhone": "123334555"
+      },
+      "payment_options": [
+        "etransfer"
+      ]
+    },
+    {
+      "id": "4b71",
+      "type": "Drop-In",
+      "title": "Dance Workout",
+      "description": "Some desc",
+      "time": "16:44",
+      "cost": "40",
+      "days": [
+        "monday",
+        "wednesday",
+        "friday"
+      ],
+      "location": {
+        "place": "Awesome Gym ",
+        "address": "1125 Kensal Place",
+        "city": "Coquitlam",
+        "region": "BC",
+        "zipcode": "V3B0G3"
+      },
+      "instructor": {
+        "name": "",
+        "description": "",
+        "contactEmail": "",
+        "contactPhone": ""
       },
       "payment_options": [
         "etransfer"
