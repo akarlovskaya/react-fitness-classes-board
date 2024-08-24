@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { doc, updateDoc, addDoc, serverTimestamp, collection } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../firebase.js';
 import { toast } from 'react-toastify';
@@ -9,7 +9,7 @@ import { IoCreateOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import {v4 as uuidv4} from "uuid";
 import Spinner from '../components/Spinner.jsx';
-import avatarImg from '../assets/images/avatar-img.png';
+import defaultAvatarImg from '../assets/images/avatar-img.png';
 
 const ProfilePage = () => {
   const auth = getAuth();
@@ -17,18 +17,31 @@ const ProfilePage = () => {
 
   const [formData, setFormData] = useState({
     avatarImage: null,
-    instructorName: auth.currentUser.displayName || "",
+    fullName: auth.currentUser.displayName || "",
     instructorTitle: "",
     instructorDescription: "",
     contactEmail: auth.currentUser.email,
-    contactPhone: auth.currentUser.phoneNumber || "",
-    // instructorPhoto: auth.currentUser.photoURL || ""
+    contactPhone: auth.currentUser.phoneNumber || ""
   });
   const [editInfo, setEditInfo] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isAvatarChanged, setIsAvatarChanged] = useState(false);
+  const {avatarImage, fullName, instructorTitle, instructorDescription, contactEmail, contactPhone } = formData;
 
-  const {avatarImage, instructorName, instructorTitle, instructorDescription, contactEmail, contactPhone, instructorPhoto } = formData;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        setFormData(userDoc.data()); // Update the state with the latest data
+      } else {
+        console.log("No such document.");
+      }
+    };
 
+    fetchUserData();
+  }, [auth.currentUser.uid]); // This runs every time the component mounts
+  
   function onSignOut() {
     // signing out
     auth.signOut();
@@ -41,8 +54,9 @@ const ProfilePage = () => {
     if (e.target.files) {
       setFormData((prevState) => ({
         ...prevState,
-        avatarImage: e.target.files
+        avatarImage: e.target.files[0]
       }));
+      setIsAvatarChanged(true);
     } else {
       setFormData((prevState) => ({
         ...prevState,
@@ -51,116 +65,114 @@ const ProfilePage = () => {
     }
   };
 
+  // Store Image in firebase storage
+  const storeImage = (image) => {
+    // console.log('image for split ', image);
+    // const splitFileName = image.name.split('.');
+    // splitFileName.pop();
+    // const imageFileName = splitFileName[0].replace(/\s+/g, "-").toLowerCase();
+
+    return new Promise((resolve, reject) => {
+      console.log('image ', image);
+      const storage = getStorage();
+      const filename = `${auth.currentUser.uid}-${image}-${uuidv4()}`;
+      const storageRef = ref(storage, filename);
+      const uploadTask = uploadBytesResumable(storageRef, image);
+      // Register three observers:
+      // 1. 'state_changed' observer, called any time the state changes
+      // 2. Error observer, called on failure
+      // 3. Completion observer, called on successful completion
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          reject(error);
+        },
+        () => {
+          // Handle successful uploads on complete
+          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  }
+
   // add change to DB
  const onSubmit = async () => {
     setLoading(true);
 
     try {
+      const updates = {}; // Initialize an empty object for updates
+      
       // Check for NAME Changes
-      if (auth.currentUser.displayName !== instructorName) {
+      if (auth.currentUser.displayName !== fullName) {
         // update display name in firebase auth
-        await updateProfile(auth.currentUser, {
-          displayName: instructorName
-        });
+        await updateProfile(auth.currentUser, {displayName: fullName});
+        updates.fullName = fullName;
       }
 
       // Check for EMAIL Changes
       if (auth.currentUser.email !== contactEmail) {
-        // update display name in firebase auth
-        await updateProfile(auth.currentUser, {
-          email: contactEmail
-        });
+        // update display email in firebase auth
+        await updateProfile(auth.currentUser, {email: contactEmail});
+        updates.contactEmail = contactEmail;
       }
 
       // Check for PHONE Changes
       if (auth.currentUser.phoneNumber !== contactPhone) {
-        // update display name in firebase auth
-        await updateProfile(auth.currentUser, {
-          phoneNumber: contactPhone
-        });
+        // update display phone in firebase auth
+        await updateProfile(auth.currentUser, {phoneNumber: contactPhone});
+        updates.contactPhone = contactPhone;
       }
 
-      // store Image in firebase storage
-      async function storeImage(image) {
-        const splitFileName = image[0].name.split('.');
-        splitFileName.pop();
-        const imageFileName = splitFileName[0].replace(/\s+/g, "-").toLowerCase();
-
-        return new Promise((resolve, reject) => {
-          const storage = getStorage();
-          const filename = `${auth.currentUser.uid}-${imageFileName}-${uuidv4()}`;
-          const storageRef = ref(storage, filename);
-          const uploadTask = uploadBytesResumable(storageRef, image[0]);
-          // Register three observers:
-          // 1. 'state_changed' observer, called any time the state changes
-          // 2. Error observer, called on failure
-          // 3. Completion observer, called on successful completion
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              // Observe state change events such as progress, pause, and resume
-              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-              console.log('snapshot.bytesTransferred ', snapshot.bytesTransferred);
-              console.log('snapshot.totalBytes ', snapshot.totalBytes);
-              const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              console.log("Upload is " + progress + "% done");
-              switch (snapshot.state) {
-                case "paused":
-                  console.log("Upload is paused");
-                  break;
-                case "running":
-                  console.log("Upload is running");
-                  break;
-              }
-            },
-            (error) => {
-              // Handle unsuccessful uploads
-              reject(error);
-            },
-            () => {
-              // Handle successful uploads on complete
-              // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                resolve(downloadURL);
-                console.log('downloadURL ', downloadURL);
-              });
-            }
-          );
-        });
-      }
-
-      // Get image URL if avatarImage exists
-      let avatarImageUrl = null;
-      if (avatarImage) {
-        avatarImageUrl = await storeImage(avatarImage).catch((error) => {
+      // Store and get avatar image URL if a new image is provided
+      // let avatarImageUrl = null;
+      if (isAvatarChanged && avatarImage) {
+        const avatarImageUrl = await storeImage(avatarImage).catch((error) => {
             setLoading(false);
             toast.error("Image not uploaded");
             return;
         });
+        if (avatarImageUrl) {
+          updates.avatarImage = avatarImageUrl;
+        }
       };
 
       // Prepare the data to update in Firestore
       const formDataCopyForDB = {
         ...formData,
-        avatarImage: avatarImageUrl,
-        instructorDescription,
-        contactPhone,
-        timestamp: serverTimestamp()
+        ...updates, // Merge the updates into the formDataCopyForDB object
+        lastUpdated: serverTimestamp(),
       };
       // Update data in Firestore
       const userRef = doc(db, "users", auth.currentUser.uid);
       await updateDoc(userRef, formDataCopyForDB);
 
       setLoading(false);
-      toast.success("Profile details updated.");
+      toast.success("Profile updated successfully.");
     } catch (error) {
-      console.log('error ', error);
+      console.log('Error updating profile: ', error);
       setLoading(false);
-      toast.error("Could not update details.");
+      toast.error("Failed to update profile.");
     }
-
-  }
+  };
 
   if (loading) {
     return <Spinner />;
@@ -177,22 +189,20 @@ const ProfilePage = () => {
             {/* Profile Image */}
             <div className="flex flex-col items-center">
                 <img 
-                  src={avatarImg}
-                  className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                  src={avatarImage  || defaultAvatarImg}
+                  className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
+                  alt="Profile Avatar">
                 </img>
-                {auth.currentUser.displayName ? 
+                {auth.currentUser.displayName &&
                   <h2 className="text-xl font-bold">{auth.currentUser.displayName}</h2> 
-                  : null
                 }
-                {instructorTitle ? 
+                {instructorTitle &&
                   <p className="text-gray-700">{instructorTitle}</p>
-                  : null
                 }
             </div>
           
             {/* Image upload */}
             <div className='mb-4'>
-              
               <label htmlFor="avatarImage" className="block text-gray-700 font-bold mb-2">Profile Image</label>
                 <p className='mb-2'>Accepted format .jpg, .png, jpeg</p>
                 <input 
@@ -204,20 +214,19 @@ const ProfilePage = () => {
                 /> 
             </div>
 
-
             <form>
               {/* INSTRUCTOR INFORMATION */}
               {/* <fieldset> */}
                   {/* <legend className="font-semibold uppercase mb-2 mt-8">Instructor Info</legend> */}
                     <div className="mb-4">
-                    <label htmlFor="instructorName" className="block text-gray-700 font-bold mb-2">Name</label>
+                    <label htmlFor="fullName" className="block text-gray-700 font-bold mb-2">Name</label>
                         <input
                             type="text"
-                            id="instructorName"
-                            name="instructorName"
+                            id="fullName"
+                            name="fullName"
                             disabled={!editInfo}
                             className="border rounded w-full py-2 px-3" 
-                            value={instructorName}
+                            value={fullName}
                             onChange={onChange} 
                         />
                     </div>
@@ -235,7 +244,6 @@ const ProfilePage = () => {
                             onChange={onChange} 
                         />
                     </div>
-
 
                   {/* About */}
                   <div className="mb-4">

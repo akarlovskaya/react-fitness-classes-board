@@ -22,9 +22,9 @@ const OAuth = () => {
 
       if (!docSnap.exists()) {
         await setDoc(docRef, {
-          name: user.displayName,
-          email: user.email,
-          timestamp: serverTimestamp()
+          fullName: user.displayName,
+          contactEmail: user.email,
+          createdAtAuth: serverTimestamp()
         });
       }
       // redirect to Home Page

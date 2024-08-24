@@ -11,12 +11,12 @@ import { toast } from 'react-toastify';
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
     fullName: '',
-    email: '',
+    contactEmail: '',
     password: ''
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const { fullName, email, password } = formData;
+  const { fullName, contactEmail, password } = formData;
   const navigate = useNavigate();
 
 
@@ -31,7 +31,7 @@ const SignUpPage = () => {
 
     try {
         const auth = getAuth();
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, contactEmail, password);
         updateProfile(auth.currentUser, {
             displayName: fullName
         });
@@ -40,7 +40,7 @@ const SignUpPage = () => {
         // delete user's password
         const forDataCopy = {... formData};
         delete forDataCopy.password;
-        forDataCopy.timeStamp = serverTimestamp();
+        forDataCopy.createdAt = serverTimestamp();
 
         // set to Database
         await setDoc(doc(db, "users", user.uid), forDataCopy);
@@ -72,11 +72,11 @@ const SignUpPage = () => {
                 className="border rounded w-full py-2 px-3 mb-5"
                 onChange={handleOnChange}/>
             </label>
-            <label htmlFor="email" className='block text-gray-700 font-bold mb-2'>Enter email:
+            <label htmlFor="contactEmail" className='block text-gray-700 font-bold mb-2'>Enter email:
             <input 
-                type="email"
-                id={email}
-                name="email"
+                type="contactEmail"
+                id={contactEmail}
+                name="contactEmail"
                 className="border rounded w-full py-2 px-3 mb-5"
                 onChange={handleOnChange}/>
             </label>
