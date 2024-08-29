@@ -10,10 +10,18 @@ import { Link } from 'react-router-dom';
 import {v4 as uuidv4} from "uuid";
 import Spinner from '../components/Spinner.jsx';
 import defaultAvatarImg from '../assets/images/avatar-img.png';
+import SocialLinksProfileForm from '../components/SocialLinksProfileForm.jsx';
 
 const ProfilePage = () => {
   const auth = getAuth();
   const navigate = useNavigate();
+
+  const socialLinks = {
+    facebook: { name: 'facebook', label: 'Facebook', link: '' },
+    instagram: { name: 'instagram', label: 'Instagram', link: '' },
+    linkedin: { name: 'linkedin', label: 'LinkedIn', link: '' },
+    x_com: { name: 'x_com', label: 'Twitter / X.com', link: '' }
+  };
 
   const [formData, setFormData] = useState({
     avatarImage: null,
@@ -21,20 +29,28 @@ const ProfilePage = () => {
     instructorTitle: "",
     instructorDescription: "",
     contactEmail: auth.currentUser.email,
-    contactPhone: auth.currentUser.phoneNumber || ""
+    contactPhone: auth.currentUser.phoneNumber || "",
+    socials: socialLinks
   });
   const [editInfo, setEditInfo] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAvatarChanged, setIsAvatarChanged] = useState(false);
-  const {avatarImage, fullName, instructorTitle, instructorDescription, contactEmail, contactPhone } = formData;
+  const {avatarImage, fullName, instructorTitle, instructorDescription, contactEmail, contactPhone, socials } = formData;
 
   useEffect(() => {
     const fetchUserData = async () => {
       const userRef = doc(db, "users", auth.currentUser.uid);
       const userDoc = await getDoc(userRef);
+      // if (userDoc.exists()) {
+      //   setFormData(userDoc.data()); // Update the state with the latest data
+      // }     
       if (userDoc.exists()) {
-        setFormData(userDoc.data()); // Update the state with the latest data
-      } else {
+      setFormData(prevState => ({
+        ...prevState,
+        ...userDoc.data(), // Merge new data with the existing state
+      }));
+    }
+      else {
         console.log("No such document.");
       }
     };
@@ -58,12 +74,25 @@ const ProfilePage = () => {
       }));
       setIsAvatarChanged(true);
     } else {
+      // Check if the id belongs to a social link and update state
+      if (['facebook', 'instagram', 'linkedin', 'x_com'].includes(e.target.id)) {
+        setFormData((prevState) => ({
+          ...prevState,
+          socials: {
+            ...prevState.socials,
+            [e.target.id]: {
+              ...prevState.socials[e.target.id],
+              link: e.target.value
+            }
+          }
+        }));
+      } else {
       setFormData((prevState) => ({
         ...prevState,
         [e.target.id]: e.target.value
       }));
     }
-  };
+  }};
 
   // Store Image in firebase storage
   const storeImage = (image) => {
@@ -180,30 +209,81 @@ const ProfilePage = () => {
 
   return (
       <section className="bg-indigo-50">
-        <div className="container m-auto py-10 px-6">
-        <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
-          <main className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-            <h1 className="text-3xl text-center font-semibold mb-6">My Profile</h1>
-
-            
+        <div className="container mx-auto py-8">
+        <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+        {/* <h1 className="text-3xl text-center font-semibold mb-6">My Profile</h1> */}
+          <aside className="col-span-4 sm:col-span-3">
             {/* Profile Image */}
-            <div className="flex flex-col items-center">
-                <img 
-                  src={avatarImage  || defaultAvatarImg}
-                  className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
-                  alt="Profile Avatar">
-                </img>
-                {auth.currentUser.displayName &&
-                  <h2 className="text-xl font-bold">{auth.currentUser.displayName}</h2> 
-                }
-                {instructorTitle &&
-                  <p className="text-gray-700">{instructorTitle}</p>
-                }
+            <div className="bg-white shadow rounded-lg p-6">
+              <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
+                    <img 
+                      src={avatarImage  || defaultAvatarImg}
+                      className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
+                      alt="Profile Avatar">
+                    </img>
+                    {auth.currentUser.displayName &&
+                      <h1 className="text-xl font-bold">{auth.currentUser.displayName}</h1> 
+                    }
+                    {instructorTitle &&
+                      <p className="text-gray-700">{instructorTitle}</p>
+                    }
+                </div>
+                <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                  <button
+                    type="submit"
+                    className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
+                    onClick={()=> {
+                      editInfo && onSubmit();
+                      setEditInfo(prevState => !prevState) 
+                    }}
+                >
+                    { editInfo ? "Save" : "Edit" }
+                </button>
+                </div>
+              </div>
+              <hr className="my-6 border-t border-gray-300" />
+
+              <SocialLinksProfileForm socialLinks={formData.socials} onSocialLinkChange={onChange} editInfo={editInfo}/>
+
+              {/* <!-- Skills --> */}
+              {/* <div className="flex flex-col">
+                    <h2 className="text-gray-700 font-bold mb-2">Skills</h2>
+                    <ul>
+                        <li className="mb-2">Personal Training</li>
+                        <li className="mb-2">Yoga</li>
+                        <li className="mb-2">HIIT</li>
+                    </ul>
+                </div> */}
             </div>
-          
+            {/* <!-- Manage --> */}
+            <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+              {/* <h2 className="text-xl font-bold mb-6">Manage Profile</h2> */}
+            {/* Edit and Sign Out */}
+            <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
+              <button
+                  type="submit"
+                  className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
+                  onClick={onSignOut}
+              >
+                  Sign Out
+              </button>
+            </div>
+            {/* Create Class Listing Button*/}
+            <Link to='/add-class'
+              className='flex bg-navy hover:bg-navy-light justify-center text-white py-2 px-4 rounded-full w-full items-center focus:outline-none focus:shadow-outline'
+            >
+              <IoCreateOutline className='mr-2 text-xl'/> Create Class
+            </Link>
+            </div>
+          </aside>
+
+          <main className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0 col-span-4 sm:col-span-9">
             {/* Image upload */}
             <div className='mb-4'>
-              <label htmlFor="avatarImage" className="block text-gray-700 font-bold mb-2">Profile Image</label>
+              <label htmlFor="avatarImage" className="block text-gray-700 font-bold mb-2">
+                { isAvatarChanged ? `Profile` : `Edit`} Image
+              </label>
                 <p className='mb-2'>Accepted format .jpg, .png, jpeg</p>
                 <input 
                   type="file" 
@@ -294,83 +374,9 @@ const ProfilePage = () => {
                           onChange={onChange} 
                       />
                   </div>
-                  {/* SOCIAL ACCOUNTS*/}
-                  {/* <fieldset>
-                  <legend className="font-semibold uppercase mb-2 mt-8">Social Accounts</legend>
-                      <div className="mb-4">
-                      { SOCIAL_LINKS.map(social_link => {
-                          return (
-                              <div key={social_link.name} className="relative flex gap-x-3 mb-4">
-                              <label
-                                  htmlFor={social_link.name}
-                                  className="flex text-lg h-10 items-center">{renderSocialIconSwitch(social_link.name)}
-                              </label>
-                              <input
-                                  type="text"
-                                  id={social_link.name}
-                                  name={social_link.name}
-                                  className="border rounded w-full py-2 px-3"
-                                  placeholder="Link to social profile. Optional"
-                                  value={socialLinksList}
-                                  onChange={(e) => setSocialLinksList(e.target.value)} 
-                              />
-                              </div>
-                          )})
-                      }
-                      </div>
-                  </fieldset> */}
-              {/* </fieldset> */}
-
             </form>
-            <button
-                  type="submit"
-                  className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
-                  onClick={()=> {
-                    editInfo && onSubmit();
-                    setEditInfo(prevState => !prevState) 
-                   }}
-              >
-                  { editInfo ? "Save" : "Edit" }
-              </button>
           </main>
-
-          {/* <!-- Sidebar --> */}
-          <aside>
-            {/* <!-- Manage --> */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold mb-6">Manage Profile</h3>
-
-            {/* Edit and Sign Out */}
-            <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
-              <button
-                  type="submit"
-                  className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
-                  onClick={onSignOut}
-              >
-                  Sign Out
-              </button>
-            </div>
-
-            {/* Create Class Listing Button*/}
-            <Link to='/add-class'
-              className='flex bg-navy hover:bg-navy-light justify-center text-white py-2 px-4 rounded-full w-full items-center focus:outline-none focus:shadow-outline'
-            >
-              <IoCreateOutline className='mr-2 text-xl'/> Create Class
-            </Link>
-
-
-                {/* <Link
-                    to={`/edit-class/${workout.id}`}
-                    className="bg-navy hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
-                    >Edit Class</Link>
-                <button 
-                    onClick={() => onDeleteClick(workout.id)}
-                    className="bg-orange-dark hover:bg-dark-light text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
-                    Delete Class
-                </button> */}
-            </div>
-            </aside>
-          </div>
+        </div>
         </div>
       </section>
   )

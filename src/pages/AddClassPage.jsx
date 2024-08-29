@@ -79,24 +79,7 @@ const AddClassPage = ({addClassSubmit}) => {
         }
       ];
 
-    const SOCIAL_LINKS = [
-        {
-            name: "facebook",
-            label: "Facebook"
-        },
-        {
-            name: "instagram",
-            label: "Instagram"
-        },
-        {
-            name: "x_com",
-            label: "Twitter / X.com"
-        },
-        {
-            name: "linkedin",
-            label: "LinkedIn"
-        }
-    ];
+
 
     const handleSelectDay = (event) => {
         const value = event.target.value; // monday
