@@ -8,9 +8,6 @@ import InstructorInfo from '../components/InstructorInfo';
 const ClassPage = ({deleteWorkout}) => {
     const navigate = useNavigate();
     const workout = useLoaderData();
-    // console.log('workout: ', workout);
-    console.log('workout.instructor.socialLinks ', workout.instructor.socialLinks);
-
 
     const onDeleteClick = (workoutId) => {
         const confirm = window.confirm("Are you sure you want to delete this class listing?");

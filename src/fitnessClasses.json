@@ -417,6 +417,33 @@
       "payment_options": [
         "etransfer"
       ]
+    },
+    {
+      "id": "b34b",
+      "type": "Drop-In",
+      "title": "Cardio Dance",
+      "description": "Desc about my dance class",
+      "time": "10:56",
+      "cost": "20",
+      "days": [
+        "monday"
+      ],
+      "location": {
+        "place": "Awesome Gym ",
+        "address": "1125 Kensal Place",
+        "city": "Coquitlam",
+        "region": "BC",
+        "zipcode": "V3B0G3"
+      },
+      "instructor": {
+        "name": "",
+        "description": "",
+        "contactEmail": "",
+        "contactPhone": ""
+      },
+      "payment_options": [
+        "etransfer"
+      ]
     }
   ]
 }

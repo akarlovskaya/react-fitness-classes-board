@@ -55,11 +55,19 @@ const App = () => {
         <Route index element={< HomePage />} />
         <Route path='/classes' element={< ClassesPage />} />
         <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/>
-        <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
-        <Route path='/edit-class/:id' element={< EditClassPage updateClassSubmit={updateWorkout}/>} loader={workoutLoader}/>
+
+        <Route path='/add-class' element={< PrivateRoute />}>
+          <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
+        </Route>
+        
+        <Route path='/edit-class/:id' element={< PrivateRoute />}>
+          <Route path='/edit-class/:id' element={< EditClassPage updateClassSubmit={updateWorkout}/>} loader={workoutLoader}/>
+        </Route>
+        
         <Route path='/profile' element={< PrivateRoute />}>
           <Route path='/profile' element={< ProfilePage />} />
         </Route>
+        
         <Route path='/sign-in' element={< SignInPage />} />
         <Route path='/sign-up' element={< SignUpPage />} />
         <Route path='/forgot-password' element={< ForgotPasswordPage />} />
