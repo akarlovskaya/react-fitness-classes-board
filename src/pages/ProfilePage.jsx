@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { doc, updateDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, serverTimestamp, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../firebase.js';
 import { toast } from 'react-toastify';
@@ -11,18 +11,17 @@ import {v4 as uuidv4} from "uuid";
 import Spinner from '../components/Spinner.jsx';
 import defaultAvatarImg from '../assets/images/avatar-img.png';
 import SocialLinksProfileForm from '../components/SocialLinksProfileForm.jsx';
+import ClassListing from '../components/ClassListing';
 
 const ProfilePage = () => {
   const auth = getAuth();
   const navigate = useNavigate();
-
   const socialLinks = {
     facebook: { name: 'facebook', label: 'Facebook', link: '' },
     instagram: { name: 'instagram', label: 'Instagram', link: '' },
     linkedin: { name: 'linkedin', label: 'LinkedIn', link: '' },
     x_com: { name: 'x_com', label: 'Twitter / X.com', link: '' }
   };
-
   const [formData, setFormData] = useState({
     avatarImage: null,
     fullName: auth.currentUser.displayName || "",
@@ -32,31 +31,68 @@ const ProfilePage = () => {
     contactPhone: auth.currentUser.phoneNumber || "",
     socials: socialLinks
   });
+  const [workouts, setWorkouts] = useState(null);
   const [editInfo, setEditInfo] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAvatarChanged, setIsAvatarChanged] = useState(false);
   const {avatarImage, fullName, instructorTitle, instructorDescription, contactEmail, contactPhone, socials } = formData;
 
+  // User Data Fetching
   useEffect(() => {
     const fetchUserData = async () => {
-      const userRef = doc(db, "users", auth.currentUser.uid);
-      const userDoc = await getDoc(userRef);
-      // if (userDoc.exists()) {
-      //   setFormData(userDoc.data()); // Update the state with the latest data
-      // }     
-      if (userDoc.exists()) {
-      setFormData(prevState => ({
-        ...prevState,
-        ...userDoc.data(), // Merge new data with the existing state
-      }));
-    }
-      else {
-        console.log("No such document.");
+      try {
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        const userDoc = await getDoc(userRef);
+   
+        if (userDoc.exists()) {
+          setFormData(prevState => ({
+            ...prevState,
+            ...userDoc.data(), // Merge new data with the existing state
+          }));
+      }
+        else {
+          console.log("No such document.");
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUserData();
   }, [auth.currentUser.uid]); // This runs every time the component mounts
+
+  // Workouts Data Fetching
+  useEffect(() => {
+    const fetchUserWorkouts = async () => {
+      try {
+        const workoutsRef = collection(db, "workouts"); 
+        const q = query(
+          workoutsRef,
+          where("instructor.id", "==", auth.currentUser.uid),
+          orderBy("timeStamp", "desc")
+        );
+        
+        const querySnap = await getDocs(q);
+
+        let fetchedWorkouts = [];
+        querySnap.forEach((doc) => {
+          fetchedWorkouts.push({
+            id: doc.id,
+            data: doc.data(),
+          });
+        });
+
+        setWorkouts(fetchedWorkouts);
+        
+      } catch (error) {
+        console.error("Error fetching workouts: ", error);
+      }
+    };
+
+    fetchUserWorkouts();
+  }, [auth.currentUser.uid]);
   
   function onSignOut() {
     // signing out
@@ -289,6 +325,7 @@ const ProfilePage = () => {
                   type="file" 
                   id='avatarImage'
                   name='avatarImage'
+                  disabled={!editInfo}
                   accept='.jpg, .png, jpeg'
                   onChange={onChange} 
                 /> 
@@ -375,6 +412,23 @@ const ProfilePage = () => {
                       />
                   </div>
             </form>
+
+            {/* My classes section */}  
+            <section className="bg-blue-50 px-4 py-10">
+              <div className="container-xl lg:container m-auto">
+                {!loading && workouts && (
+                  <>
+                    <h2 className="text-3xl font-bold text-navy mb-6 text-center">My Classes</h2>
+                    <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {workouts.map((workout) => (
+                        <ClassListing key={workout.id} workout={workout}/>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+            </section>
+
           </main>
         </div>
         </div>

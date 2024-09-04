@@ -12,19 +12,17 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import PrivateRoute from './components/PrivateRoute';
+import { db } from './firebase.js';
+import { addDoc,collection } from 'firebase/firestore';
 
 const App = () => {
   // Add new workout
   const addWorkout = async (newWorkout) => {
-      const res = await fetch('/api/classes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newWorkout),
-      });
-      console.log('newWorkout: ', newWorkout);
-      return;
+      try {
+        const docRef = await addDoc(collection(db, 'workouts'), newWorkout);
+      } catch (error) {
+        console.error('Error adding document: ', error);
+      }
   };
 
   // Delete workout

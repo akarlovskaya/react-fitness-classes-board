@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { db } from '../firebase.js';
 import ClassListing from './ClassListing';
 import Spinner from './Spinner';
 
@@ -8,25 +10,67 @@ const ClassListings = ( {isHome = false} ) => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const urlAPI = isHome
-      ? '/api/classes?_limit=3' 
-      : '/api/classes';
+  // useEffect(() => {
+  //   const urlAPI = isHome
+  //     ? '/api/classes?_limit=3' 
+  //     : '/api/classes';
 
-    const fetchClasses = async() => {
+  //   const fetchClasses = async() => {
+  //     try {
+  //       const res = await fetch(urlAPI);
+  //       const data = await res.json();
+  //       setClasses(data);
+  //     } catch (error) {
+  //       console.log('Error fetching data', error);
+  //     } finally {
+  //         setLoading(false);
+  //       }
+  //   };
+
+  //   fetchClasses();
+  // }, []);
+
+  // Workouts Data Fetching
+  useEffect(() => {
+    const fetchAllWorkouts = async () => {
       try {
-        const res = await fetch(urlAPI);
-        const data = await res.json();
-        setClasses(data);
+        const workoutsRef = collection(db, "workouts"); 
+        const q = query(
+          workoutsRef,
+          orderBy("timeStamp", "desc")
+        );
+        
+        const querySnap = await getDocs(q);
+
+        let fetchedAllWorkouts = [];
+        querySnap.forEach((doc) => {
+          fetchedAllWorkouts.push({
+            id: doc.id,
+            data: doc.data(),
+          });
+        });
+
+        setClasses(fetchedAllWorkouts);
+        
       } catch (error) {
-        console.log('Error fetching data', error);
-      } finally {
-          setLoading(false);
-        }
+        console.error("Error fetching all workouts: ", error);
+      }finally {
+        setLoading(false);
+      }
     };
 
-    fetchClasses();
+    fetchAllWorkouts();
   }, []);
+
+
+
+
+
+
+
+
+
+
 
   return (
     <section className="bg-blue-50 px-4 py-10">

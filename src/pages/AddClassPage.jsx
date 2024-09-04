@@ -3,7 +3,9 @@ import { useState } from 'react';
 import Checkbox from '../components/Checkbox';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { renderSocialIconSwitch } from '../utilities/Utilities';
+import { getAuth } from 'firebase/auth';
+import { serverTimestamp } from 'firebase/firestore';
+
 
 const AddClassPage = ({addClassSubmit}) => {
     const [type, setType] = useState('Drop-In');
@@ -17,17 +19,12 @@ const AddClassPage = ({addClassSubmit}) => {
     const [city, setCity] = useState('');
     const [region, setRegion] = useState('');
     const [zipcode, setZipcode] = useState('');
-    const [instructorName, setInstructorName] = useState('');
-    const [instructorDescription, setInstructorDescription] = useState('');
-    const [contactEmail, setContactEmail] = useState('');
-    const [contactPhone, setContactPhone] = useState('');
-    const [socialLinksList, setSocialLinksList] = useState([]);
     const [paymentOptions, setPaymentOptions] = useState([]);
 
     // for redirecting to Class page
     const navigate = useNavigate();
+    const auth = getAuth();
     
-
     const DAYS = [
         {
           name: "monday",
@@ -79,8 +76,6 @@ const AddClassPage = ({addClassSubmit}) => {
         }
       ];
 
-
-
     const handleSelectDay = (event) => {
         const value = event.target.value; // monday
         const id = event.target.id; // 1
@@ -129,13 +124,15 @@ const AddClassPage = ({addClassSubmit}) => {
               zipcode
             },            
             instructor: {
-              name: instructorName,
-              description: instructorDescription,
-              contactEmail,
-              contactPhone
+              name: auth.currentUser.displayName || "",
+              id: auth.currentUser.uid,
+              contactEmail: auth.currentUser.email,
+              contactPhone: auth.currentUser.phoneNumber || ""
             },
-            payment_options: paymentOptions
+            payment_options: paymentOptions,
+            timeStamp: serverTimestamp()
         }
+        
 
         addClassSubmit(newWorkout);
 
