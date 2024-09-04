@@ -20,7 +20,7 @@ const HomePageCards = () => {
             </Link>
           </Card>
           <Card bg='bg-orange-100'>
-            <h2 className="text-2xl font-bold">For Fitness Proffesionals</h2>
+            <h2 className="text-2xl font-bold">For Fitness Professionals</h2>
             <p className="mt-2 mb-4">
               List your classes to help others discover them
             </p>

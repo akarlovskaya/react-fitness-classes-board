@@ -4,6 +4,8 @@ import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import InstructorInfo from '../components/InstructorInfo';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../firebase.js';
 
 const ClassPage = ({deleteWorkout}) => {
     const navigate = useNavigate();
@@ -132,10 +134,14 @@ const ClassPage = ({deleteWorkout}) => {
 };
 
 const workoutLoader = async ({params}) => {
-    const res = await fetch(`/api/classes/${params.id}`);
-    const data = await res.json();
-    return data;
-};
+    const workoutId = params.id; // Get the workout ID from route params
+    const workoutRef = doc(db, "workouts", workoutId); // Create a reference to the workout document
+    const workoutDoc = await getDoc(workoutRef); // Fetch the document
 
+    if (!workoutDoc.exists()) {
+        throw new Error("Workout not found");
+    }
+    return workoutDoc.data();
+};
 
 export { ClassPage as default, workoutLoader };

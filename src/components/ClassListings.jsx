@@ -5,30 +5,9 @@ import { db } from '../firebase.js';
 import ClassListing from './ClassListing';
 import Spinner from './Spinner';
 
-
 const ClassListings = ( {isHome = false} ) => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const urlAPI = isHome
-  //     ? '/api/classes?_limit=3' 
-  //     : '/api/classes';
-
-  //   const fetchClasses = async() => {
-  //     try {
-  //       const res = await fetch(urlAPI);
-  //       const data = await res.json();
-  //       setClasses(data);
-  //     } catch (error) {
-  //       console.log('Error fetching data', error);
-  //     } finally {
-  //         setLoading(false);
-  //       }
-  //   };
-
-  //   fetchClasses();
-  // }, []);
 
   // Workouts Data Fetching
   useEffect(() => {
@@ -61,16 +40,6 @@ const ClassListings = ( {isHome = false} ) => {
 
     fetchAllWorkouts();
   }, []);
-
-
-
-
-
-
-
-
-
-
 
   return (
     <section className="bg-blue-50 px-4 py-10">

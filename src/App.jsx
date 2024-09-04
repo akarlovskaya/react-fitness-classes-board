@@ -13,7 +13,7 @@ import SignUpPage from './pages/SignUpPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import PrivateRoute from './components/PrivateRoute';
 import { db } from './firebase.js';
-import { addDoc,collection } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 
 const App = () => {
   // Add new workout
