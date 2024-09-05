@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import InstructorInfo from '../components/InstructorInfo';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
+import { changeTimeFormat, formatDaysArray } from '../utilities/Utilities.jsx';
 
 const ClassPage = ({deleteWorkout}) => {
     const navigate = useNavigate();
@@ -21,20 +22,6 @@ const ClassPage = ({deleteWorkout}) => {
         toast.success('Class listing deleted successfully!');
 
         navigate('/classes');
-    };
-
-    // Convert time to AM / PM
-    const changeTimeFormat = (time) => {
-        const timeString12hr = new Date('1970-01-01T' + time + 'Z')
-            .toLocaleTimeString('en-CA',
-            {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
-            );
-        return timeString12hr;
-    }
-
-    // Capitalize First Letter for Days Array and string together with comma
-    function formatDaysArray(daysArray) {
-        return daysArray.map(day => day.charAt(0).toUpperCase() + day.slice(1)).join(', ');
     };
 
     return (

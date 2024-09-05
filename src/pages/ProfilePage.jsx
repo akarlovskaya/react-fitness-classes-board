@@ -22,6 +22,7 @@ const ProfilePage = () => {
     linkedin: { name: 'linkedin', label: 'LinkedIn', link: '' },
     x_com: { name: 'x_com', label: 'Twitter / X.com', link: '' }
   };
+
   const [formData, setFormData] = useState({
     avatarImage: null,
     fullName: auth.currentUser.displayName || "",
@@ -31,7 +32,7 @@ const ProfilePage = () => {
     contactPhone: auth.currentUser.phoneNumber || "",
     socials: socialLinks
   });
-  const [workouts, setWorkouts] = useState(null);
+  const [workouts, setWorkouts] = useState([]);
   const [editInfo, setEditInfo] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAvatarChanged, setIsAvatarChanged] = useState(false);
@@ -416,7 +417,7 @@ const ProfilePage = () => {
             {/* My classes section */}  
             <section className="bg-blue-50 px-4 py-10">
               <div className="container-xl lg:container m-auto">
-                {!loading && workouts && (
+                {!loading && workouts.length > 0 && (
                   <>
                     <h2 className="text-3xl font-bold text-navy mb-6 text-center">My Classes</h2>
                     <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
