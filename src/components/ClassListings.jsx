@@ -52,7 +52,7 @@ const ClassListings = ( {isHome = false} ) => {
           ) : (
             <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {classes.map((workout) => (
-                <ClassListing key={workout.id} workout={workout}/>
+                <ClassListing key={workout.id} id={workout.id} workout={workout.data}/>
               ))}
             </ul>
           )}

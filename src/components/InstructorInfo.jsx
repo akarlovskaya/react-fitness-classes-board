@@ -12,7 +12,6 @@ const InstructorInfo = ({workout}) => {
     contactEmail: workout.instructor.contactEmail,
     contactPhone: workout.instructor.contactPhone,
   });
-  console.log('instructorData', instructorData.socials);
 
   // Fetch additional instructor data from Firestore
     useEffect(() => {

@@ -52,7 +52,7 @@ const App = () => {
       <Route path='/' element={< MainLayout />}>
         <Route index element={< HomePage />} />
         <Route path='/classes' element={< ClassesPage />} />
-        <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/>
+        {/* <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/> */}
 
         <Route path='/add-class' element={< PrivateRoute />}>
           <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
