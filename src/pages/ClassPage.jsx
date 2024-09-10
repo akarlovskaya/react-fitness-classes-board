@@ -8,21 +8,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { changeTimeFormat, formatDaysArray } from '../utilities/Utilities.jsx';
 
-const ClassPage = ({deleteWorkout}) => {
+const ClassPage = () => {
     const navigate = useNavigate();
     const workout = useLoaderData();
-
-    const onDeleteClick = (workoutId) => {
-        const confirm = window.confirm("Are you sure you want to delete this class listing?");
-
-        if (!confirm) return;
-
-        deleteWorkout(workoutId);
-
-        toast.success('Class listing deleted successfully!');
-
-        navigate('/classes');
-    };
 
     return (
         <>
@@ -100,18 +88,18 @@ const ClassPage = ({deleteWorkout}) => {
                 <InstructorInfo workout={workout}/>
 
                 {/* <!-- Manage --> */}
-                <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+                {/* <div className="bg-white p-6 rounded-lg shadow-md mt-6">
                     <h3 className="text-xl font-bold mb-6">Manage Class</h3>
                     <Link
                         to={`/edit-class/${workout.id}`}
                         className="bg-navy hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
                         >Edit Class</Link>
                     <button 
-                        onClick={() => onDeleteClick(workout.id)}
+                        onClick={() => deleteWorkout(workout.id)}
                         className="bg-orange-dark hover:bg-dark-light text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                         Delete Class
                     </button>
-                </div>
+                </div> */}
             </aside>
             </div>
         </div>

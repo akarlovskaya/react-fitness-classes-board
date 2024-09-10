@@ -19,14 +19,16 @@ const ClassListing = ({workout, id, onDelete, onEdit}) => {
 
   return (
     <li key={id} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-150 relative">
-      <Link to={`/classes/${id}`}>
+      
         <Moment className="absolute top-2 right-2 bg-beige uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg" fromNow>
           {workout.timeStamp?.toDate()}
         </Moment>
         <div className="p-4">
           <div className="mb-6">
             <div className="text-gray-600 my-2">{workout.type}</div>
-            <h3 className="text-xl font-bold">{workout.title}</h3>
+            <Link to={`/classes/${id}`}>
+               <h3 className="text-xl font-bold">{workout.title}</h3>
+            </Link>
           </div>
 
           <div className="mb-5 min-h-20">
@@ -78,8 +80,6 @@ const ClassListing = ({workout, id, onDelete, onEdit}) => {
           </div>
 
         </div>
-      </Link>
-
   </li>
   )
 }

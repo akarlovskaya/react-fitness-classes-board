@@ -258,7 +258,6 @@ const ProfilePage = () => {
   };
 
   const onEdit = (id) => {
-    console.log('id', id);
     navigate(`/edit-class/${id}`);
   };
 
