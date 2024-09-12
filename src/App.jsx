@@ -13,7 +13,7 @@ import SignUpPage from './pages/SignUpPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import PrivateRoute from './components/PrivateRoute';
 import { db } from './firebase.js';
-import { doc, addDoc, collection, updateDoc } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 
 const App = () => {
   // Add new workout
@@ -24,16 +24,6 @@ const App = () => {
         console.error('Error adding document: ', error);
       }
   };
-
-  // Edit workout
-  const updateWorkout = async (updatedWorkout) => {
-    try {
-      const docRef = doc(db, 'workouts', params.id)
-      await updateDoc(docRef, updatedWorkout);
-    } catch (error) {
-      console.error('Error updating document: ', error);
-    }
-  };
   
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -41,7 +31,6 @@ const App = () => {
         <Route index element={< HomePage />} />
 
         <Route path='/classes' element={< ClassesPage />} />
-        {/* <Route path='/classes/:id' element={< ClassPage deleteWorkout={deleteWorkout}/>} loader={workoutLoader}/> */}
         <Route path='/classes/:id' element={< ClassPage />} loader={workoutLoader}/>
 
         <Route path='/add-class' element={< PrivateRoute />}>
@@ -49,7 +38,7 @@ const App = () => {
         </Route>
         
         <Route path='/edit-class' element={< PrivateRoute />}> 
-          <Route path='/edit-class/:id' element={< EditClassPage updateClassSubmit={updateWorkout}/>} loader={workoutLoader}/>
+          <Route path='/edit-class/:id' element={< EditClassPage/>}/>
         </Route>
 
         <Route path='/profile' element={< PrivateRoute />}>

@@ -1,161 +1,114 @@
-import React from 'react';
-import { useState } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import Checkbox from '../components/Checkbox';
 import { toast } from 'react-toastify';
+import { DAYS, PAYMENT_OPTIONS } from '../utilities/Utilities.jsx';
+import Spinner from '../components/Spinner.jsx';
+import { db } from '../firebase.js';
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-const EditClassPage = ({updateClassSubmit}) => {
-    const workout = useLoaderData();
-
-    const [type, setType] = useState(workout.type);
-    const [title, setTitle] = useState(workout.title);
-    const [description, setDescription] = useState(workout.description);
-    const [time, setTime] = useState(workout.time);
-    const [fee, setFee] = useState(workout.cost);
-    const [daysList, setDaysList] = useState(workout.days);
-    const [place, setPlace] = useState(workout.location.place);
-    const [address, setAddress] = useState(workout.location.address);
-    const [city, setCity] = useState(workout.location.city);
-    const [region, setRegion] = useState(workout.location.region);
-    const [zipcode, setZipcode] = useState(workout.location.zipcode);
-    const [instructorName, setInstructorName] = useState(workout.instructor.name);
-    const [instructorDescription, setInstructorDescription] = useState(workout.instructor.description);
-    const [contactEmail, setContactEmail] = useState(workout.instructor.contactEmail);
-    const [contactPhone, setContactPhone] = useState(workout.instructor.contactPhone);
-    const [paymentOptions, setPaymentOptions] = useState(workout.payment_options);
-
+const EditClassPage = () => {
+    const [workout, setWorkout] = useState(null);
+    const [loading, setLoading] = useState(true);
     // for redirecting to Class page
     const navigate = useNavigate();
     const {id} = useParams();
+    const auth = getAuth();
 
-    const DAYS = [
-        {
-          id: "1",
-          name: "monday",
-          label: "Monday"
-        },
-        {
-          id: "2",
-          name: "tuesday",
-          label: "Tuesday"
-        },
-        {
-          id: "3",
-          name: "wednesday",
-          label: "Wednesday"
-        },
-        {
-          id: "4",
-          name: "thursday",
-          label: "Thursday"
-        },
-        {
-          id: "5",
-          name: "friday",
-          label: "Friday"
-        },
-        {
-          id: "6",
-          name: "saturday",
-          label: "Saturday"
-        },
-        {
-           id: "7",
-           name: "sunday",
-           label: "Sunday"
+    useEffect(() => {
+        if (workout && workout.instructor.id !== auth.currentUser.uid) {
+          toast.error("You can't edit this listing");
+          navigate("/");
         }
-      ];
+      }, [auth.currentUser.uid, workout, navigate]);
 
-    const PAYMENT_OPTIONS = [
-        {
-            id: "1",
-            type: "etransfer",
-            label: "E-transfer"
-        },
-        {
-            id: "2",
-            type: "cash",
-            label: "Cash"
-        },
-        {
-            id: "3",
-            type: "visaMastercard",
-            label: "Visa/Mastercard"
-        },
-        {
-            id: "4",
-            type: "cheque",
-            label: "Cheque"
-        }
-      ];
+    useEffect(() => {
+        const fetchWorkout = async () => {
+            try {
+                const docRef = doc(db, "workouts", id);
+                const docSnap = await getDoc(docRef);
 
+                if (docSnap.exists()) {
+                    setWorkout({ id: docSnap.id, ...docSnap.data() });
+                } else {
+                    navigate("/");
+                    toast.error("Listing does not exist");
+                }
+            } catch (error) {
+                console.error("Error fetching workout:", error);
+                toast.error("Error fetching workout data");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-      const handleSelectDay = (event) => {
-        const value = event.target.value; // monday
-        const isChecked = event.target.checked;
+        fetchWorkout();
+    }, [id, navigate]);
 
-        if (isChecked) {
-            // Add checked day to the daysList
-            setDaysList([...daysList, value]);
-        } else {
-            // Remove unchecked item from the daysList
-            const filteredList = daysList.filter((item) => item !==value);
-            setDaysList(filteredList);
-        }
-
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setWorkout(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
-    const handleSelectPayment = (event) => {
-        const value = event.target.value;
-        const isChecked = event.target.checked;
-
-        if (isChecked) {
-            // Add checked option to the PaymentOptions list
-            setPaymentOptions([...paymentOptions, value]);
-        } else {
-            // Remove unchecked item from the PaymentOptions list
-            const filteredList = paymentOptions.filter((item) => item !==value);
-            setPaymentOptions(filteredList);
-        }
-    };
-
-    const submitForm = (e) => {
-        e.preventDefault();
-
-        const updatedWorkout = {
-            id,
-            type,
-            title,
-            description,
-            time,
-            cost: fee,
-            days: daysList,
+    const handleLocationChange = (e) => {
+        const { name, value } = e.target;
+        setWorkout(prevState => ({
+            ...prevState,
             location: {
-              place,
-              address,
-              city,
-              region,
-              zipcode
-            },            
-            instructor: {
-              name: instructorName,
-              description: instructorDescription,
-              contactEmail,
-              contactPhone
-            },
-            payment_options: paymentOptions
-        }
-
-        console.log('updatedWorkout :', updatedWorkout);
-
-        updateClassSubmit(updatedWorkout);
-
-        // show confirmation
-        toast.success('Class listing updated successfully!');
-        // redirect to Class page
-        navigate(`/classes/${id}`);
+                ...prevState.location,
+                [name]: value
+            }
+        }));
     };
 
+    const handleSelectDay = (e) => {
+        const { value, checked } = e.target;
+        setWorkout(prevState => ({
+            ...prevState,
+            days: checked
+                ? [...prevState.days, value]
+                : prevState.days.filter(day => day !== value)
+        }));
+    };
+
+    const handleSelectPayment = (e) => {
+        const { value, checked } = e.target;
+        setWorkout(prevState => ({
+            ...prevState,
+            payment_options: checked
+                ? [...prevState.payment_options, value]
+                : prevState.payment_options.filter(option => option !== value)
+        }));
+    };
+
+    const submitForm = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const docRef = doc(db, "workouts", id);
+            await updateDoc(docRef, workout);
+            toast.success('Class listing updated successfully!');
+            navigate(`/classes/${id}`);
+        } catch (error) {
+            console.error("Error updating document: ", error);
+            toast.error('Error updating class listing');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return <Spinner />;
+    }
+
+    if (!workout) {
+        return <div>No workout found</div>;
+    }
 
   return (
     <section className="bg-indigo-50">
@@ -174,8 +127,8 @@ const EditClassPage = ({updateClassSubmit}) => {
                         name="type"
                         className="border rounded w-full py-2 px-3"
                         required
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
+                        value={workout.type}
+                        onChange={handleInputChange}
                         >
                         <option value="Drop-In">Drop-In</option>
                         <option value="Session">Session</option>
@@ -194,8 +147,8 @@ const EditClassPage = ({updateClassSubmit}) => {
                         className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="E.g. Cardio Dance"
                         required
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        value={workout.title}
+                        onChange={handleInputChange}
                     />
                 </div>
                 {/* Description */}
@@ -209,8 +162,8 @@ const EditClassPage = ({updateClassSubmit}) => {
                         className="border rounded w-full py-2 px-3"
                         rows="5"
                         placeholder="Tell what to expect from your classes - e.g. goal of the class, duration, what participants should bring and wear, if any eguipment will be used in your class. Note: Make your first sentence as informative and catchy as possible, as only the first 130 characters will be visible on the Home Page. The full description will be visible on the Class Details page."
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}>
+                        value={workout.description}
+                        onChange={handleInputChange}>
                         </textarea>
                 </div>
                 {/* Time */}
@@ -224,8 +177,8 @@ const EditClassPage = ({updateClassSubmit}) => {
                         name="time"
                         className="border rounded w-full py-2 px-3 mb-2"
                         required
-                        value={time}
-                        onChange={(e) => setTime(e.target.value)}
+                        value={workout.time}
+                        onChange={handleInputChange}
                     />
                 </div>
 
@@ -241,7 +194,7 @@ const EditClassPage = ({updateClassSubmit}) => {
                                 type="checkbox"
                                 value={day.name} 
                                 id={day.id} 
-                                checked={daysList.includes(day.name)}
+                                checked={workout.days.includes(day.name)}
                                 name={day.name}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 handleSelect={handleSelectDay}>{day.label}
@@ -253,17 +206,17 @@ const EditClassPage = ({updateClassSubmit}) => {
                 {/* Fee */}
                 <div className="mb-4">
                     <label
-                        htmlFor="fee"
+                        htmlFor="cost"
                         className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Fee</label>
                     <input
                         type="number"
-                        id="fee"
-                        name="fee"
+                        id="cost"
+                        name="cost"
                         className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="Price for One Class or Session"
                         required
-                        value={fee}
-                        onChange={(e) => setFee(e.target.value)}
+                        value={workout.cost}
+                        onChange={handleInputChange}
                     />
                 </div>
             </fieldset> 
@@ -273,135 +226,26 @@ const EditClassPage = ({updateClassSubmit}) => {
             <fieldset>
             <legend className="font-semibold uppercase mb-2 mt-10">Location</legend>
                 <div className='mb-4'>
-                    <label htmlFor="place" className='block text-gray-700 font-bold mb-2'>
-                        Place
-                    </label>
-                    <input
-                        type='text'
-                        id='place'
-                        name='place'
-                        className='border rounded w-full py-2 px-3 mb-2'
-                        placeholder='E.g., name of a Gym or Studio'
-                        required
-                        value={place}
-                        onChange={(e) => setPlace(e.target.value)}         
-                    />
-
-                    <label htmlFor="address" className='block text-gray-700 font-bold mb-2'>
-                        Street Address
-                    </label>
-                    <input
-                        type='text'
-                        id='address'
-                        name='address'
-                        className='border rounded w-full py-2 px-3 mb-2'
-                        required
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}         
-                    />
-
-                    <label htmlFor="city" className='block text-gray-700 font-bold mb-2'>
-                        City
-                    </label>
-                    <input
-                        type='text'
-                        id='city'
-                        name='city'
-                    className='border rounded w-full py-2 px-3 mb-2'
-                        required
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}       
-                    />
-
-                    <label htmlFor="region" className='block text-gray-700 font-bold mb-2'>
-                        State / Province
-                    </label>
-                    <input
-                        type='text'
-                        id='region'
-                        name='region'
-                        className='border rounded w-full py-2 px-3 mb-2'
-                        required
-                        value={region}
-                        onChange={(e) => setRegion(e.target.value)}     
-                    />
-                    <label htmlFor="zipcode" className='block text-gray-700 font-bold mb-2'>
-                        ZIP / Postal code
-                    </label>
-                    <input
-                        type='text'
-                        id='zipcode'
-                        name='zipcode'
-                        className='border rounded w-full py-2 px-3 mb-2'
-                        required
-                        value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}           
-                    />
+                    {['place', 'address', 'city', 'region', 'zipcode'].map((field) => (
+                        <div key={field}>
+                            <label htmlFor={field} className='block text-gray-700 font-bold mb-2'>
+                                {field.charAt(0).toUpperCase() + field.slice(1)}
+                            </label>
+                            <input
+                                type='text'
+                                id={field}
+                                name={field}
+                                className='border rounded w-full py-2 px-3 mb-2'
+                                required
+                                value={workout.location[field]}
+                                onChange={handleLocationChange}
+                            />
+                        </div>
+                    ))}
                 </div>
             </fieldset>
             {/* END of LOCATION */}
 
-            {/* INSTRUCTOR INFORMATION */}
-            <fieldset>
-                <legend className="font-semibold uppercase mb-2 mt-8">Instructor Info</legend>
-                <div className="mb-4">
-                <label htmlFor="instructorName" className="block text-gray-700 font-bold mb-2">Name</label>
-                    <input
-                        type="text"
-                        id="instructorName"
-                        name="instructorName"
-                        className="border rounded w-full py-2 px-3"
-                        value={instructorName}
-                        onChange={(e) => setInstructorName(e.target.value)} 
-                    />
-                </div>
-                {/* About */}
-                <div className="mb-4">
-                <label
-                    htmlFor="instructorDescription"
-                    className="block text-gray-700 font-bold mb-2">About You</label>
-                    <textarea
-                        id="instructorDescription"
-                        name="instructorDescription"
-                        className="border rounded w-full py-2 px-3"
-                        rows="4"
-                        placeholder="Tell a bit about yourself - experience, what moves you?"
-                        value={instructorDescription}
-                        onChange={(e) => setInstructorDescription(e.target.value)} 
-                    ></textarea>
-                </div>
-                {/* Contact Email */}
-                <div className="mb-4">
-                    <label
-                        htmlFor="contactEmail"
-                        className="block text-gray-700 font-bold mb-2">Contact Email</label>
-                    <input
-                        type="email"
-                        id="contactEmail"
-                        name="contactEmail"
-                        className="border rounded w-full py-2 px-3"
-                        placeholder="You email address"
-                        required
-                        value={contactEmail}
-                        onChange={(e) => setContactEmail(e.target.value)} 
-                    />
-                </div>
-                {/* Contact Phone */}
-                <div className="mb-4">
-                    <label
-                    htmlFor="contactPhone"
-                    className="block text-gray-700 font-bold mb-2">Contact Phone</label>
-                    <input
-                        type="tel"
-                        id="contactPhone"
-                        name="contactPhone"
-                        className="border rounded w-full py-2 px-3"
-                        placeholder="Add phone number. Optional"
-                        value={contactPhone}
-                        onChange={(e) => setContactPhone(e.target.value)} 
-                    />
-                </div>
-            </fieldset>
             {/* PAYMENT OPRIONS */}
             <fieldset>
             <legend className="font-semibold uppercase mb-2 mt-8">Payment Options</legend>
@@ -413,7 +257,7 @@ const EditClassPage = ({updateClassSubmit}) => {
                         type="checkbox"
                         value={payment.type} 
                         id={payment.id} 
-                        checked={paymentOptions.includes(payment.type)}
+                        checked={workout.payment_options.includes(payment.type)}
                         name={payment.type}
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         handleSelect={handleSelectPayment}>{payment.label}
@@ -425,9 +269,9 @@ const EditClassPage = ({updateClassSubmit}) => {
 
             <div>
             <button
-            className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                className="bg-navy hover:bg-navy-light text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                 type="submit">
-                Edit Class
+                    Edit Class
             </button>
             </div>
         </form>

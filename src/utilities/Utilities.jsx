@@ -32,3 +32,65 @@ export const changeTimeFormat = (time) => {
 export function formatDaysArray(daysArray) {
     return daysArray.map(day => day.charAt(0).toUpperCase() + day.slice(1)).join(', ');
 };
+
+
+export const DAYS = [
+    {
+      id: "1",
+      name: "monday",
+      label: "Monday"
+    },
+    {
+      id: "2",
+      name: "tuesday",
+      label: "Tuesday"
+    },
+    {
+      id: "3",
+      name: "wednesday",
+      label: "Wednesday"
+    },
+    {
+      id: "4",
+      name: "thursday",
+      label: "Thursday"
+    },
+    {
+      id: "5",
+      name: "friday",
+      label: "Friday"
+    },
+    {
+      id: "6",
+      name: "saturday",
+      label: "Saturday"
+    },
+    {
+       id: "7",
+       name: "sunday",
+       label: "Sunday"
+    }
+  ];
+
+export const PAYMENT_OPTIONS = [
+    {
+        id: "1",
+        type: "etransfer",
+        label: "E-transfer"
+    },
+    {
+        id: "2",
+        type: "cash",
+        label: "Cash"
+    },
+    {
+        id: "3",
+        type: "visaMastercard",
+        label: "Visa/Mastercard"
+    },
+    {
+        id: "4",
+        type: "cheque",
+        label: "Cheque"
+    }
+  ];
