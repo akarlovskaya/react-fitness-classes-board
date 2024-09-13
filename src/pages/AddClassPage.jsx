@@ -4,105 +4,54 @@ import Checkbox from '../components/Checkbox';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getAuth } from 'firebase/auth';
-import { serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { DAYS, PAYMENT_OPTIONS } from '../utilities/Utilities.jsx';
+import { db } from '../firebase.js';
 
 
 const AddClassPage = ({addClassSubmit}) => {
-    const [type, setType] = useState('Drop-In');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [time, setTime] = useState('');
-    const [fee, setFee] = useState('');
-    const [daysList, setDaysList] = useState([]);
-    const [place, setPlace] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [region, setRegion] = useState('');
-    const [zipcode, setZipcode] = useState('');
-    const [paymentOptions, setPaymentOptions] = useState([]);
-
+    const [formData, setFormData] = useState({
+        type: 'Drop-In',
+        title: '',
+        description: '',
+        time: '',
+        fee: '',
+        daysList: [],
+        place: '',
+        address: '',
+        city: '',
+        region: '',
+        zipcode: '',
+        paymentOptions: [],
+    });
     // for redirecting to Class page
     const navigate = useNavigate();
     const auth = getAuth();
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
     
-    const DAYS = [
-        {
-          name: "monday",
-          label: "Monday"
-        },
-        {
-          name: "tuesday",
-          label: "Tuesday"
-        },
-        {
-          name: "wednesday",
-          label: "Wednesday"
-        },
-        {
-          name: "thursday",
-          label: "Thursday"
-        },
-        {
-          name: "friday",
-          label: "Friday"
-        },
-        {
-          name: "saturday",
-          label: "Saturday"
-        },
-        {
-           name: "sunday",
-           label: "Sunday"
-        }
-      ];
-
-    const PAYMENT_OPTIONS = [
-        {
-            type: "etransfer",
-            label: "E-transfer"
-        },
-        {
-            type: "cash",
-            label: "Cash"
-        },
-        {
-
-            type: "visaMastercard",
-            label: "Visa / Mastercard"
-        },
-        {
-            type: "cheque",
-            label: "Cheque"
-        }
-      ];
-
-    const handleSelectDay = (event) => {
-        const value = event.target.value; // monday
-        const id = event.target.id; // 1
-        const isChecked = event.target.checked;
-
-        if (isChecked) {
-            // Add checked day to the daysList
-            setDaysList([...daysList, value]);
-        } else {
-            // Remove unchecked item from the daysList
-            const filteredList = daysList.filter((item) => item !==value);
-            setDaysList(filteredList);
-        }
-
+    const handleCheckboxChange = (e, stateKey) => {
+        const { value, checked } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [stateKey]: checked
+                ? [...prevState[stateKey], value]
+                : prevState[stateKey].filter(item => item !== value)
+        }));
     };
 
-    const handleSelectPayment = (event) => {
-        const value = event.target.value;
-        const isChecked = event.target.checked;
-
-        if (isChecked) {
-            // Add checked option to the PaymentOptions list
-            setPaymentOptions([...paymentOptions, value]);
-        } else {
-            // Remove unchecked item from the PaymentOptions list
-            const filteredList = paymentOptions.filter((item) => item !==value);
-            setPaymentOptions(filteredList);
+    // Add new workout
+    const addWorkout = async (newWorkout) => {
+        try {
+        const docRef = await addDoc(collection(db, 'workouts'), newWorkout);
+        } catch (error) {
+        console.error('Error adding document: ', error);
         }
     };
 
@@ -110,35 +59,28 @@ const AddClassPage = ({addClassSubmit}) => {
         e.preventDefault();
 
         const newWorkout = {
-            type,
-            title,
-            description,
-            time,
-            cost: fee,
-            days: daysList,
+            ...formData,
+            cost: formData.fee,
+            days: formData.daysList,
             location: {
-              place,
-              address,
-              city,
-              region,
-              zipcode
-            },            
-            instructor: {
-              name: auth.currentUser.displayName || "",
-              id: auth.currentUser.uid,
-              contactEmail: auth.currentUser.email,
-              contactPhone: auth.currentUser.phoneNumber || ""
+                place: formData.place,
+                address: formData.address,
+                city: formData.city,
+                region: formData.region,
+                zipcode: formData.zipcode
             },
-            payment_options: paymentOptions,
+            instructor: {
+                name: auth.currentUser.displayName || "",
+                id: auth.currentUser.uid,
+                contactEmail: auth.currentUser.email,
+                contactPhone: auth.currentUser.phoneNumber || ""
+            },
+            payment_options: formData.paymentOptions,
             timeStamp: serverTimestamp()
-        }
-        
+        };
 
-        addClassSubmit(newWorkout);
-
-        // show confirmation
+        addWorkout(newWorkout);
         toast.success('Class listing created successfully!');
-        // redirect to Class page
         navigate('/classes');
     };
     
@@ -159,8 +101,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         name="type"
                         className="border rounded w-full py-2 px-3"
                         required
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
+                        value={formData.type}
+                        onChange={handleInputChange}
                         >
                         <option value="Drop-In">Drop-In</option>
                         <option value="Session">Session</option>
@@ -179,8 +121,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="E.g. Cardio Dance"
                         required
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        value={formData.title}
+                        onChange={handleInputChange}
                     />
                 </div>
                 {/* Description */}
@@ -194,8 +136,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         className="border rounded w-full py-2 px-3"
                         rows="5"
                         placeholder="Tell what to expect from your classes - e.g. goal of the class, duration, what participants should bring and wear, if any eguipment will be used in your class. Note: Make your first sentence as informative and catchy as possible, as only the first 130 characters will be visible on the Home Page. The full description will be visible on the Class Details page."
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}>
+                        value={formData.description}
+                        onChange={handleInputChange}>
                         </textarea>
                 </div>
                 {/* Time */}
@@ -209,8 +151,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         name="time"
                         className="border rounded w-full py-2 px-3 mb-2"
                         required
-                        value={time}
-                        onChange={(e) => setTime(e.target.value)}
+                        value={formData.time}
+                        onChange={handleInputChange}
                     />
                 </div>
 
@@ -227,7 +169,7 @@ const AddClassPage = ({addClassSubmit}) => {
                                 id={day.name} 
                                 name={day.name}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                handleSelect={handleSelectDay}>{day.label}
+                                handleSelect={(e) => handleCheckboxChange(e, 'daysList')}>{day.label}
                             </Checkbox>
                         )
                         } 
@@ -245,8 +187,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="Price for One Class or Session"
                         required
-                        value={fee}
-                        onChange={(e) => setFee(e.target.value)}
+                        value={formData.fee}
+                        onChange={handleInputChange}
                     />
                 </div>
             </fieldset> 
@@ -266,8 +208,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         className='border rounded w-full py-2 px-3 mb-2'
                         placeholder='E.g., name of a Gym or Studio'
                         required
-                        value={place}
-                        onChange={(e) => setPlace(e.target.value)}         
+                        value={formData.place}
+                        onChange={handleInputChange}         
                     />
 
                     <label htmlFor="address" className='block text-gray-700 font-bold mb-2'>
@@ -279,8 +221,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         name='address'
                         className='border rounded w-full py-2 px-3 mb-2'
                         required
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}         
+                        value={formData.address}
+                        onChange={handleInputChange}         
                     />
 
                     <label htmlFor="city" className='block text-gray-700 font-bold mb-2'>
@@ -292,8 +234,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         name='city'
                     className='border rounded w-full py-2 px-3 mb-2'
                         required
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}       
+                        value={formData.city}
+                        onChange={handleInputChange}       
                     />
 
                     <label htmlFor="region" className='block text-gray-700 font-bold mb-2'>
@@ -305,8 +247,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         name='region'
                         className='border rounded w-full py-2 px-3 mb-2'
                         required
-                        value={region}
-                        onChange={(e) => setRegion(e.target.value)}     
+                        value={formData.region}
+                        onChange={handleInputChange}     
                     />
                     <label htmlFor="zipcode" className='block text-gray-700 font-bold mb-2'>
                         ZIP / Postal code
@@ -317,8 +259,8 @@ const AddClassPage = ({addClassSubmit}) => {
                         name='zipcode'
                         className='border rounded w-full py-2 px-3 mb-2'
                         required
-                        value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}           
+                        value={formData.zipcode}
+                        onChange={handleInputChange}           
                     />
                 </div>
             </fieldset>
@@ -337,7 +279,7 @@ const AddClassPage = ({addClassSubmit}) => {
                         id={payment.type} 
                         name={payment.type}
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        handleSelect={handleSelectPayment}>{payment.label}
+                        handleSelect={(e) => handleCheckboxChange(e, 'paymentOptions')}>{payment.label}
                     </Checkbox>
                    )
                 } 

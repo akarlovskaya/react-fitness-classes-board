@@ -12,19 +12,9 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import PrivateRoute from './components/PrivateRoute';
-import { db } from './firebase.js';
-import { addDoc, collection } from 'firebase/firestore';
 
 const App = () => {
-  // Add new workout
-  const addWorkout = async (newWorkout) => {
-      try {
-        const docRef = await addDoc(collection(db, 'workouts'), newWorkout);
-      } catch (error) {
-        console.error('Error adding document: ', error);
-      }
-  };
-  
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={< MainLayout />}>
@@ -34,7 +24,7 @@ const App = () => {
         <Route path='/classes/:id' element={< ClassPage />} loader={workoutLoader}/>
 
         <Route path='/add-class' element={< PrivateRoute />}>
-          <Route path='/add-class' element={< AddClassPage addClassSubmit={addWorkout}/>} />
+          <Route path='/add-class' element={< AddClassPage />} />
         </Route>
         
         <Route path='/edit-class' element={< PrivateRoute />}> 
