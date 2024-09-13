@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import InstructorInfo from '../components/InstructorInfo';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { changeTimeFormat, formatDaysArray } from '../utilities/Utilities.jsx';
+import { FaShare } from "react-icons/fa";
 
 const ClassPage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const workout = useLoaderData();
+    const [shareLinkCopied, setShareLinkCopied] = useState(false);
+
 
     return (
         <>
@@ -29,16 +32,39 @@ const ClassPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
             <main>
                 <div
-                className="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
-                <div className="text-gray-500 mb-4">{ workout.type }</div>
-                <h1 className="text-3xl font-bold mb-4">
-                    { workout.title }
-                </h1>
-                <div
-                className="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
-                    <FaMapMarker className='inline text-lg mb-1 mr-1 mt-1 text-orange-dark' />
-                    <p className="text-orange-dark"> { workout.location.city } </p>
-                </div>
+                    className="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
+
+                        <div className='flex justify-between'>
+                            <div className="text-gray-500 mb-4">{ workout.type }</div>
+                            {/* <!-- Share link --> */} 
+                            <div
+                                className="relative cursor-pointer z-10"
+                                onClick={() => {
+                                navigator.clipboard.writeText(window.location.href);
+                                setShareLinkCopied(true);
+                                setTimeout(() => {
+                                    setShareLinkCopied(false);
+                                }, 2000);
+                                }}
+                            >
+                                <FaShare className="text-lg text-indigo-800 ml-6 mt-2" title="Copy link to share" />
+                                {shareLinkCopied && (
+                                    <p className="absolute top-[60%] text-xs cursor-pointer z-10">
+                                    Link Copied
+                                    </p>
+                                )}
+                            </div>
+
+                        </div>
+
+                    <h1 className="text-3xl font-bold mb-4">
+                        { workout.title }
+                    </h1>
+                    <div
+                    className="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
+                        <FaMapMarker className='inline text-lg mb-1 mr-1 mt-1 text-orange-dark' />
+                        <p className="text-orange-dark"> { workout.location.city } </p>
+                    </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-lg shadow-md mt-6">
