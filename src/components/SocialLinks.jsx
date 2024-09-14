@@ -4,6 +4,8 @@ import { renderSocialIconSwitch } from '../utilities/Utilities';
 
 
 const SocialLinks = ({socialLinks}) => {
+  // Link to = {`https://${socialLink.link}`} 
+
   return (
     <>
     <h3 className="text-xl mt-4">Find me on:</h3>
@@ -11,7 +13,7 @@ const SocialLinks = ({socialLinks}) => {
           {Object.values(socialLinks).map((socialLink) => {
             return (
               <li key={socialLink.name} className="text-xl content-center mr-2 hover:text-orange-dark">
-                <Link to={`https://${socialLink.link}`} target="_blank" rel="noopener noreferrer">
+                <Link to='' target="_blank" rel="noopener noreferrer">
                   {renderSocialIconSwitch(socialLink.name)} {/* Render the icon */}
                 </Link>
               </li>

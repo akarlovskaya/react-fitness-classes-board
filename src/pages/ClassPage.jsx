@@ -4,6 +4,7 @@ import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 // import { toast } from 'react-toastify';
 import InstructorInfo from '../components/InstructorInfo';
+import Message from '../components/Message';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { changeTimeFormat, formatDaysArray } from '../utilities/Utilities.jsx';
@@ -13,7 +14,6 @@ const ClassPage = () => {
     // const navigate = useNavigate();
     const workout = useLoaderData();
     const [shareLinkCopied, setShareLinkCopied] = useState(false);
-
 
     return (
         <>
@@ -34,27 +34,33 @@ const ClassPage = () => {
                 <div
                     className="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
 
-                        <div className='flex justify-between'>
+                        <div className='relative flex justify-between'>
                             <div className="text-gray-500 mb-4">{ workout.type }</div>
                             {/* <!-- Share link --> */} 
-                            <div
-                                className="relative cursor-pointer z-10"
+                            <button
+                                type="button"
+                                aria-label="Share this class"
+                                title="Copy link to share"
+                                className="flex text-navy hover:text-navy-light justify-center py-2 px-4 items-center"
                                 onClick={() => {
                                 navigator.clipboard.writeText(window.location.href);
                                 setShareLinkCopied(true);
                                 setTimeout(() => {
                                     setShareLinkCopied(false);
                                 }, 2000);
-                                }}
-                            >
-                                <FaShare className="text-lg text-indigo-800 ml-6 mt-2" title="Copy link to share" />
-                                {shareLinkCopied && (
-                                    <p className="absolute top-[60%] text-xs cursor-pointer z-10">
-                                    Link Copied
-                                    </p>
-                                )}
-                            </div>
-
+                                }}>
+                                    Share
+                                    <FaShare 
+                                        aria-hidden="true" 
+                                        focusable="false"
+                                        className="mr-2 text-xl pl-2" 
+                                        title="Copy link to share" />
+                            </button>
+                            {shareLinkCopied && (
+                                <span className="absolute top-0 right-0 text-xs z-10">
+                                Link Copied
+                                </span>
+                            )}
                         </div>
 
                     <h1 className="text-3xl font-bold mb-4">
@@ -112,11 +118,10 @@ const ClassPage = () => {
             {/* <!-- Sidebar --> */}
             <aside>
                 <InstructorInfo workout={workout}/>
+                <Message instructorId={workout.instructor.id} workout={workout}/>
 
                 {/* <!-- Manage --> */}
-                {/* <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                    <h3 className="text-xl font-bold mb-6">Manage Class</h3>
-                    <Link
+                    {/* <Link
                         to={`/edit-class/${workout.id}`}
                         className="bg-navy hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
                         >Edit Class</Link>
@@ -124,8 +129,8 @@ const ClassPage = () => {
                         onClick={() => deleteWorkout(workout.id)}
                         className="bg-orange-dark hover:bg-dark-light text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                         Delete Class
-                    </button>
-                </div> */}
+                    </button> */}
+
             </aside>
             </div>
         </div>

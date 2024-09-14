@@ -68,16 +68,16 @@ const InstructorInfo = ({workout}) => {
 
         <hr className="my-4" />
 
-        {instructorData.contactEmail && (
+        {/* {instructorData.contactEmail && (
           <>
-          <h3 className="text-xl">Contact Email:</h3>
+          <h3 className="text-xl">Email:</h3>
           <p className="my-2 bg-indigo-100 p-2 font-bold">{ instructorData.contactEmail }</p>
           </>
-        )}
+        )} */}
 
         {instructorData.contactPhone && (
           <>
-          <h3 className="text-xl mt-4">Contact Phone:</h3>
+          <h3 className="text-xl mt-4">Phone:</h3>
           <p className="my-2 bg-indigo-100 p-2 font-bold">{ instructorData.contactPhone }</p>
           </>
         )}
