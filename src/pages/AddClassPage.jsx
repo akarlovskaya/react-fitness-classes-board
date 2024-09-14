@@ -157,6 +157,7 @@ const AddClassPage = ({addClassSubmit}) => {
                 </div>
 
                 {/* Checkbox DAY of WEEK */}
+                {/* TODO: add validation */}
                 <fieldset>
                     <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Days of the Week</legend>
                     <div className="mb-4">
@@ -267,6 +268,7 @@ const AddClassPage = ({addClassSubmit}) => {
             {/* END of LOCATION */}
 
             {/* PAYMENT OPTIONS */}
+            {/* TODO: add validation */}
             <fieldset>
             <legend className="font-semibold uppercase mb-2 mt-8">Payment Options</legend>
             <div className="mb-4">

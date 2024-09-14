@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import { doc, updateDoc, getDoc, serverTimestamp, collection, query, where, orderBy, getDocs, deleteDoc } from 'firebase/firestore';
+// import { useNavigate } from 'react-router-dom';
+import { doc, updateDoc, getDoc, serverTimestamp, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../firebase.js';
 import { toast } from 'react-toastify';
@@ -11,11 +11,12 @@ import {v4 as uuidv4} from "uuid";
 import Spinner from '../components/Spinner.jsx';
 import defaultAvatarImg from '../assets/images/avatar-img.png';
 import SocialLinksProfileForm from '../components/SocialLinksProfileForm.jsx';
-import ClassListing from '../components/ClassListing';
+import ProfilePageMyClasses from '../components/ProfilePageMyClasses.jsx';
+// import ClassListing from '../components/ClassListing';
 
 const ProfilePage = () => {
   const auth = getAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const socialLinks = {
     facebook: { name: 'facebook', label: 'Facebook', link: '' },
     instagram: { name: 'instagram', label: 'Instagram', link: '' },
@@ -244,221 +245,185 @@ const ProfilePage = () => {
     return <Spinner />;
   }
 
-  const onDelete = async (workoutID) => {
-    const confirm = window.confirm("Are you sure you want to delete this class listing?");
-    if (!confirm) return;
-
-    await deleteDoc(doc(db, "workouts", workoutID));
-    const updatedListings = workouts.filter(
-      workout => workout.id !== workoutID
-    );
-    setWorkouts(updatedListings);
-
-    toast.success('Class listing deleted successfully!');
-  };
-
-  const onEdit = (id) => {
-    navigate(`/edit-class/${id}`);
-  };
-
   return (
-      <section className="bg-indigo-50">
-        <div className="container mx-auto py-8">
-        <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
-        {/* <h1 className="text-3xl text-center font-semibold mb-6">My Profile</h1> */}
-          <aside className="col-span-4 sm:col-span-3">
-            {/* Profile Image */}
-            <div className="bg-white shadow rounded-lg p-6">
+    <section className="bg-indigo-50">
+      <div className="container mx-auto py-8">
+      <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+      {/* <h1 className="text-3xl text-center font-semibold mb-6">My Profile</h1> */}
+        <aside className="col-span-4 sm:col-span-3">
+          {/* Profile Image */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="flex flex-col items-center">
               <div className="flex flex-col items-center">
-                <div className="flex flex-col items-center">
-                    <img 
-                      src={avatarImage  || defaultAvatarImg}
-                      className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
-                      alt="Profile Avatar">
-                    </img>
-                    {auth.currentUser.displayName &&
-                      <h1 className="text-xl font-bold">{auth.currentUser.displayName}</h1> 
-                    }
-                    {instructorTitle &&
-                      <p className="text-gray-700">{instructorTitle}</p>
-                    }
-                </div>
-                <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                  <button
-                    type="submit"
-                    className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
-                    onClick={()=> {
-                      editInfo && onSubmit();
-                      setEditInfo(prevState => !prevState) 
-                    }}
-                >
-                    { editInfo ? "Save" : "Edit" }
-                </button>
-                </div>
+                  <img 
+                    src={avatarImage  || defaultAvatarImg}
+                    className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
+                    alt="Profile Avatar">
+                  </img>
+                  {auth.currentUser.displayName &&
+                    <h1 className="text-xl font-bold">{auth.currentUser.displayName}</h1> 
+                  }
+                  {instructorTitle &&
+                    <p className="text-gray-700">{instructorTitle}</p>
+                  }
               </div>
-              <hr className="my-6 border-t border-gray-300" />
-
-              <SocialLinksProfileForm socialLinks={formData.socials} onSocialLinkChange={onChange} editInfo={editInfo}/>
-
-              {/* <!-- Skills --> */}
-              {/* <div className="flex flex-col">
-                    <h2 className="text-gray-700 font-bold mb-2">Skills</h2>
-                    <ul>
-                        <li className="mb-2">Personal Training</li>
-                        <li className="mb-2">Yoga</li>
-                        <li className="mb-2">HIIT</li>
-                    </ul>
-                </div> */}
-            </div>
-            {/* <!-- Manage --> */}
-            <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-              {/* <h2 className="text-xl font-bold mb-6">Manage Profile</h2> */}
-            {/* Edit and Sign Out */}
-            <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
-              <button
+              <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                <button
                   type="submit"
                   className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
-                  onClick={onSignOut}
+                  onClick={()=> {
+                    editInfo && onSubmit();
+                    setEditInfo(prevState => !prevState) 
+                  }}
               >
-                  Sign Out
+                  { editInfo ? "Save" : "Edit" }
               </button>
-            </div>
-            {/* Create Class Listing Button*/}
-            <Link to='/add-class'
-              className='flex bg-navy hover:bg-navy-light justify-center text-white py-2 px-4 rounded-full w-full items-center focus:outline-none focus:shadow-outline'
-            >
-              <IoCreateOutline className='mr-2 text-xl'/> Create Class
-            </Link>
-            </div>
-          </aside>
-
-          <main className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0 col-span-4 sm:col-span-9">
-            {/* Image upload */}
-            <div className='mb-4'>
-              <label htmlFor="avatarImage" className="block text-gray-700 font-bold mb-2">
-                { isAvatarChanged ? `Profile` : `Edit`} Image
-              </label>
-                <p className='mb-2'>Accepted format .jpg, .png, jpeg</p>
-                <input 
-                  type="file" 
-                  id='avatarImage'
-                  name='avatarImage'
-                  disabled={!editInfo}
-                  accept='.jpg, .png, jpeg'
-                  onChange={onChange} 
-                /> 
-            </div>
-
-            <form>
-              {/* INSTRUCTOR INFORMATION */}
-              {/* <fieldset> */}
-                  {/* <legend className="font-semibold uppercase mb-2 mt-8">Instructor Info</legend> */}
-                    <div className="mb-4">
-                    <label htmlFor="fullName" className="block text-gray-700 font-bold mb-2">Name</label>
-                        <input
-                            type="text"
-                            id="fullName"
-                            name="fullName"
-                            disabled={!editInfo}
-                            className="border rounded w-full py-2 px-3" 
-                            value={fullName}
-                            onChange={onChange} 
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                    <label htmlFor="instructorTitle" className="block text-gray-700 font-bold mb-2">Title</label>
-                        <input
-                            type="text"
-                            id="instructorTitle"
-                            name="instructorTitle"
-                            disabled={!editInfo}
-                            className="border rounded w-full py-2 px-3" 
-                            placeholder="Ex. Group Fitness Instructor"
-                            value={instructorTitle}
-                            onChange={onChange} 
-                        />
-                    </div>
-
-                  {/* About */}
-                  <div className="mb-4">
-                  <label
-                      htmlFor="instructorDescription"
-                      className="block text-gray-700 font-bold mb-2">About You</label>
-                      <textarea
-                          id="instructorDescription"
-                          name="instructorDescription"
-                          disabled={!editInfo}
-                          className="border rounded w-full py-2 px-3"
-                          rows="4"
-                          placeholder="Tell a bit about yourself - experience, what moves you?"
-                          value={instructorDescription}
-                          onChange={onChange} 
-                      ></textarea>
-                  </div>
-                  {/* Contact Email */}
-                  <div className="mb-4">
-                      <label
-                          htmlFor="contactEmail"
-                          className="block text-gray-700 font-bold mb-2">Contact Email</label>
-                      <input
-                          type="email"
-                          id="contactEmail"
-                          name="contactEmail"
-                          disabled={!editInfo}
-                          className="border rounded w-full py-2 px-3"
-                          placeholder="You email address"
-                          required
-                          value={contactEmail}
-                          onChange={onChange} 
-                      />
-                  </div>
-                  {/* Contact Phone */}
-                  <div className="mb-4">
-                      <label
-                      htmlFor="contactPhone"
-                      className="block text-gray-700 font-bold mb-2">Contact Phone</label>
-                      <input
-                          type="tel"
-                          id="contactPhone"
-                          name="contactPhone"
-                          disabled={!editInfo}
-                          className="border rounded w-full py-2 px-3"
-                          placeholder="Add phone number. Optional"
-                          value={contactPhone}
-                          onChange={onChange} 
-                      />
-                  </div>
-            </form>
-
-
-
-          </main>
-        </div>
-
-            {/* My classes section */}  
-            <section className="bg-blue-50 px-4 py-10">
-              <div className="container-xl lg:container m-auto">
-                {!loading && workouts.length > 0 && (
-                  <>
-                    <h2 className="text-3xl font-bold text-navy mb-6 text-center">My Classes</h2>
-                    <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      {workouts.map((workout) => (
-                        <ClassListing 
-                          key={workout.id} 
-                          id={workout.id} 
-                          workout={workout.data}
-                          onDelete={()=>onDelete(workout.id)}
-                          onEdit={()=>onEdit(workout.id)}
-                        />
-                      ))}
-                    </ul>
-                  </>
-                )}
               </div>
-            </section>
-        </div>
-      </section>
+            </div>
+            <hr className="my-6 border-t border-gray-300" />
+
+            <SocialLinksProfileForm socialLinks={formData.socials} onSocialLinkChange={onChange} editInfo={editInfo}/>
+
+            {/* <!-- Skills --> */}
+            {/* <div className="flex flex-col">
+                  <h2 className="text-gray-700 font-bold mb-2">Skills</h2>
+                  <ul>
+                      <li className="mb-2">Personal Training</li>
+                      <li className="mb-2">Yoga</li>
+                      <li className="mb-2">HIIT</li>
+                  </ul>
+              </div> */}
+          </div>
+          {/* <!-- Manage --> */}
+          <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+            {/* <h2 className="text-xl font-bold mb-6">Manage Profile</h2> */}
+          {/* Edit and Sign Out */}
+          <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
+            <button
+                type="submit"
+                className="white hover:text-purple text-navy font-bold py-2 px-4 rounded-full w-full border-2 focus:outline-none focus:shadow-outline"
+                onClick={onSignOut}
+            >
+                Sign Out
+            </button>
+          </div>
+          {/* Create Class Listing Button*/}
+          <Link to='/add-class'
+            className='flex bg-navy hover:bg-navy-light justify-center text-white py-2 px-4 rounded-full w-full items-center focus:outline-none focus:shadow-outline'
+          >
+            <IoCreateOutline className='mr-2 text-xl'/> Create Class
+          </Link>
+          </div>
+        </aside>
+
+        <main className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0 col-span-4 sm:col-span-9">
+          {/* Image upload */}
+          <div className='mb-4'>
+            <label htmlFor="avatarImage" className="block text-gray-700 font-bold mb-2">
+              { isAvatarChanged ? `Profile` : `Edit`} Image
+            </label>
+              <p className='mb-2'>Accepted format .jpg, .png, jpeg</p>
+              <input 
+                type="file" 
+                id='avatarImage'
+                name='avatarImage'
+                disabled={!editInfo}
+                accept='.jpg, .png, jpeg'
+                onChange={onChange} 
+              /> 
+          </div>
+
+          <form>
+            {/* INSTRUCTOR INFORMATION */}
+            {/* <fieldset> */}
+                {/* <legend className="font-semibold uppercase mb-2 mt-8">Instructor Info</legend> */}
+                  <div className="mb-4">
+                  <label htmlFor="fullName" className="block text-gray-700 font-bold mb-2">Name</label>
+                      <input
+                          type="text"
+                          id="fullName"
+                          name="fullName"
+                          disabled={!editInfo}
+                          className="border rounded w-full py-2 px-3" 
+                          value={fullName}
+                          onChange={onChange} 
+                      />
+                  </div>
+
+                  <div className="mb-4">
+                  <label htmlFor="instructorTitle" className="block text-gray-700 font-bold mb-2">Title</label>
+                      <input
+                          type="text"
+                          id="instructorTitle"
+                          name="instructorTitle"
+                          disabled={!editInfo}
+                          className="border rounded w-full py-2 px-3" 
+                          placeholder="Ex. Group Fitness Instructor"
+                          value={instructorTitle}
+                          onChange={onChange} 
+                      />
+                  </div>
+
+                {/* About */}
+                <div className="mb-4">
+                <label
+                    htmlFor="instructorDescription"
+                    className="block text-gray-700 font-bold mb-2">About You</label>
+                    <textarea
+                        id="instructorDescription"
+                        name="instructorDescription"
+                        disabled={!editInfo}
+                        className="border rounded w-full py-2 px-3"
+                        rows="4"
+                        placeholder="Tell a bit about yourself - experience, what moves you?"
+                        value={instructorDescription}
+                        onChange={onChange} 
+                    ></textarea>
+                </div>
+                {/* Contact Email */}
+                <div className="mb-4">
+                    <label
+                        htmlFor="contactEmail"
+                        className="block text-gray-700 font-bold mb-2">Contact Email</label>
+                    <input
+                        type="email"
+                        id="contactEmail"
+                        name="contactEmail"
+                        disabled={!editInfo}
+                        className="border rounded w-full py-2 px-3"
+                        placeholder="You email address"
+                        required
+                        value={contactEmail}
+                        onChange={onChange} 
+                    />
+                </div>
+                {/* Contact Phone */}
+                <div className="mb-4">
+                    <label
+                    htmlFor="contactPhone"
+                    className="block text-gray-700 font-bold mb-2">Contact Phone</label>
+                    <input
+                        type="tel"
+                        id="contactPhone"
+                        name="contactPhone"
+                        disabled={!editInfo}
+                        className="border rounded w-full py-2 px-3"
+                        placeholder="Add phone number. Optional"
+                        value={contactPhone}
+                        onChange={onChange} 
+                    />
+                </div>
+          </form>
+
+
+
+        </main>
+      </div>
+
+      {/* My classes section */}  
+      <ProfilePageMyClasses workouts={workouts} loading={loading} setWorkouts={setWorkouts}/>
+      </div>
+    </section>
   )
 }
 

@@ -183,6 +183,7 @@ const EditClassPage = () => {
                 </div>
 
                 {/* Checkbox DAY of WEEK */}
+                {/* TODO: add validation */}
                 <fieldset>
                     <legend className="block text-sm font-semibold leading-6 text-gray-900 mb-2">Days of the Week</legend>
                     <div className="mb-4">

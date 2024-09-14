@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import defaultAvatarImg from '../assets/images/avatar-img.png';
 
 const InstructorInfo = ({workout}) => {
+  console.log('workout', workout);
   // Destructure the instructor info from workout and set it as the initial state for instructorData
   const [instructorData, setInstructorData] = useState({
     name: workout.instructor.name,
