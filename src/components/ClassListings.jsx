@@ -50,11 +50,18 @@ const ClassListings = ( {isHome = false} ) => {
           { loading ? (
             <Spinner loading={loading}/>
           ) : (
-            <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {classes.map((workout) => (
+            isHome ?
+            (<ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {classes.slice(0,6).map((workout) => (
                 <ClassListing key={workout.id} id={workout.id} workout={workout.data}/>
               ))}
-            </ul>
+            </ul>)
+            :             
+            (<ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {classes.map((workout) => (
+              <ClassListing key={workout.id} id={workout.id} workout={workout.data}/>
+            ))}
+          </ul>)
           )}
       </div>
     </section>

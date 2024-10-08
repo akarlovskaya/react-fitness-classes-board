@@ -209,6 +209,11 @@ const ProfilePage = () => {
         updates.contactPhone = contactPhone;
       }
 
+      // Check for instructorDescription changes
+      if (instructorDescription !== formData.instructorDescription) {
+        updates.instructorDescription = instructorDescription;
+      }
+
       // Store and get avatar image URL if a new image is provided
       // let avatarImageUrl = null;
       if (isAvatarChanged && avatarImage) {
@@ -231,6 +236,7 @@ const ProfilePage = () => {
       // Update data in Firestore
       const userRef = doc(db, "users", auth.currentUser.uid);
       await updateDoc(userRef, formDataCopyForDB);
+      console.log('profile page fromData after submit', formData);
 
       setLoading(false);
       toast.success("Profile updated successfully.");
