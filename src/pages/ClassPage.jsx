@@ -13,7 +13,7 @@ import { FaShare } from "react-icons/fa";
 const ClassPage = () => {
     // const navigate = useNavigate();
     const workout = useLoaderData();
-    console.log('workout class', workout);
+    // console.log('workout class', workout);
     const [shareLinkCopied, setShareLinkCopied] = useState(false);
 
     return (

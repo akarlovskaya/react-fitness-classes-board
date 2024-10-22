@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { doc, updateDoc, getDoc, serverTimestamp, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../firebase.js';
@@ -16,13 +16,20 @@ import ProfilePageMyClasses from '../components/ProfilePageMyClasses.jsx';
 
 const ProfilePage = () => {
   const auth = getAuth();
-  // const navigate = useNavigate();
-  const socialLinks = {
-    facebook: { name: 'facebook', label: 'Facebook', link: '' },
-    instagram: { name: 'instagram', label: 'Instagram', link: '' },
-    linkedin: { name: 'linkedin', label: 'LinkedIn', link: '' },
-    x_com: { name: 'x_com', label: 'Twitter / X.com', link: '' }
-  };
+   const navigate = useNavigate();
+  // const socialLinks = {
+  //   facebook: { name: 'facebook', label: 'Facebook', link: '' },
+  //   instagram: { name: 'instagram', label: 'Instagram', link: '' },
+  //   linkedin: { name: 'linkedin', label: 'LinkedIn', link: '' },
+  //   x_com: { name: 'x_com', label: 'Twitter / X.com', link: '' }
+  // };
+
+  const socialLinks = [
+    { name: 'facebook', link: '', label: 'Facebook'},
+    { name: 'instagram', link: '', label: 'Instagram' },
+    { name: 'linkedin', link: '', label: 'LinkedIn' },
+    { name: 'x_com', link: '', label: 'witter / X.com' }
+  ];
 
   const [formData, setFormData] = useState({
     avatarImage: null,
@@ -104,33 +111,38 @@ const ProfilePage = () => {
   }
 
   const onChange = (e) => {
+    const { id, value, files } = e.target;
+  
     // File Input
-    if (e.target.files) {
+    if (files) {
       setFormData((prevState) => ({
         ...prevState,
-        avatarImage: e.target.files[0]
+        avatarImage: files[0],
       }));
       setIsAvatarChanged(true);
     } else {
-      // Check if the id belongs to a social link and update state
-      if (['facebook', 'instagram', 'linkedin', 'x_com'].includes(e.target.id)) {
+      // Find the social link object that matches the input id
+      const socialLink = socialLinks.find(link => link.name === id);
+  
+      // If a matching social link is found, update its link
+      if (socialLink) {
         setFormData((prevState) => ({
           ...prevState,
-          socials: {
-            ...prevState.socials,
-            [e.target.id]: {
-              ...prevState.socials[e.target.id],
-              link: e.target.value
-            }
-          }
+          socials: prevState.socials.map((item) =>
+            item.name === socialLink.name
+              ? { ...item, link: value }  // Update the link for the matched social link
+              : item
+          ),
         }));
       } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [e.target.id]: e.target.value
-      }));
+        setFormData((prevState) => ({
+          ...prevState,
+          [id]: value,
+        }));
+      }
     }
-  }};
+  };
+  
 
   // Store Image in firebase storage
   const storeImage = (image) => {
@@ -287,8 +299,8 @@ const ProfilePage = () => {
               </div>
             </div>
             <hr className="my-6 border-t border-gray-300" />
-
             <SocialLinksProfileForm socialLinks={formData.socials} onSocialLinkChange={onChange} editInfo={editInfo}/>
+            
 
             {/* <!-- Skills --> */}
             {/* <div className="flex flex-col">
@@ -420,9 +432,6 @@ const ProfilePage = () => {
                     />
                 </div>
           </form>
-
-
-
         </main>
       </div>
 
