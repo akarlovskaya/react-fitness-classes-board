@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+  	// makes sure that entire DB is logged down
+  	match /{document=**} {
+    	allow read, write: if false;
+    }
+  
+  
+  
+    // Workouts
+    match /workouts/{workout} {
+    	allow read;
+      // allow create: if request.auth != null && request.resource.data.imgUrls.size() < 7;
+      allow create: if isLoggedIn();
+      // allow create: if canCreateWorkout();
+      allow delete: if isLoggedIn() 
+      							&& resource.data.instructor.id == request.auth.uid;
+
+      allow update: if isLoggedIn() 
+      							&& resource.data.instructor.id == request.auth.uid;
+    }
+   
+    // Users
+    match /users/{user} {
+    	allow read;
+    	allow create;
+    	allow update: if request.auth.uid == user
+    }
+    
+    function isLoggedIn () {
+    	return request.auth.uid != null;
+    }
+    
+    function canCreateWorkout () {
+    	let isSignedIn = request.auth.uid != null;
+      let isOwner = request.auth.uid == request.resource.data.uid;
+      let isNotTooLong = request.resource.data.text.sixe() < 300;
+      let isNow = request.time == request.resource.data.createAt;
+      
+      // check if user is not banned
+      let isNotBanned = exists(
+      	/database/$(database)/document/banned/$(request.auth.uid)
+      ) == false;
+      
+      return isSignedIn && isOwner && isNotTooLong && isNow && isNotBanned;
+    }
+  }
+}
