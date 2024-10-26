@@ -41,10 +41,10 @@ const ForgotPasswordPage = () => {
 
             <div className='flex justify-between text-sm sm:text-base mb-10'>
                 <p>Don't have account? 
-                    <Link to="sign-up" className='text-orange-dark hover:text-orange-light ml-1'>Register</Link>
+                    <Link to="/sign-up" className='text-orange-dark hover:text-orange-light ml-1'>Register</Link>
                 </p>
                 <p>
-                    <Link to="sign-in" className='text-navy hover:text-indigo-600'>Sign In</Link>
+                    <Link to="/sign-in" className='text-navy hover:text-indigo-600'>Sign In</Link>
                 </p>
             </div>
              <button 

@@ -103,10 +103,10 @@ const SignUpPage = () => {
             </div>
             <div className='flex justify-between text-sm sm:text-base mb-10'>
                 <p>Have an account? 
-                    <Link to="sign-ip" className='text-orange-dark hover:text-orange-light ml-1'>Sign In</Link>
+                    <Link to="/sign-in" className='text-orange-dark hover:text-orange-light ml-1'>Sign In</Link>
                 </p>
                 <p>
-                    <Link to="forgot-password" className='text-navy hover:text-indigo-600'>Forgot Password?</Link>
+                    <Link to="/forgot-password" className='text-navy hover:text-indigo-600'>Forgot Password?</Link>
                 </p>
             </div>
              <button 
