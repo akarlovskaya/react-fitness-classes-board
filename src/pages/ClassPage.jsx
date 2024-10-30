@@ -124,7 +124,7 @@ const ClassPage = () => {
                 {/* <!-- Manage --> */}
                     {/* <Link
                         to={`/edit-class/${workout.id}`}
-                        className="bg-navy hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+                        className="bg-navy hover:gray-700 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
                         >Edit Class</Link>
                     <button 
                         onClick={() => deleteWorkout(workout.id)}

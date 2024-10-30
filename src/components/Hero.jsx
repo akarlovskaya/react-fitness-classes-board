@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import SearchBar from '../components/SearchBar';
 
 const Hero = () => {
   return (
@@ -14,6 +15,7 @@ const Hero = () => {
           <p className="my-4 text-xl text-white">
             Find Fitness classes that fit your schedule and needs
           </p>
+          <SearchBar />
         </div>
       </div>
     </section>
@@ -21,4 +23,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Hero;
